@@ -1,11 +1,16 @@
 <template>
   <section class="section">
-    BBT Storefront
+    {{ hello }}
   </section>
 </template>
 
-<script>
-export default {
-  name: 'HomePage'
+<script lang="ts">
+import { Vue, Component } from 'vue-property-decorator'
+
+@Component
+class IndexPage extends Vue {
+  hello: string = 'This is a message';
 }
+
+export default IndexPage
 </script>

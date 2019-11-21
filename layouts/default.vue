@@ -7,7 +7,7 @@
     >
       <div class="navbar-brand">
         <a class="navbar-item" href="/">
-          <img src="~assets/bbt-logo.svg" alt="BBT Online" height="28" />
+          <img src="~assets/bbt-logo.svg" alt="BBT Online" height="28">
         </a>
 
         <div class="navbar-burger">

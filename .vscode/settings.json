@@ -1,4 +1,10 @@
 {
   "prettier.singleQuote": true,
-  "prettier.semi": false
+  "prettier.semi": false,
+  "eslint.autoFixOnSave": true,
+  "eslint.validate": [
+    "javascript",
+    "typescript",
+    { "language": "vue", "autoFix": true }
+  ]
 }

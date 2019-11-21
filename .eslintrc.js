@@ -5,10 +5,14 @@ module.exports = {
     node: true
   },
   parserOptions: {
-    parser: 'babel-eslint'
+    parser: "babel-eslint"
   },
-  extends: ['@nuxtjs', 'plugin:nuxt/recommended'],
+  extends: [
+    "@nuxtjs",
+    "@nuxtjs/eslint-config-typescript",
+    "plugin:nuxt/recommended"
+  ],
   rules: {
-    'space-before-function-paren': 0
+    "space-before-function-paren": 0
   }
-}
+};
