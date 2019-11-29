@@ -1,8 +1,16 @@
 <template>
-  <div>
-    <img :src="cover" class="cover">
-    <b>{{ title }}</b>
-    <small>{{ author }}</small>
+  <div class="overflow-hidden mb-3">
+    <img :src="cover" class="rounded w-full">
+    <div class="text-center">
+      <div class="font-bold text-sm leading-none py-1">
+        {{ title }}
+      </div>
+      <p
+        class="text-gray-500 text-xs leading-none"
+      >
+        {{ author }}
+      </p>
+    </div>
   </div>
 </template>
 
@@ -23,10 +31,3 @@ class BookCard extends Vue {
 
 export default BookCard
 </script>
-
-<style scoped>
-.cover {
-  border-radius: 5px;
-  max-width: 256px;
-}
-</style>

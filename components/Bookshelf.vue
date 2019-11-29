@@ -1,11 +1,12 @@
 <template>
-  <div>
+  <div class="flex flex-row flex-wrap -mb-4">
     <book-card
       v-for="book in books"
       :key="book.id"
       :title="book.title"
       :author="book.author"
       :cover="book.cover"
+      class="px-2 w-40"
     />
   </div>
 </template>
