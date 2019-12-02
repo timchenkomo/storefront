@@ -21,19 +21,13 @@
         <!-- Buttons -->
         <hr class="my-6">
 
-        <div class="inline-block mr-6">
-          <img class="h-5 mr-4 inline-block fill-current" src="http://bbt-online.ru/wp-content/themes/bbt/img/vector/digital_1.svg">
-          <span class="text-sm font-light">
-            Эл. книга
-          </span>
-        </div>
+        <icon-button icon-url="http://bbt-online.ru/wp-content/themes/bbt/img/vector/digital_1.svg">
+          Эл. книга
+        </icon-button>
 
-        <div class="inline-block mr-6">
-          <img class="h-5 mr-4 inline-block" src="http://bbt-online.ru/wp-content/themes/bbt/img/vector/press_1.svg">
-          <span class="text-sm font-light">
-            Аудиокнига
-          </span>
-        </div>
+        <icon-button icon-url="http://bbt-online.ru/wp-content/themes/bbt/img/vector/press_1.svg">
+          Аудиокнига
+        </icon-button>
       </div>
     </div>
   </div>
@@ -41,9 +35,11 @@
 
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator'
-// import { Book } from '@/lib/book'
+import IconButton from '@/components/IconButton.vue'
 
-@Component
+@Component({
+  components: { IconButton }
+})
 class BookPage extends Vue {
 
 }
