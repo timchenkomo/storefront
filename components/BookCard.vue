@@ -1,16 +1,18 @@
 <template>
   <div class="overflow-hidden mb-3">
-    <img :src="cover" class="rounded w-full">
-    <div class="text-center">
-      <div class="font-bold text-sm leading-none py-1">
-        {{ title }}
+    <a :href="url">
+      <img :src="cover" class="rounded w-full">
+      <div class="text-center">
+        <div class="font-bold text-sm leading-none py-1">
+          {{ title }}
+        </div>
+        <p
+          class="text-gray-500 text-xs leading-none"
+        >
+          {{ author }}
+        </p>
       </div>
-      <p
-        class="text-gray-500 text-xs leading-none"
-      >
-        {{ author }}
-      </p>
-    </div>
+    </a>
   </div>
 </template>
 
@@ -27,6 +29,9 @@ class BookCard extends Vue {
 
   /** Author's name */
   @Prop() readonly author!: string;
+
+  /** Url to go on click */
+  @Prop() readonly url!: string;
 }
 
 export default BookCard
