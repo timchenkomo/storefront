@@ -19,15 +19,16 @@
         </div>
 
         <!-- Buttons -->
-        <hr class="my-6">
+        <div class="my-10">
+          <icon-button icon-url="http://bbt-online.ru/wp-content/themes/bbt/img/vector/digital_1.svg">
+            Эл. книга
+          </icon-button>
 
-        <icon-button icon-url="http://bbt-online.ru/wp-content/themes/bbt/img/vector/digital_1.svg">
-          Эл. книга
-        </icon-button>
-
-        <icon-button icon-url="http://bbt-online.ru/wp-content/themes/bbt/img/vector/press_1.svg">
-          Аудиокнига
-        </icon-button>
+          <icon-button icon-url="http://bbt-online.ru/wp-content/themes/bbt/img/vector/press_1.svg">
+            Аудиокнига
+          </icon-button>
+        </div>
+        <buy-button :price="250" />
       </div>
     </div>
   </div>
@@ -36,12 +37,12 @@
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator'
 import IconButton from '@/components/IconButton.vue'
+import BuyButton from '@/components/BuyButton.vue'
 
 @Component({
-  components: { IconButton }
+  components: { IconButton, BuyButton }
 })
 class BookPage extends Vue {
-
 }
 
 export default BookPage
