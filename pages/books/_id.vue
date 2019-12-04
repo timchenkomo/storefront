@@ -29,6 +29,11 @@
           </icon-button>
         </div>
         <buy-button :price="250" />
+        <div class="my-10 text-sm font-light">
+          <div><span class="text-gray-500">Серия: </span><span class="text-gray-900">Махабхарата</span></div>
+          <div><span class="text-gray-500">Год выпуска: </span><span class="text-gray-900">2018</span></div>
+          <div><span class="text-gray-500">Издательство: </span><span class="text-gray-900"> Фонд "Бхактиведанта"</span></div>
+        </div>
       </div>
     </div>
   </div>
