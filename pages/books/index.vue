@@ -1,5 +1,8 @@
 <template>
   <section>
+    <div class="flex justify-center pb-8">
+      <bookshelf-filter v-model="query" class="m-4 w-2/3" />
+    </div>
     <bookshelf :books="books" />
   </section>
 </template>
@@ -9,11 +12,14 @@ import { Vue, Component } from 'vue-property-decorator'
 import { Book } from '@/lib/book'
 
 import Bookshelf from '@/components/Bookshelf.vue'
+import BookshelfFilter from '@/components/BookshelfFilter.vue'
 
 @Component({
-  components: { Bookshelf }
+  components: { Bookshelf, BookshelfFilter }
 })
 class BooksIndexPage extends Vue {
+  private query:string = '';
+
   get books(): Book[] {
     return [
       {
@@ -46,7 +52,7 @@ class BooksIndexPage extends Vue {
         author: 'Кришна-дхарма дас',
         cover: 'http://bbt-online.ru/wp-content/uploads/Mahabharata-2-1.jpg'
       }
-    ]
+    ].filter(x => x.title.includes(this.query))
   }
 }
 
