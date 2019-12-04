@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-row flex-wrap -mb-4">
+  <div class="flex flex-row flex-wrap justify-around">
     <book-card
       v-for="book in books"
       :key="book.id"
@@ -7,7 +7,7 @@
       :author="book.author"
       :cover="book.cover"
       :url="bookUrl(book.id)"
-      class="px-2 w-40"
+      class="mx-4 w-40"
     />
   </div>
 </template>
