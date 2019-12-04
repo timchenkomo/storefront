@@ -6,15 +6,15 @@
       </div>
 
       <nav>
-        <span class="px-4">
+        <nuxt-link to="/about" class="px-4">
           Об издательстве
-        </span>
-        <span class="px-4">
+        </nuxt-link>
+        <nuxt-link to="/books" class="px-4">
           Библиотека
-        </span>
-        <span class="px-4">
+        </nuxt-link>
+        <nuxt-link to="/login" class="px-4">
           Войти
-        </span>
+        </nuxt-link>
       </nav>
     </div>
   </div>

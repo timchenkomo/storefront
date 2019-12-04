@@ -1,6 +1,6 @@
 <template>
   <div class="overflow-hidden mb-3">
-    <a :href="url">
+    <nuxt-link :to="url">
       <img :src="cover" class="rounded w-full">
       <div class="text-center">
         <div class="font-bold text-sm leading-none py-1">
@@ -12,7 +12,7 @@
           {{ author }}
         </p>
       </div>
-    </a>
+    </nuxt-link>
   </div>
 </template>
 
