@@ -1,5 +1,5 @@
 <template>
-  <div class="container p-4 mx-auto">
+  <div class="p-4">
     <div class="flex flex-row">
       <!-- Cover -->
       <div class="w-1/3 mr-16">
