@@ -1,5 +1,5 @@
 <template>
-  <div class="w-auto py-6 border-b-2 mb-4">
+  <div class="w-auto py-6 border-b-2">
     <div class="container mx-auto flex items-center justify-between px-4 text-sm font-light">
       <div>
         <img src="http://bbt-online.ru/wp-content/uploads/logo.svg">
