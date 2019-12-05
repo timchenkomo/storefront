@@ -41,7 +41,7 @@ class BookshelfFilter extends Vue {
   private onFocused() {
     this.focused = true
     this.$nextTick(function () {
-      this.$refs.input.focus()
+      (this.$refs.input as HTMLInputElement).focus()
     })
   }
 
