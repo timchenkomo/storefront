@@ -52,7 +52,9 @@ class BooksIndexPage extends Vue {
         author: 'Кришна-дхарма дас',
         cover: 'http://bbt-online.ru/wp-content/uploads/Mahabharata-2-1.jpg'
       }
-    ].filter(x => x.title.includes(this.query))
+    ].filter(x =>
+      x.title.toLowerCase().includes(this.query.toLowerCase()) ||
+      x.author.toLowerCase().includes(this.query.toLowerCase()))
   }
 }
 
