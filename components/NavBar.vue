@@ -1,11 +1,11 @@
 <template>
-  <div class="w-auto py-6 border-b-2">
+  <div :class="{'border-b-2': borders}" class="w-auto py-6">
     <div class="container mx-auto flex items-center justify-between px-4 text-sm font-light">
-      <div>
-        <img src="http://bbt-online.ru/wp-content/uploads/logo.svg">
-      </div>
+      <nuxt-link to="/">
+        <img :src="logoUrl">
+      </nuxt-link>
 
-      <nav>
+      <nav :class="{'text-white': inverted }">
         <nuxt-link to="/about" class="px-4">
           Об издательстве
         </nuxt-link>
@@ -25,7 +25,14 @@ import { Vue, Component, Prop } from 'vue-property-decorator'
 
 @Component
 class NavBar extends Vue {
-  @Prop() readonly price!: string;
+  @Prop({ default: true }) readonly borders!: boolean;
+  @Prop({ default: false }) readonly inverted!: boolean;
+
+  get logoUrl(): string {
+    return this.inverted
+      ? 'http://bbt-online.ru/wp-content/themes/bbt/img/main-page-logo.svg'
+      : 'http://bbt-online.ru/wp-content/uploads/logo.svg'
+  }
 }
 
 export default NavBar
