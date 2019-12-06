@@ -1,6 +1,12 @@
 <template>
-  <div class="inline-block mr-6">
-    <img :src="iconUrl" class="h-5 mr-4 inline-block fill-current">
+  <div
+    :class="{ 'text-blue-500': active }"
+    @click="onClicked"
+  >
+    <!-- Icon -->
+    <slot name="icon" />
+
+    <!-- Title -->
     <span class="text-sm font-light">
       <slot />
     </span>
@@ -12,7 +18,11 @@ import { Vue, Component, Prop } from 'vue-property-decorator'
 
 @Component
 class IconButton extends Vue {
-  @Prop() readonly iconUrl!: string
+  @Prop({ default: false }) readonly active!: boolean;
+
+  private onClicked() {
+    this.$emit('click')
+  }
 }
 
 export default IconButton
