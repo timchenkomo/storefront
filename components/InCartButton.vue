@@ -1,5 +1,5 @@
 <template>
-  <div class="rounded text-blue-500 py-2 border border-solid border-blue-500 text-sm font-semibold text-center inline-block px-4">
+  <div class="rounded text-blue-500 py-2 border border-solid border-blue-500 text-sm font-semibold text-center inline-block px-4 cursor-pointer hover:border-blue-600 hover:text-blue-600">
     В корзину
 
     <!-- <div class="py-2 px-4">
