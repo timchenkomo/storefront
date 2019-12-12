@@ -26,7 +26,7 @@
 
       <div class="flex my-8">
         <buy-button price="250р" class="flex-auto mr-2" />
-        <in-cart-button price="250р" />
+        <in-cart-button @click="onInCartClicked" price="250р" />
       </div>
 
       <div class="text-sm font-light">
@@ -45,12 +45,15 @@ import IconButton from '@/components/IconButton.vue'
 import BuyButton from '@/components/BuyButton.vue'
 import InCartButton from '@/components/InCartButton.vue'
 import VarierySwitcher from '@/components/VarietySwitcher.vue'
+import { cartStore } from '~/store'
+import { Book } from '@/lib/book'
 
 @Component({
   components: { IconButton, BuyButton, InCartButton, VarierySwitcher }
 })
 class BookPage extends Vue {
   private activeVariery: string = 'digital';
+  private book: Book = { id: '1', title: '', author: '', cover: '' }
 
   async asyncData(ctx) {
     const { data } = await axios.get('http://localhost:8000/books/' + ctx.params.id)
@@ -65,6 +68,10 @@ class BookPage extends Vue {
 
   private onVarietyChanged(variety: string) {
     this.activeVariery = variety
+  }
+
+  private onInCartClicked() {
+    cartStore.add(this.book)
   }
 }
 
