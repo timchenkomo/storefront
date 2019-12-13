@@ -26,7 +26,7 @@
 
       <div class="flex my-8">
         <buy-button price="250р" class="flex-auto mr-2" />
-        <in-cart-button @click="onInCartClicked" price="250р" />
+        <in-cart-button @click="onInCartButtonClicked" price="250р" />
       </div>
 
       <div class="text-sm font-light">
@@ -70,7 +70,7 @@ class BookPage extends Vue {
     this.activeVariery = variety
   }
 
-  private onInCartClicked() {
+  private onInCartButtonClicked() {
     cartStore.add(this.book)
   }
 }
