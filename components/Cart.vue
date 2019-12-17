@@ -25,11 +25,11 @@
       <!-- List of items in cart -->
       <nuxt-link
         v-for="item in items"
-        :key="item.product.id"
-        :to="'/books/' + item.product.id"
+        :key="item.id"
+        :to="'/books/' + item.id"
         class="px-4 py-2 hover:bg-blue-500 hover:text-white"
       >
-        {{ item.product.title }}
+        {{ item.title }}
       </nuxt-link>
 
       <!-- Delimiter -->

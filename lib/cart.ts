@@ -1,6 +1,5 @@
-import { Book } from './book'
-
 export interface CartItem {
-  product: Book;
-  quantity: number;
+  id: string
+  title: string
+  price: number
 }

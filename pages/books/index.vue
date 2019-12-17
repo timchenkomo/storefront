@@ -10,7 +10,7 @@
 <script lang="ts">
 import { Vue, Component } from 'nuxt-property-decorator'
 import axios from 'axios'
-import { Book } from '@/lib/book'
+import { Product } from '@/lib/book'
 
 import Bookshelf from '@/components/Bookshelf.vue'
 import BookshelfFilter from '@/components/BookshelfFilter.vue'
@@ -20,14 +20,14 @@ import BookshelfFilter from '@/components/BookshelfFilter.vue'
 })
 class BooksIndexPage extends Vue {
   private query: string = '';
-  private allBooks: Book[] = [];
+  private allBooks: Product[] = [];
 
   async asyncData() {
-    const { data } = await axios.get('http://localhost:8000/books')
+    const { data } = await axios.get('http://localhost:8000/products')
     return { allBooks: data }
   }
 
-  get books(): Book[] {
+  get books(): Product[] {
     return this.allBooks.filter(
       x =>
         x.title.toLowerCase().includes(this.query.toLowerCase()) ||

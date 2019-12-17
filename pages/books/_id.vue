@@ -2,37 +2,45 @@
   <div class="flex flex-row xl:mx-8">
     <!-- Cover -->
     <div class="w-1/3 mr-16">
-      <img :src="book.cover" class="rounded">
+      <img :src="product.cover" class="rounded">
     </div>
 
     <!-- Content -->
     <div class="w-2/3">
       <h1 class="font-serif text-5xl leading-none mb-3">
-        {{ book.title }}
+        {{ product.title }}
       </h1>
       <div class="text-sm text-gray-500">
-        Автор: <a href="#">{{ book.author }}</a>
+        Автор: <a href="#">{{ product.author }}</a>
       </div>
       <div class="font-light text-sm text-gray-900 mt-4 leading-loose">
-        {{ book.desc }}
+        {{ product.description }}
       </div>
 
-      <!-- Buttons -->
       <variery-switcher
         :active="activeVariery"
         :varieties="varieties"
         @change="onVarietyChanged"
       />
 
-      <div class="flex my-8">
-        <buy-button price="250р" class="flex-auto mr-2" />
-        <in-cart-button @click="onInCartButtonClicked" price="250р" />
-      </div>
+      <in-cart-button
+        @addToCart="onInCartButtonClicked"
+        @placeAnOrder="onPlaceAnOrderButtonClicked"
+        :inCart="isInCart"
+        :price="variety.price"
+        class="w-full my-8"
+      />
 
       <div class="text-sm font-light">
-        <div><span class="text-gray-500">Серия: </span><span class="text-gray-900">Махабхарата</span></div>
-        <div><span class="text-gray-500">Год выпуска: </span><span class="text-gray-900">2018</span></div>
-        <div><span class="text-gray-500">Издательство: </span><span class="text-gray-900"> Фонд "Бхактиведанта"</span></div>
+        <div>
+          <span class="text-gray-500">Серия: </span><span class="text-gray-900">Махабхарата</span>
+        </div>
+        <div>
+          <span class="text-gray-500">Год выпуска: </span><span class="text-gray-900">2018</span>
+        </div>
+        <div>
+          <span class="text-gray-500">Издательство: </span><span class="text-gray-900"> Фонд "Бхактиведанта"</span>
+        </div>
       </div>
     </div>
   </div>
@@ -46,24 +54,33 @@ import BuyButton from '@/components/BuyButton.vue'
 import InCartButton from '@/components/InCartButton.vue'
 import VarierySwitcher from '@/components/VarietySwitcher.vue'
 import { cartStore } from '~/store'
-import { Book } from '@/lib/book'
+import { Product, EmptyBook, ProductVariety, EmptyProductVariety } from '@/lib/book'
 
 @Component({
   components: { IconButton, BuyButton, InCartButton, VarierySwitcher }
 })
 class BookPage extends Vue {
   private activeVariery: string = 'digital';
-  private book: Book = { id: '1', title: '', author: '', cover: '' }
+  private product: Product = EmptyBook;
 
-  async asyncData(ctx) {
-    const { data } = await axios.get('http://localhost:8000/books/' + ctx.params.id)
-    return { book: data }
+  async asyncData(ctx: any) {
+    const { data } = await axios.get(
+      'http://localhost:8000/products/' + ctx.params.id
+    )
+    return {
+      product: data,
+      activeVariery: data.varieties[0].id
+    }
+  }
+
+  private get isInCart(): boolean {
+    return cartStore.items
+      .map(x => x.id)
+      .includes(this.variety.id)
   }
 
   private get varieties() {
-    return [
-      'digital', 'audio', 'press'
-    ]
+    return this.product.varieties
   }
 
   private onVarietyChanged(variety: string) {
@@ -71,7 +88,19 @@ class BookPage extends Vue {
   }
 
   private onInCartButtonClicked() {
-    cartStore.add(this.book)
+    cartStore.add({
+      id: this.activeVariery,
+      title: (this.product.title + ' ' + (this.variety.title || '')).trim(),
+      price: this.variety.price
+    })
+  }
+
+  private onPlaceAnOrderButtonClicked() {
+    console.log('Here is a new order')
+  }
+
+  private get variety(): ProductVariety {
+    return this.product.varieties.filter(x => x.id === this.activeVariery)[0] || EmptyProductVariety
   }
 }
 
