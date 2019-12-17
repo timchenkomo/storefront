@@ -15,9 +15,9 @@
         <nuxt-link to="/login" class="px-4">
           Войти
         </nuxt-link>
-        <account-button
+        <cart
           :open="myBooksDropdownOpen"
-          :count="myBooksCount"
+          :items="myCartItems"
           @close="myBooksDropdownOpen=false"
           @click="onMyBooksDropdownClick"
         />
@@ -28,10 +28,11 @@
 
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator'
-import AccountButton from '~/components/Account.vue'
+import { CartItem } from '../lib/cart'
+import Cart from '~/components/Cart.vue'
 import { cartStore } from '~/store/index'
 
-@Component({ components: { AccountButton } })
+@Component({ components: { Cart } })
 class NavBar extends Vue {
   @Prop({ default: true }) readonly borders!: boolean;
   @Prop({ default: false }) readonly inverted!: boolean;
@@ -44,8 +45,8 @@ class NavBar extends Vue {
       : 'http://bbt-online.ru/wp-content/uploads/logo.svg'
   }
 
-  get myBooksCount():number {
-    return cartStore.items.length
+  get myCartItems(): CartItem[] {
+    return cartStore.items
   }
 
   private onMyBooksDropdownClick() {
