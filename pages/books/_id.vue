@@ -50,14 +50,13 @@
 import { Vue, Component } from 'nuxt-property-decorator'
 import axios from 'axios'
 import IconButton from '@/components/IconButton.vue'
-import BuyButton from '@/components/BuyButton.vue'
 import InCartButton from '@/components/InCartButton.vue'
 import VarierySwitcher from '@/components/VarietySwitcher.vue'
 import { cartStore } from '~/store'
 import { Product, EmptyBook, ProductVariety, EmptyProductVariety } from '@/lib/book'
 
 @Component({
-  components: { IconButton, BuyButton, InCartButton, VarierySwitcher }
+  components: { IconButton, InCartButton, VarierySwitcher }
 })
 class BookPage extends Vue {
   private variery: string = 'digital';
