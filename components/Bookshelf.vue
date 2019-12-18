@@ -14,7 +14,7 @@
 
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator'
-import { Book } from '~/lib/book'
+import { Product } from '~/lib/book'
 
 import BookCard from '@/components/BookCard.vue'
 
@@ -22,7 +22,7 @@ import BookCard from '@/components/BookCard.vue'
   components: { BookCard }
 })
 class Bookshelf extends Vue {
-  @Prop() readonly books: Book[] | undefined
+  @Prop() readonly books: Product[] | undefined
 
   private bookUrl(bookId: string) {
     return '/books/' + bookId
