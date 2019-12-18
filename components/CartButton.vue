@@ -51,9 +51,9 @@
       <hr class="my-2">
 
       <!-- Put an order button -->
-      <button class="py-2 mx-2 text-white rounded bg-blue-500 hover:bg-blue-600">
+      <nuxt-link to="/cart" class="py-2 mx-2 text-white text-center rounded bg-blue-500 hover:bg-blue-600">
         Оформить заказ
-      </button>
+      </nuxt-link>
     </div>
   </span>
 </template>

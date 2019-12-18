@@ -103,7 +103,7 @@ class BookPage extends Vue {
   }
 
   private onPlaceAnOrderButtonClicked() {
-    console.log('Here is a new order')
+    this.$router.push('/cart')
   }
 
   private get variety(): ProductVariety {
