@@ -15,7 +15,7 @@
         <nuxt-link to="/login" class="px-4">
           Войти
         </nuxt-link>
-        <cart
+        <cart-button
           :open="myBooksDropdownOpen"
           :items="myCartItems"
           @close="myBooksDropdownOpen=false"
@@ -29,10 +29,10 @@
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator'
 import { CartItem } from '../lib/cart'
-import Cart from '~/components/Cart.vue'
+import CartButton from '~/components/CartButton.vue'
 import { cartStore } from '~/store/index'
 
-@Component({ components: { Cart } })
+@Component({ components: { CartButton } })
 class NavBar extends Vue {
   @Prop({ default: true }) readonly borders!: boolean;
   @Prop({ default: false }) readonly inverted!: boolean;
