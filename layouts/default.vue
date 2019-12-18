@@ -1,8 +1,10 @@
 <template>
   <div>
     <nav-bar />
-    <div class="container mx-auto mt-6">
-      <nuxt />
+    <div class="mx-4">
+      <div class="mx-auto mt-6">
+        <nuxt />
+      </div>
     </div>
   </div>
 </template>

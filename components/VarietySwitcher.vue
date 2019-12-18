@@ -1,12 +1,12 @@
 <template>
-  <div class="my-8 flex flex-col md:flex-row">
+  <div class="flex flex-col md:flex-row">
     <!-- digital -->
     <icon-button
       v-for="variety in varieties"
       :key="variety.id"
       :active="active == variety.id"
       @click="onVarietyChanged(variety.id)"
-      class="mr-4 cursor-pointer"
+      class="my-1 sm:my-0 mr-4 cursor-pointer"
     >
       <template v-slot:icon>
         <svg

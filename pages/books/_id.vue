@@ -1,36 +1,41 @@
 <template>
-  <div class="flex flex-row xl:mx-8">
-    <!-- Cover -->
-    <div class="w-1/3 mr-16">
+  <div class="flex flex-col sm:flex-row">
+    <!-- Product cover image -->
+    <div class="w-full sm:w-1/3 mr-8 mb-8">
       <img :src="product.cover" class="rounded">
     </div>
 
     <!-- Content -->
-    <div class="w-2/3">
-      <h1 class="font-serif text-5xl leading-none mb-3">
+    <div class="sm:w-2/3">
+      <!-- Title and author -->
+      <h1 class="mb-1 sm:mb-3 font-serif text-5xl leading-none">
         {{ product.title }}
       </h1>
       <div class="text-sm text-gray-500">
         Автор: <a href="#">{{ product.author }}</a>
       </div>
-      <div class="font-light text-sm text-gray-900 mt-4 leading-loose">
+      <div class="mt-2 sm:mt-4 text-gray-900 sm:leading-loose">
         {{ product.description }}
       </div>
 
+      <!-- Variety switcher -->
       <variery-switcher
         :active="variery"
         :varieties="varieties"
         @change="onVarietyChanged"
+        class="my-2 sm:my-8"
       />
 
+      <!-- Buy button -->
       <in-cart-button
         @addToCart="onInCartButtonClicked"
         @placeAnOrder="onPlaceAnOrderButtonClicked"
         :inCart="isInCart"
         :price="variety.price"
-        class="w-full my-8"
+        class="w-full my-4 sm:my-8"
       />
 
+      <!-- Additional info -->
       <div class="text-sm font-light">
         <div>
           <span class="text-gray-500">Серия: </span><span class="text-gray-900">Махабхарата</span>
