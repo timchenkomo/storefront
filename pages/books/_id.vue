@@ -18,7 +18,7 @@
       </div>
 
       <variery-switcher
-        :active="activeVariery"
+        :active="variery"
         :varieties="varieties"
         @change="onVarietyChanged"
       />
@@ -60,16 +60,22 @@ import { Product, EmptyBook, ProductVariety, EmptyProductVariety } from '@/lib/b
   components: { IconButton, BuyButton, InCartButton, VarierySwitcher }
 })
 class BookPage extends Vue {
-  private activeVariery: string = 'digital';
+  private variery: string = 'digital';
   private product: Product = EmptyBook;
 
   async asyncData(ctx: any) {
     const { data } = await axios.get(
       'http://localhost:8000/products/' + ctx.params.id
     )
+
+    if (!data.varieties) {
+      // It is an error to get product without varieties
+      throw new Error('There are no varieties for the specified product.')
+    }
+
     return {
       product: data,
-      activeVariery: data.varieties[0].id
+      variery: data.varieties[0].id // set first variety as an active
     }
   }
 
@@ -84,12 +90,12 @@ class BookPage extends Vue {
   }
 
   private onVarietyChanged(variety: string) {
-    this.activeVariery = variety
+    this.variery = variety
   }
 
   private onInCartButtonClicked() {
     cartStore.add({
-      id: this.activeVariery,
+      id: this.variery,
       title: (this.product.title + ' ' + (this.variety.title || '')).trim(),
       price: this.variety.price
     })
@@ -100,7 +106,7 @@ class BookPage extends Vue {
   }
 
   private get variety(): ProductVariety {
-    return this.product.varieties.filter(x => x.id === this.activeVariery)[0] || EmptyProductVariety
+    return this.product.varieties.filter(x => x.id === this.variery)[0] || EmptyProductVariety
   }
 }
 
