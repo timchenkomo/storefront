@@ -1,5 +1,9 @@
 <template>
-  <div @click="onFocused" class="p-2 border border-solid rounded flex items-center justify-center">
+  <div
+    @click="onFocused"
+    :class="{'border-blue-500': focused}"
+    class="p-2 border border-solid rounded flex items-center justify-center"
+  >
     <!-- Search icon -->
     <img
       class="h-4 mx-2"
