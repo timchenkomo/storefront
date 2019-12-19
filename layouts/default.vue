@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="font-montserrat">
     <nav-bar />
     <div class="mx-4">
       <div class="mx-auto mt-6">

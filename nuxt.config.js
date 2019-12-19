@@ -42,7 +42,8 @@ export default {
     // Doc: https://github.com/nuxt-community/nuxt-tailwindcss
     '@nuxtjs/tailwindcss',
     // Doc: https://axios.nuxtjs.org/usage
-    '@nuxtjs/axios'
+    '@nuxtjs/axios',
+    'nuxt-webfontloader'
   ],
   /*
    ** Axios module configuration
@@ -57,5 +58,11 @@ export default {
      ** You can extend webpack config here
      */
     // extend(config, ctx) {}
+  },
+
+  webfontloader: {
+    google: {
+      families: ['Montserrat', 'Prata']
+    }
   }
 }

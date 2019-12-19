@@ -8,13 +8,13 @@
     <!-- Content -->
     <div class="sm:w-2/3">
       <!-- Title and author -->
-      <h1 class="mb-1 sm:mb-3 font-serif text-5xl leading-none">
+      <h1 class="mb-1 sm:mb-3 text-5xl leading-none font-prata">
         {{ product.title }}
       </h1>
       <div class="text-sm text-gray-500">
         Автор: <a href="#">{{ product.author }}</a>
       </div>
-      <div class="mt-2 sm:mt-4 text-gray-900 sm:leading-loose">
+      <div class="mt-2 sm:mt-4 text-sm text-gray-900 sm:leading-loose">
         {{ product.description }}
       </div>
 
