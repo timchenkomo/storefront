@@ -2,8 +2,8 @@
   <div class="overflow-hidden mb-3">
     <nuxt-link :to="url">
       <img :src="cover" class="rounded w-full">
-      <div class="text-center">
-        <div class="font-bold text-sm leading-none py-1">
+      <div class="text-center my-2">
+        <div class="font-bold text-sm leading-tight my-1">
           {{ title }}
         </div>
         <p
