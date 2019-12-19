@@ -9,6 +9,10 @@
       :url="bookUrl(book.id)"
       class="mx-4 w-40"
     />
+
+    <div v-if="isNothingFound" class="text-xl">
+      Ничего не найдено
+    </div>
   </div>
 </template>
 
@@ -26,6 +30,10 @@ class Bookshelf extends Vue {
 
   private bookUrl(bookId: string) {
     return '/books/' + bookId
+  }
+
+  private get isNothingFound(): boolean {
+    return (this.books || []).length === 0
   }
 }
 
