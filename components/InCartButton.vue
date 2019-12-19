@@ -26,7 +26,7 @@ class InCartButton extends Vue {
   }
 
   private onClicked() {
-    this.$emit(this.inCart ? 'placeAnOrder' : 'addToCart')
+    this.$emit(this.inCart ? 'checkout' : 'add')
   }
 }
 

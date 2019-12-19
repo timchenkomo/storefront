@@ -16,10 +16,11 @@
           Войти
         </nuxt-link>
         <cart-button
-          :open="myBooksDropdownOpen"
+          :open="isCartDropdownOpen"
           :items="myCartItems"
-          @close="myBooksDropdownOpen=false"
+          @close="isCartDropdownOpen=false"
           @click="onMyBooksDropdownClick"
+          @checkout="onCheckoutClicked"
         />
       </nav>
     </div>
@@ -37,7 +38,7 @@ class NavBar extends Vue {
   @Prop({ default: true }) readonly borders!: boolean;
   @Prop({ default: false }) readonly inverted!: boolean;
 
-  private myBooksDropdownOpen: boolean = false;
+  private isCartDropdownOpen: boolean = false;
 
   get logoUrl(): string {
     return this.inverted
@@ -50,7 +51,12 @@ class NavBar extends Vue {
   }
 
   private onMyBooksDropdownClick() {
-    this.myBooksDropdownOpen = !this.myBooksDropdownOpen
+    this.isCartDropdownOpen = !this.isCartDropdownOpen
+  }
+
+  private onCheckoutClicked() {
+    this.isCartDropdownOpen = false
+    this.$router.push('/cart')
   }
 }
 

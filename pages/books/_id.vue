@@ -28,8 +28,8 @@
 
       <!-- Buy button -->
       <in-cart-button
-        @addToCart="onInCartButtonClicked"
-        @placeAnOrder="onPlaceAnOrderButtonClicked"
+        @add="onInCartButtonClicked"
+        @checkout="onCheckoutButtonClicked"
         :inCart="isInCart"
         :price="variety.price"
         class="w-full my-4 sm:my-8"
@@ -107,7 +107,7 @@ class BookPage extends Vue {
     })
   }
 
-  private onPlaceAnOrderButtonClicked() {
+  private onCheckoutButtonClicked() {
     this.$router.push('/cart')
   }
 

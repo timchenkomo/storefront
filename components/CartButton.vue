@@ -51,9 +51,9 @@
       <hr class="my-2">
 
       <!-- Put an order button -->
-      <nuxt-link to="/cart" class="py-2 mx-2 text-white text-center rounded bg-blue-500 hover:bg-blue-600">
+      <button @click="onCheckoutClicked" class="py-2 mx-2 text-white text-center rounded bg-blue-500 hover:bg-blue-600">
         Оформить заказ
-      </nuxt-link>
+      </button>
     </div>
   </span>
 </template>
@@ -81,6 +81,10 @@ class CartButton extends Vue {
 
   private onCloseClicked() {
     this.$emit('close')
+  }
+
+  private onCheckoutClicked() {
+    this.$emit('checkout')
   }
 
   private get totalPrice(): number {
