@@ -7,8 +7,13 @@
       :author="book.author"
       :cover="book.cover"
       :url="bookUrl(book.id)"
-      class="mx-4 w-40"
-    />
+      @click="onProductClicked(book)"
+      class="mx-4 w-40 cursor-pointer"
+    >
+      <template v-slot:cover>
+        <slot v-bind:product="book" name="cover" />
+      </template>
+    </book-card>
 
     <div v-if="isNothingFound" class="text-xl">
       Ничего не найдено
@@ -34,6 +39,10 @@ class Bookshelf extends Vue {
 
   private get isNothingFound(): boolean {
     return (this.books || []).length === 0
+  }
+
+  private onProductClicked(product: Product) {
+    this.$emit('click', product)
   }
 }
 

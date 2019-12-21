@@ -3,7 +3,7 @@
     <div class="flex justify-center pb-8">
       <bookshelf-filter v-model="query" class="m-4 w-2/3" />
     </div>
-    <bookshelf :books="books" />
+    <bookshelf @click="onProductClicked" :books="books" />
   </section>
 </template>
 
@@ -33,6 +33,10 @@ class BooksIndexPage extends Vue {
         x.title.toLowerCase().includes(this.query.toLowerCase()) ||
         x.author.toLowerCase().includes(this.query.toLowerCase())
     )
+  }
+
+  private onProductClicked(product: Product) {
+    this.$router.push('/books/' + product.id)
   }
 }
 

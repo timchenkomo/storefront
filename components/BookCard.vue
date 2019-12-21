@@ -1,18 +1,23 @@
 <template>
-  <div class="overflow-hidden mb-3">
-    <nuxt-link :to="url">
+  <div
+    @click="onClicked"
+    class="overflow-hidden mb-3"
+  >
+    <div class="flex relative justify-center items-center">
       <img :src="cover" class="rounded w-full">
-      <div class="text-center my-2">
-        <div class="font-bold text-sm leading-tight my-1">
-          {{ title }}
-        </div>
-        <p
-          class="text-gray-500 text-xs leading-none"
-        >
-          {{ author }}
-        </p>
+      <slot name="cover" />
+    </div>
+
+    <div class="text-center my-2">
+      <div class="font-bold text-sm leading-tight my-1">
+        {{ title }}
       </div>
-    </nuxt-link>
+      <p
+        class="text-gray-500 text-xs leading-none"
+      >
+        {{ author }}
+      </p>
+    </div>
   </div>
 </template>
 
@@ -30,8 +35,9 @@ class BookCard extends Vue {
   /** Author's name */
   @Prop() readonly author!: string;
 
-  /** Url to go on click */
-  @Prop() readonly url!: string;
+  private onClicked(): void {
+    this.$emit('click')
+  }
 }
 
 export default BookCard
