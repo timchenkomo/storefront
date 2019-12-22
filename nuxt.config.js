@@ -43,7 +43,8 @@ export default {
     '@nuxtjs/tailwindcss',
     // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/axios',
-    'nuxt-webfontloader'
+    'nuxt-webfontloader',
+    'nuxt-svg-loader'
   ],
   /*
    ** Axios module configuration
