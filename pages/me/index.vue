@@ -18,20 +18,38 @@
         </div>
       </template>
     </bookshelf>
+
+    <!-- Product downloader -->
+    <downloader
+      :visible="isDownloaderVisible"
+      :options="downloaderOptions"
+      @close="onDownloaderClose"
+      title="Бхагавад-гита как она есть"
+      class="absolute align-center justify-center"
+    />
   </div>
 </template>
 
 <script lang="ts">
-import { Vue, Component } from 'vue-property-decorator'
+import { Vue, Component } from 'nuxt-property-decorator'
 import axios from 'axios'
 import Bookshelf from '~/components/Bookshelf.vue'
 import BookshelfFilter from '@/components/BookshelfFilter.vue'
+import Downloader from '@/components/Downloader.vue'
 import { Product } from '~/lib/book'
 import DownloadIcon from '~/assets/download.svg'
 
-@Component({ components: { Bookshelf, BookshelfFilter, DownloadIcon } })
+@Component({ components: {
+  Bookshelf, BookshelfFilter, DownloadIcon, Downloader
+} })
 class MeIndexPage extends Vue {
-  private myProducts: Product[] = [];
+  private myProducts: Product[]
+  private isDownloaderVisible: boolean = false
+  private downloaderOptions: any = [
+    { type: 'epub', url: 'dsdsd' },
+    { type: 'fb2', url: 'dsdsd' },
+    { type: 'mp3', url: 'dsdsd' }
+  ]
   private query: string = ''
 
   async asyncData() {
@@ -43,8 +61,13 @@ class MeIndexPage extends Vue {
     return this.myProducts
   }
 
-  private onProductClicked(product:any) {
+  private onProductClicked(product: any) {
+    this.isDownloaderVisible = true
     console.log(product)
+  }
+
+  private onDownloaderClose() {
+    this.isDownloaderVisible = false
   }
 }
 
