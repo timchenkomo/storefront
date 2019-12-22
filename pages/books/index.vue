@@ -3,7 +3,12 @@
     <div class="flex justify-center pb-8">
       <bookshelf-filter v-model="query" class="m-4 w-2/3" />
     </div>
-    <bookshelf @click="onProductClicked" :books="books" />
+
+    <bookshelf
+      @click="onProductClicked"
+      :books="books"
+      product-class="cursor-pointer"
+    />
   </section>
 </template>
 
