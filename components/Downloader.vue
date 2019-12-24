@@ -23,7 +23,9 @@
           :key="idx"
         >
           <li class="hover:bg-blue-500 rounded px-4 py-1 my-1 hover:text-white">
-            Скачать {{ opt.type }}
+            Скачать
+            <span class="uppercase">{{ opt.ext }}</span>
+            <span class="text-xs text-gray-500">{{ opt.size }}</span>
           </li>
         </a>
       </ul>

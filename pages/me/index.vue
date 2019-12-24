@@ -7,7 +7,7 @@
     <!-- List of my products -->
     <bookshelf :books="myFilteredProducts">
       <!-- Add downlaod button to each book. -->
-      <template v-slot:cover="product">
+      <template v-slot:cover="{ product }">
         <div class="absolute flex justify-center items-center w-full h-full opacity-0 hover:opacity-100">
           <div
             @click="onProductClicked(product)"
@@ -61,9 +61,11 @@ class MeIndexPage extends Vue {
     return this.myProducts
   }
 
-  private onProductClicked(product: any) {
+  private onProductClicked(product: Product) {
     this.isDownloaderVisible = true
-    console.log(product)
+    this.downloaderOptions = product.varieties
+      .filter(x => x.urls !== undefined)
+      .map(x => x.urls).flat()
   }
 
   private onDownloaderClose() {

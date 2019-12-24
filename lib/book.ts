@@ -36,6 +36,15 @@ export interface ProductVariety {
 
   /** Name of variety */
   title: string;
+
+  /** List of urls to download file */
+  urls: UrlInfo[];
+}
+
+export interface UrlInfo {
+  url: string;
+  size: string;
+  ext: string;
 }
 
 export const EmptyBook : Product = {
