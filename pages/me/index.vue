@@ -5,7 +5,7 @@
     </div>
 
     <!-- List of my products -->
-    <bookshelf :books="myFilteredProducts">
+    <bookshelf :books="myProductsFiltered">
       <!-- Add downlaod button to each book. -->
       <template v-slot:cover="{ product }">
         <div class="absolute flex justify-center items-center w-full h-full opacity-0 hover:opacity-100">
@@ -45,11 +45,7 @@ import DownloadIcon from '~/assets/download.svg'
 class MeIndexPage extends Vue {
   private myProducts: Product[]
   private isDownloaderVisible: boolean = false
-  private downloaderOptions: any = [
-    { type: 'epub', url: 'dsdsd' },
-    { type: 'fb2', url: 'dsdsd' },
-    { type: 'mp3', url: 'dsdsd' }
-  ]
+  private downloaderOptions: UrlInfo[] = []
   private query: string = ''
 
   async asyncData() {
@@ -57,8 +53,11 @@ class MeIndexPage extends Vue {
     return { myProducts: data }
   }
 
-  private get myFilteredProducts(): Product[] {
-    return this.myProducts
+  private get myProductsFiltered(): Product[] {
+    return this.myProducts.filter(x =>
+      x.title.toLowerCase().includes(this.query.toLowerCase()) ||
+      x.author.toLowerCase().includes(this.query.toLowerCase())
+    )
   }
 
   private onProductClicked(product: Product) {
