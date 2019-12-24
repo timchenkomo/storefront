@@ -21,6 +21,7 @@
           v-for="(opt, idx) in props.options"
           :href="opt.url"
           :key="idx"
+          class="cursor-pointer"
         >
           <li class="hover:bg-blue-500 rounded px-4 py-1 my-1 hover:text-white">
             Скачать
