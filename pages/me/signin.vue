@@ -11,11 +11,12 @@
 <script lang="ts">
 import { Vue, Component } from 'nuxt-property-decorator'
 import axios from 'axios'
+import { SignInForm } from '@/lib/forms.ts'
 
 @Component
 class LoginPage extends Vue {
-  private async onSignInClicked({ login, password }) {
-    await axios.post('http://localhost:8000/me/signin', { login, password })
+  private async onSignInClicked(form: SignInForm) {
+    await axios.post('http://localhost:8000/me/signin', form)
   }
 }
 

@@ -52,5 +52,9 @@ export const EmptyBook : Product = {
 }
 
 export const EmptyProductVariety: ProductVariety = {
-  id: '', price: -1, type: ProductVarietyType.Digital, title: ''
+  id: '',
+  price: -1,
+  type: ProductVarietyType.Digital,
+  title: '',
+  urls: []
 }

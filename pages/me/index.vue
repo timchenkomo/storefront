@@ -36,14 +36,14 @@ import axios from 'axios'
 import Bookshelf from '~/components/Bookshelf.vue'
 import BookshelfFilter from '@/components/BookshelfFilter.vue'
 import Downloader from '@/components/Downloader.vue'
-import { Product } from '~/lib/book'
+import { Product, UrlInfo } from '~/lib/book'
 import DownloadIcon from '~/assets/download.svg'
 
 @Component({ components: {
   Bookshelf, BookshelfFilter, DownloadIcon, Downloader
 } })
 class MeIndexPage extends Vue {
-  private myProducts: Product[]
+  private myProducts: Product[] = []
   private isDownloaderVisible: boolean = false
   private downloaderOptions: UrlInfo[] = []
   private query: string = ''
