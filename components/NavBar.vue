@@ -12,9 +12,14 @@
         <nuxt-link to="/books" class="px-4">
           Библиотека
         </nuxt-link>
-        <nuxt-link to="/login" class="px-4">
+
+        <nuxt-link v-if="!isAuthenticated" to="/me/signin" class="px-4">
           Войти
         </nuxt-link>
+        <nuxt-link v-else to="/me" class="px-4">
+          Мой ББТ
+        </nuxt-link>
+
         <cart-button
           :open="isCartDropdownOpen"
           :items="myCartItems"
@@ -31,7 +36,7 @@
 import { Vue, Component, Prop } from 'vue-property-decorator'
 import { CartItem } from '../lib/cart'
 import CartButton from '~/components/CartButton.vue'
-import { cartStore } from '~/store/index'
+import { cartStore, userStore } from '~/store/index'
 
 @Component({ components: { CartButton } })
 class NavBar extends Vue {
@@ -39,6 +44,10 @@ class NavBar extends Vue {
   @Prop({ default: false }) readonly inverted!: boolean;
 
   private isCartDropdownOpen: boolean = false;
+
+  get isAuthenticated(): boolean {
+    return userStore.isAuthenticated
+  }
 
   get logoUrl(): string {
     return this.inverted
