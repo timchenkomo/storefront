@@ -1,31 +1,15 @@
-from fastapi import FastAPI, Depends
-from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
+from fastapi import FastAPI
 from starlette.middleware.cors import CORSMiddleware
-from pydantic import BaseModel, Field
-from typing import Optional
+from routes import me
+from db.models import Base
+from db.db import engine
 
 from api_forms import RegistrationForm, AuthenticationForm
 
-
-class Credentials(BaseModel):
-    login: str
-    password: str
-
-
-class User(BaseModel):
-    login: str
-    email: Optional[str] = None
-    full_name: Optional[str] = None
-    disabled: Optional[bool] = None
-
-
-class UserInDB(User):
-    hashed_password: str
-
+Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
-
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/me/token")
+app.include_router(me.router, prefix="/me", tags=["me"])
 
 origins = [
     "http://localhost",
@@ -98,10 +82,6 @@ PRODUCTS = [
 ]
 
 
-def fake_hash_password(password: str):
-    return "fakehashed" + password
-
-
 @app.get("/products")
 async def read_products():
     """Returns list of products."""
@@ -119,22 +99,6 @@ async def read_book(product_id: str):
 async def read_me_products():
     """Returns list products."""
     return PRODUCTS
-
-
-def fake_decode_token(token):
-    return User(
-        username=token + "fakedecoded", email="john@example.com", full_name="John Doe"
-    )
-
-
-async def get_current_user(token: str = Depends(oauth2_scheme)):
-    user = fake_decode_token(token)
-    return user
-
-
-@app.get("/users/me")
-async def read_users_me(current_user: User = Depends(get_current_user)):
-    return current_user
 
 
 # USERS
