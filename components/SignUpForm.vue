@@ -37,6 +37,7 @@
     <!-- Submit button -->
     <button
       @click="onSignUpClicked"
+      :class="{ 'opacity-50': !isFormValid, 'cursor-not-allowed': !isFormValid }"
       class="bg-blue-500 hover:bg-blue-700 text-white font-bold my-1 py-2 px-4 w-full rounded focus:outline-none focus:shadow-outline"
       type="button"
     >
@@ -64,12 +65,21 @@ class SignInForm extends Vue {
   private promocode: string = '';
 
   private onSignUpClicked() {
+    if (!this.isFormValid) { return }
     this.$emit('signup', {
       name: this.name,
       login: this.login,
       password: this.password,
       promocode: this.promocode
     })
+  }
+
+  private get isFormValid(): boolean {
+    if (this.name.trim().length === 0) { return false }
+    if (this.login.trim().length === 0) { return false }
+    if (!this.login.includes('@')) { return false }
+    if (this.password.length < 3) { return false }
+    return true
   }
 }
 
