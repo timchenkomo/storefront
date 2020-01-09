@@ -1,6 +1,6 @@
 import { Module, VuexModule, Action, Mutation } from 'vuex-module-decorators'
 import axios from 'axios'
-import { SignUpForm } from '@/lib/forms.ts'
+import { SignUpForm, SignInForm } from '@/lib/forms.ts'
 
 @Module({
   name: 'user',
@@ -16,7 +16,10 @@ export default class UserModule extends VuexModule {
     return data.success
   }
 
-  @Action public signin() {
+  @Action public async signIn(form: SignInForm): boolean {
+    const { data } = await axios.post('http://localhost:8000/me/signin', form)
+    this.setAuthentication(data.success)
+    return data.success
   }
 
   @Mutation private setAuthentication(value: boolean) {
