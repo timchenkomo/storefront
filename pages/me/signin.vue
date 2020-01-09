@@ -12,11 +12,17 @@
 import { Vue, Component } from 'nuxt-property-decorator'
 import axios from 'axios'
 import { SignInForm } from '@/lib/forms.ts'
+import { msgStore } from '@/store/index'
 
 @Component
 class LoginPage extends Vue {
   private async onSignInClicked(form: SignInForm) {
-    await axios.post('http://localhost:8000/me/signin', form)
+    const { data } = await axios.post('http://localhost:8000/me/signin', form)
+
+    if (data.success) {
+      msgStore.add({ msg: 'Вы вошли!' })
+      this.$router.push('/books')
+    }
   }
 }
 
