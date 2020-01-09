@@ -22,6 +22,8 @@ class LoginPage extends Vue {
     if (data.success) {
       msgStore.add({ msg: 'Вы вошли!' })
       this.$router.push('/books')
+    } else {
+      msgStore.add({ msg: 'Неверный логин/пароль' })
     }
   }
 }
