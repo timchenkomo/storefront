@@ -9,7 +9,7 @@ from sqlalchemy.orm import Session
 
 from db import db_session
 from db.models import User
-from forms.user import SignUpForm, SignInForm, UserOutForm
+from forms.user import SignUpForm, SignInForm, UserInfo
 from mappers.user import model2user
 
 # to get a string like this run:
@@ -122,9 +122,9 @@ async def user_signin(
 @router.get(
     "/",
     summary="User's data",
-    response_model=UserOutForm
+    response_model=UserInfo
 )
 async def user_get_data(
-        user: User = Depends(get_current_active_user)) -> UserOutForm:
+        user: User = Depends(get_current_active_user)) -> UserInfo:
     """Return information about authenticated user."""
     return model2user(user)

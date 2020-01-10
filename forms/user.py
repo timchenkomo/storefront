@@ -14,7 +14,7 @@ class SignInForm(BaseModel):
     password: str
 
 
-class UserOutForm(BaseModel):
+class UserInfo(BaseModel):
     name: str = Schema(
         "", title="User's name",
     )
