@@ -29,7 +29,8 @@ export default {
    */
   plugins: [
     '~/plugins/icons',
-    '~/plugins/ui-kit'
+    '~/plugins/ui-kit',
+    '~/plugins/axios'
   ],
   /*
    ** Nuxt.js dev-modules
