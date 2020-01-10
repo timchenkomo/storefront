@@ -84,7 +84,10 @@ async def get_current_active_user(
 
 # USERS
 
-@router.post("/signup")
+@router.post(
+    "/signup",
+    summary="Register a new user."
+)
 async def user_signup(
         form: SignUpForm,
         db: Session = Depends(db_session)):
@@ -99,24 +102,29 @@ async def user_signup(
     return {"success": True}
 
 
-@router.post("/signin", response_model=Token)
-async def user_signin(form_data: OAuth2PasswordRequestForm = Depends(),
-                      db: Session = Depends(db_session)):
+@router.post(
+    "/signin",
+    summary="Sign user in and returns token back.",
+    response_model=Token)
+async def user_signin(
+        form_data: OAuth2PasswordRequestForm = Depends(),
+        db: Session = Depends(db_session)):
+    """Authenticate user using specified credentials."""
     user = authenticate_user(db, form_data.username, form_data.password)
     if not user:
-        raise HTTPException(
-            status_code=400, detail="Incorrect name or password")
+        raise HTTPException(status_code=400, detail="Incorrect name or password")
     access_token_expires = timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
     access_token = create_access_token(
-        data={"login": user.name}, expires_delta=access_token_expires)
+        data={"login": user.email}, expires_delta=access_token_expires)
     return {"access_token": access_token, "token_type": "bearer"}
 
 
 @router.get(
     "/",
-    response_model=UserOutForm,
-    summary="User's data"
+    summary="User's data",
+    response_model=UserOutForm
 )
-async def read_users_me(current_user: User = Depends(get_current_active_user)):
-    """Returns information about authenticated user."""
-    return model2user(current_user)
+async def user_get_data(
+        user: User = Depends(get_current_active_user)) -> UserOutForm:
+    """Return information about authenticated user."""
+    return model2user(user)

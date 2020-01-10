@@ -17,7 +17,6 @@ class SignInForm(BaseModel):
 class UserOutForm(BaseModel):
     name: str = Schema(
         "", title="User's name",
-        min_length=3, max_length=128
     )
     email: str = ""
     disabled: bool = False
