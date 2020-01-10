@@ -2,19 +2,6 @@ from pydantic import BaseModel
 from typing import Optional, List
 
 
-# USERS
-
-class RegistrationForm(BaseModel):
-    login: str
-    password: str
-    promocode: Optional[str]
-
-
-class AuthenticationForm(BaseModel):
-    login: str
-    password: str
-
-
 # PRODUCTS
 
 class UrlInfo:

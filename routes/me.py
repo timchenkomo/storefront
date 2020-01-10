@@ -9,7 +9,7 @@ from sqlalchemy.orm import Session
 
 from db import db_session
 from db.models import User
-from forms.user import UserOut
+from forms.user import SignUpForm, SignInForm, UserOutForm
 from mappers.user import model2user
 
 # to get a string like this run:
@@ -20,6 +20,8 @@ TOKEN_SUBJECT = "access"
 ACCESS_TOKEN_EXPIRE_MINUTES = 30
 
 router = APIRouter()
+USERS = {}
+PRODUCTS = []
 
 
 class Token(BaseModel):
@@ -28,24 +30,24 @@ class Token(BaseModel):
 
 
 class TokenPayload(BaseModel):
-    username: str = None
+    login: str = None
 
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/me/token")
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/me/signin")
 
 
 def verify_password(plain_password, hashed_password):
     return pwd_context.verify(plain_password, hashed_password)
 
 
-def get_user(s: Session, username: str):
+def get_user(s: Session, login: str):
     s.expire_on_commit = False
-    return s.query(User).filter_by(name=username).first()
+    return s.query(User).filter_by(email=login).first()
 
 
-def authenticate_user(s: Session, username: str, password: str) -> User:
-    user = get_user(s, username)
+def authenticate_user(s: Session, login: str, password: str) -> User:
+    user = get_user(s, login)
     return user if user and verify_password(password, user.hashed_password) else False
 
 
@@ -66,7 +68,7 @@ async def get_current_user(
         token_data = TokenPayload(**payload)
     except PyJWTError:
         raise HTTPException(status_code=401, detail="Not authenticated")
-    user = get_user(s, username=token_data.username)
+    user = get_user(s, login=token_data.login)
     return user if user else None
 
 
@@ -80,22 +82,39 @@ async def get_current_active_user(
     return current_user
 
 
-@router.post("/token", response_model=Token)
-async def route_login_access_token(form_data: OAuth2PasswordRequestForm = Depends(),
-                                   s: Session = Depends(db_session)):
-    user = authenticate_user(s, form_data.username, form_data.password)
+# USERS
+
+@router.post("/signup")
+async def user_signup(
+        form: SignUpForm,
+        db: Session = Depends(db_session)):
+    """Register a new user."""
+    user = User()
+    user.name = form.name
+    user.email = form.login
+    user.hashed_password = pwd_context.hash(form.password)
+    user.disabled = False
+    db.add(user)
+    db.commit()
+    return {"success": True}
+
+
+@router.post("/signin", response_model=Token)
+async def user_signin(form_data: OAuth2PasswordRequestForm = Depends(),
+                      db: Session = Depends(db_session)):
+    user = authenticate_user(db, form_data.username, form_data.password)
     if not user:
         raise HTTPException(
             status_code=400, detail="Incorrect name or password")
     access_token_expires = timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
     access_token = create_access_token(
-        data={"username": user.name}, expires_delta=access_token_expires)
+        data={"login": user.name}, expires_delta=access_token_expires)
     return {"access_token": access_token, "token_type": "bearer"}
 
 
 @router.get(
     "/",
-    response_model=UserOut,
+    response_model=UserOutForm,
     summary="User's data"
 )
 async def read_users_me(current_user: User = Depends(get_current_active_user)):

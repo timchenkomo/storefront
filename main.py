@@ -4,7 +4,6 @@ from routes import me
 from db.models import Base
 from db.db import engine
 
-from api_forms import RegistrationForm, AuthenticationForm
 
 Base.metadata.create_all(bind=engine)
 
@@ -23,9 +22,6 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
-USERS = {}
-
 
 PRODUCTS = [
     {
@@ -99,18 +95,3 @@ async def read_book(product_id: str):
 async def read_me_products():
     """Returns list products."""
     return PRODUCTS
-
-
-# USERS
-
-@app.post("/me/signup")
-async def user_signup(form: RegistrationForm):
-    """Register a new user."""
-    USERS[form.login] = form
-    return {"success": True}
-
-
-@app.post("/me/signin")
-async def user_signin(form: AuthenticationForm):
-    """Authenticate an user using specified credentials."""
-    return {"success": True} if form.login in USERS else {"success": False}
