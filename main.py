@@ -1,9 +1,9 @@
 from fastapi import FastAPI
 from starlette.middleware.cors import CORSMiddleware
-from routes import me
-from db.models import Base
-from db.db import engine
 
+from db.db import engine
+from db.models import Base
+from routes import me
 
 Base.metadata.create_all(bind=engine)
 
