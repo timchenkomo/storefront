@@ -1,17 +1,15 @@
 from pydantic import BaseModel
-from typing import Optional, List
+from typing import List
 
 
-# PRODUCTS
-
-class UrlInfo:
+class UrlInfo(BaseModel):
     """Additional information to URL for specific product variety."""
     ext: str
     url: str
     size: str
 
 
-class ProductVariety:
+class ProductVariety(BaseModel):
     """Specific variety of a product."""
     vid: str
     type: str
@@ -19,7 +17,7 @@ class ProductVariety:
     urls: List[UrlInfo]
 
 
-class Product:
+class Product(BaseModel):
     """Product."""
     pid: str
     title: str
