@@ -17,9 +17,18 @@ export default class UserModule extends VuexModule {
   }
 
   @Action public async signIn(form: SignInForm): boolean {
-    const { data } = await axios.post('http://localhost:8000/me/signin', form)
-    this.setAuthentication(data.success)
-    return data.success
+    const credentials = new FormData()
+    credentials.set('username', form.login)
+    credentials.set('password', form.password)
+
+    try {
+      const { data } = await axios.post('http://localhost:8000/me/signin', credentials)
+      const isSignedIn = data.access_token !== undefined
+      this.setAuthentication(isSignedIn)
+      return isSignedIn
+    } catch (Exception) {
+      return false
+    }
   }
 
   @Mutation private setAuthentication(value: boolean) {
