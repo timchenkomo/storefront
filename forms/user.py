@@ -2,14 +2,14 @@ from typing import Optional
 from pydantic import BaseModel, Schema
 
 
-class SignUpForm(BaseModel):
+class SignUp(BaseModel):
     login: str
     password: str
     name: str
     promocode: Optional[str]
 
 
-class SignInForm(BaseModel):
+class SignIn(BaseModel):
     login: str
     password: str
 

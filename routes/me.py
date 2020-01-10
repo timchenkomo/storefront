@@ -9,7 +9,7 @@ from sqlalchemy.orm import Session
 
 from db import db_session
 from db.models import User
-from forms.user import SignUpForm, SignInForm, UserInfo
+from forms.user import SignUp, SignIn, UserInfo
 from mappers.user import model2user
 
 # to get a string like this run:
@@ -89,7 +89,7 @@ async def get_current_active_user(
     summary="Register a new user."
 )
 async def user_signup(
-        form: SignUpForm,
+        form: SignUp,
         db: Session = Depends(db_session)):
     """Register a new user."""
     user = User()
