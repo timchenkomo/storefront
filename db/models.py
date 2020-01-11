@@ -39,9 +39,9 @@ class Product(Base):
 
 
 class ProductType(Enum):
-    ebook = 1
-    audiobook = 2
-    press = 3
+    digital = 1
+    audio = 2
+    printed = 3
 
 
 class ProductVariety(Base):
