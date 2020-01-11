@@ -1,12 +1,15 @@
+from pathlib import Path
+
 from forms.products import Product, ProductVariety, UrlInfo
 
 
 def model2url(url) -> UrlInfo:
-    return UrlInfo(url=url, ext="123", size="123")
+    ext = ''.join(Path(url).suffixes)
+    return UrlInfo(url=url, ext=ext, size="")
 
 
 def model2variety(model) -> ProductVariety:
-    urls = list(map(model2url, model.urls.split(",")))
+    urls = list(map(model2url, model.urls.split(";")))
     return ProductVariety(
         id=model.id,
         type=model.type.name,
