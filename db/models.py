@@ -16,6 +16,8 @@ class User(Base):
     hashed_password = Column(String(100), nullable=False)
     disabled = Column(Boolean, nullable=False)
 
+    purchases = relationship("Purchase", back_populates="user")
+
 
 class Author(Base):
     __tablename__ = "authors"
@@ -53,3 +55,16 @@ class ProductVariety(Base):
     urls = Column(String(1024))
 
     product = relationship("Product", back_populates="varieties")
+    purchases = relationship("Purchase", back_populates="product_variety")
+
+
+class Purchase(Base):
+    __tablename__ = "purchases"
+    id = Column(Integer, primary_key=True, index=True)
+    user_id = Column(Integer, ForeignKey("users.id"), index=True)
+    product_variety_id = Column(Integer, ForeignKey("product_varieties.id"), index=True)
+    price = Column(Integer)
+    date = Column(DateTime, nullable=False)
+
+    product_variety = relationship("ProductVariety", back_populates="purchases")
+    user = relationship("User", back_populates="purchases")
