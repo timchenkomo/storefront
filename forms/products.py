@@ -20,7 +20,7 @@ class ProductVariety(BaseModel):
 
 class Product(BaseModel):
     """Product."""
-    pid: str
+    slug: str
     title: str
     author: str
     cover: str

@@ -29,6 +29,7 @@ class Product(Base):
     __tablename__ = "products"
     id = Column(Integer, primary_key=True, index=True)
     author_id = Column(Integer, ForeignKey("authors.id"), index=True)
+    slug = Column(String(32), nullable=False, index=True)
     title = Column(String(128), nullable=False)
     description = Column(UnicodeText(), nullable=False)
     cover_url = Column(String(1024), nullable=False)
