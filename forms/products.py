@@ -12,7 +12,7 @@ class UrlInfo(BaseModel):
 
 class ProductVariety(BaseModel):
     """Specific variety of a product."""
-    vid: str
+    id: str
     type: str
     price: int
     urls: List[UrlInfo]
