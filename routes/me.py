@@ -10,6 +10,8 @@ from db.models import User
 from forms.auth import Token
 from forms.user import SignUp, SignIn, UserInfo
 from mappers.user import model2user
+from mappers.products import model2productNV, model2variety
+
 
 router = APIRouter()
 
@@ -58,3 +60,20 @@ async def user_get_data(
         user: User = Depends(get_current_active_user)) -> UserInfo:
     """Return information about authenticated user."""
     return model2user(user)
+
+
+@router.get(
+    "/products"
+)
+async def user_get_products(user: User = Depends(get_current_active_user)):
+    """Returns list products."""
+    result = {}
+    for purchase in user.purchases:
+        product_variety = purchase.product_variety
+        product = product_variety.product
+
+        if product.id not in result:
+            result[product.id] = model2productNV(product)
+
+        result[product.id].varieties.append(model2variety(product_variety))
+    return list(result.values())

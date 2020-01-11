@@ -21,8 +21,3 @@ async def read_book(slug: str, db: Session = Depends(db_session)):
     """Returns specified product."""
     return model2product(db.query(Product).filter(Product.slug == slug).first())
 
-
-#@router.get("/me/products")
-#async def read_me_products():
-#    """Returns list products."""
-#    return PRODUCTS

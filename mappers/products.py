@@ -23,3 +23,13 @@ def model2product(model) -> Product:
         cover=model.cover_url,
         description=model.description,
         varieties=varieties)
+
+
+def model2productNV(model) -> Product:
+    return Product(
+        slug=model.slug,
+        title=model.title,
+        author=model.author.name,
+        cover=model.cover_url,
+        description=model.description,
+        varieties=[])
