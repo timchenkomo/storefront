@@ -1,7 +1,6 @@
 from datetime import timedelta
 
 from fastapi import APIRouter, Depends, HTTPException
-from fastapi.security import OAuth2PasswordRequestForm
 from sqlalchemy.orm import Session
 
 from auth import (ACCESS_TOKEN_EXPIRE_MINUTES, authenticate_user,
@@ -9,7 +8,7 @@ from auth import (ACCESS_TOKEN_EXPIRE_MINUTES, authenticate_user,
 from db import db_session
 from db.models import User
 from forms.auth import Token
-from forms.user import SignUp, UserInfo
+from forms.user import SignUp, SignIn, UserInfo
 from mappers.user import model2user
 
 router = APIRouter()
@@ -38,10 +37,10 @@ async def user_signup(
     summary="Sign user in and returns token back.",
     response_model=Token)
 async def user_signin(
-        form_data: OAuth2PasswordRequestForm = Depends(),
-        db: Session = Depends(db_session)):
+        credentials: SignIn = Depends(),
+        db: Session = Depends(db_session)) -> Token:
     """Authenticate user using specified credentials."""
-    user = authenticate_user(db, form_data.username, form_data.password)
+    user = authenticate_user(db, credentials.username, credentials.password)
     if not user:
         raise HTTPException(status_code=400, detail="Incorrect name or password")
     access_token_expires = timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)

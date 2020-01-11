@@ -1,6 +1,7 @@
 from typing import Optional
 
 from pydantic import BaseModel, Schema
+from fastapi.security import OAuth2PasswordRequestForm
 
 
 class SignUp(BaseModel):
@@ -10,9 +11,8 @@ class SignUp(BaseModel):
     promocode: Optional[str]
 
 
-class SignIn(BaseModel):
-    login: str
-    password: str
+class SignIn(OAuth2PasswordRequestForm):
+    pass
 
 
 class UserInfo(BaseModel):
