@@ -1,6 +1,6 @@
 export interface Product {
   /** Unique ID of group of products. */
-  id: string;
+  slug: string;
 
   /** Title of a product. */
   title: string;
@@ -48,7 +48,7 @@ export interface UrlInfo {
 }
 
 export const EmptyBook : Product = {
-  id: 'null', title: 'Empty book', author: 'No one', cover: '', description: '', varieties: []
+  slug: 'null', title: 'Empty book', author: 'No one', cover: '', description: '', varieties: []
 }
 
 export const EmptyProductVariety: ProductVariety = {

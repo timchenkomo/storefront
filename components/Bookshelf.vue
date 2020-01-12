@@ -2,11 +2,11 @@
   <div class="flex flex-row flex-wrap justify-around">
     <book-card
       v-for="book in props.books"
-      :key="book.id"
+      :key="book.slug"
       :title="book.title"
       :author="book.author"
       :cover="book.cover"
-      :url="'/book/' + book.id"
+      :url="'/book/' + book.slug"
       :class="props.productClass"
       @click="listeners.click ? listeners.click(book) : null"
       class="mx-4 w-40"

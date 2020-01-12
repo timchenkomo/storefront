@@ -41,7 +41,7 @@ class BooksIndexPage extends Vue {
   }
 
   private onProductClicked(product: Product) {
-    this.$router.push('/books/' + product.id)
+    this.$router.push('/books/' + product.slug)
   }
 }
 
