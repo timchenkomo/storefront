@@ -27,6 +27,14 @@ class Author(Base):
     products = relationship("Product", back_populates="author")
 
 
+class Series(Base):
+    __tablename__ = "series"
+    id = Column(Integer, primary_key=True, index=True)
+    title = Column(String(64), nullable=False)
+
+    varieties = relationship("ProductVariety", back_populates="series")
+
+
 class Product(Base):
     __tablename__ = "products"
     id = Column(Integer, primary_key=True, index=True)
@@ -50,10 +58,15 @@ class ProductVariety(Base):
     __tablename__ = "product_varieties"
     id = Column(Integer, primary_key=True, index=True)
     product_id = Column(Integer, ForeignKey("products.id"), index=True)
+    series_id = Column(Integer, ForeignKey("series.id"), index=True)
     type = Column(EnumColumn(ProductType))
     price = Column(Integer)
     urls = Column(String(1024))
 
+    publisher = Column(String(256))
+    year_published = Column(Integer)
+
+    series = relationship("Series", back_populates="varieties")
     product = relationship("Product", back_populates="varieties")
     purchases = relationship("Purchase", back_populates="product_variety")
 

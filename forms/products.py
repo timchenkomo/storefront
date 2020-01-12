@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Optional
 
 from pydantic import BaseModel
 
@@ -15,6 +15,9 @@ class ProductVariety(BaseModel):
     id: str
     type: str
     price: int
+    publisher: Optional[str]
+    year_published: Optional[int]
+    series: Optional[str]
     urls: List[UrlInfo]
 
 

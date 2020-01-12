@@ -14,6 +14,9 @@ def model2variety(model) -> ProductVariety:
         id=model.id,
         type=model.type.name,
         price=model.price,
+        publisher=model.publisher,
+        year_published=model.year_published,
+        series=model.series.title if model.series else None,
         urls=urls)
 
 
