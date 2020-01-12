@@ -19,7 +19,7 @@ class LoginPage extends Vue {
     const authenticated = await userStore.signIn(form)
 
     if (authenticated) {
-      msgStore.add({ msg: 'Вы вошли' })
+      msgStore.add({ msg: 'Вы вошли', color: 'green' })
       this.$router.push('/me')
     } else {
       msgStore.add({ msg: 'Неверный логин/пароль' })

@@ -1,11 +1,11 @@
 <template functional>
   <div
     :ref="data.ref"
-    :class="[data.class, data.staticClass]"
+    :class="[data.class, data.staticClass, 'bg-' + props.color + '-100', 'border-' + props.color + '-400', 'text-' + props.color + '-700']"
     :style="[data.style, data.staticStyle]"
     v-bind="data.attrs"
     v-on="listeners"
-    class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative"
+    class="border px-4 py-3 rounded relative"
     role="alert"
   >
     <strong v-if="props.header" class="font-bold">{{ props.header }}</strong>
@@ -13,7 +13,7 @@
     <span class="absolute top-0 bottom-0 right-0 px-4 py-3">
       <svg
         @click="listeners.click"
-        class="fill-current h-6 w-6 text-red-500"
+        class="fill-current h-6 w-6 opacity-75"
         role="button"
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 20 20"

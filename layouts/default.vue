@@ -9,6 +9,7 @@
           @click="onMsgClicked(idx)"
           :key="idx"
           :msg="msg.msg"
+          :color="msg.color || 'red'"
           class="my-2"
         />
         <nuxt />
