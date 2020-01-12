@@ -103,7 +103,7 @@ class BookPage extends Vue {
       title: this.product.title,
       type: this.variety.title,
       price: this.variety.price,
-      url: this.product.id
+      url: this.product.slug
     })
   }
 
