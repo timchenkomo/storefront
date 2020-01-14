@@ -20,10 +20,10 @@ class SignUpPage extends Vue {
     const registered = await userStore.signUp(form)
 
     if (registered) {
-      msgStore.add({ msg: 'Вы были успешно зарегистрированы!' })
+      msgStore.add({ msg: 'Вы были успешно зарегистрированы!', color: 'green' })
       this.$router.push('/books')
     } else {
-      msgStore.add({ msg: 'Ошибка во время регистрации' })
+      msgStore.add({ msg: 'Ошибка во время регистрации', color: 'red' })
     }
   }
 }
