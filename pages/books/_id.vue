@@ -103,7 +103,7 @@ class BookPage extends Vue {
 
   private onInCartButtonClicked() {
     cartStore.add({
-      id: this.activeVariety.id,
+      id: this.activeVarietyIdx,
       title: this.product.title,
       type: this.variety.title,
       price: this.variety.price,
