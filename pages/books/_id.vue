@@ -20,7 +20,7 @@
 
       <!-- Variety switcher -->
       <variery-switcher
-        :active="variery"
+        :active="activeVarietyIdx"
         :varieties="varieties"
         @change="onVarietyChanged"
         class="my-2 sm:my-8"
@@ -37,14 +37,14 @@
 
       <!-- Additional info -->
       <div class="text-sm font-light">
-        <div>
-          <span class="text-gray-500">Серия: </span><span class="text-gray-900">Махабхарата</span>
+        <div v-if="variety.series">
+          <span class="text-gray-500">Серия: </span><span class="text-gray-900">{{ variety.series }}</span>
         </div>
-        <div>
-          <span class="text-gray-500">Год выпуска: </span><span class="text-gray-900">2018</span>
+        <div v-if="variety.year_published">
+          <span class="text-gray-500">Год выпуска: </span><span class="text-gray-900">{{ variety.year_published }}</span>
         </div>
-        <div>
-          <span class="text-gray-500">Издательство: </span><span class="text-gray-900"> Фонд "Бхактиведанта"</span>
+        <div v-if="variety.publisher">
+          <span class="text-gray-500">Издательство: </span><span class="text-gray-900">{{ variety.publisher }}</span>
         </div>
       </div>
     </div>
@@ -58,14 +58,14 @@ import IconButton from '@/components/IconButton.vue'
 import InCartButton from '@/components/InCartButton.vue'
 import VarierySwitcher from '@/components/VarietySwitcher.vue'
 import { cartStore } from '~/store'
-import { Product, EmptyBook, ProductVariety, EmptyProductVariety } from '@/lib/book'
+import { Product, EmptyBook, ProductVariety } from '@/lib/book'
 
 @Component({
   components: { IconButton, InCartButton, VarierySwitcher }
 })
 class BookPage extends Vue {
-  private variery: string = 'digital';
-  private product: Product = EmptyBook;
+  private activeVarietyIdx: number = 0
+  private product: Product = EmptyBook
 
   async asyncData(ctx: any) {
     const { data } = await axios.get(
@@ -79,7 +79,7 @@ class BookPage extends Vue {
 
     return {
       product: data,
-      variery: data.varieties[0].id // set first variety as an active
+      activeVarietyIdx: data.varieties[0].id
     }
   }
 
@@ -93,26 +93,26 @@ class BookPage extends Vue {
     return this.product.varieties
   }
 
-  private onVarietyChanged(variety: string) {
-    this.variery = variety
+  private get variety(): ProductVariety {
+    return this.varieties.filter(v => v.id === this.activeVarietyIdx)[0]
+  }
+
+  private onVarietyChanged(varietyIdx: number) {
+    this.activeVarietyIdx = varietyIdx
   }
 
   private onInCartButtonClicked() {
     cartStore.add({
-      id: this.variery,
+      id: this.activeVariety.id,
       title: this.product.title,
-      type: this.variety.title,
-      price: this.variety.price,
+      type: this.activeVariety.title,
+      price: this.activeVariety.price,
       url: this.product.id
     })
   }
 
   private onCheckoutButtonClicked() {
     this.$router.push('/cart')
-  }
-
-  private get variety(): ProductVariety {
-    return this.product.varieties.filter(x => x.id === this.variery)[0] || EmptyProductVariety
   }
 }
 
