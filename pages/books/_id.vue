@@ -12,7 +12,7 @@
         {{ product.title }}
       </h1>
       <div class="text-sm text-gray-500">
-        Автор: <a href="#">{{ product.author }}</a>
+        Автор: <a href="#" class="underline">{{ product.author }}</a>
       </div>
       <div class="mt-2 sm:mt-4 text-sm text-gray-900 sm:leading-loose">
         {{ product.description }}

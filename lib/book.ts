@@ -39,6 +39,10 @@ export interface ProductVariety {
 
   /** List of urls to download file */
   urls: UrlInfo[];
+
+  series: string;
+  year_published: number;
+  publisher: string;
 }
 
 export interface UrlInfo {
