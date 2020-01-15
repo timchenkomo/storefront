@@ -105,9 +105,9 @@ class BookPage extends Vue {
     cartStore.add({
       id: this.activeVariety.id,
       title: this.product.title,
-      type: this.activeVariety.title,
-      price: this.activeVariety.price,
-      url: this.product.id
+      type: this.variety.title,
+      price: this.variety.price,
+      url: this.product.slug
     })
   }
 
