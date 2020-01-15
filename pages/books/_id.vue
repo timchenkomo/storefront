@@ -1,10 +1,10 @@
 <template>
   <div class="flex flex-col sm:flex-row">
     <!-- Product cover image -->
-    <div class="w-full sm:w-1/3 mr-8 mb-8">
+    <div class="w-full sm:w-1/3 mr-8 lg:mr-16 mb-8">
       <img :src="product.cover" class="rounded">
-    </div>
 
+    </div>
     <!-- Content -->
     <div class="sm:w-2/3">
       <!-- Title and author -->
