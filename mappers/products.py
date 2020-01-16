@@ -1,6 +1,6 @@
 from pathlib import Path
 
-from forms.products import Product, ProductVariety, UrlInfo
+from forms.products import Group, Product, UrlInfo
 
 
 def model2url(url) -> UrlInfo:
@@ -8,9 +8,9 @@ def model2url(url) -> UrlInfo:
     return UrlInfo(url=url, ext=ext, size="")
 
 
-def model2variety(model) -> ProductVariety:
+def model2product(model) -> Product:
     urls = list(map(model2url, model.urls.split(";")))
-    return ProductVariety(
+    return Product(
         id=model.id,
         type=model.type.name,
         price=model.price,
@@ -20,22 +20,22 @@ def model2variety(model) -> ProductVariety:
         urls=urls)
 
 
-def model2product(model) -> Product:
-    varieties = list(map(model2variety, model.varieties))
+def model2group(model) -> Group:
+    products = list(map(model2product, model.products))
+    return Group(
+        slug=model.slug,
+        title=model.title,
+        author=model.author.name,
+        cover=model.cover_url,
+        description=model.description,
+        products=products)
+
+
+def model2groupNV(model) -> Group:
     return Product(
         slug=model.slug,
         title=model.title,
         author=model.author.name,
         cover=model.cover_url,
         description=model.description,
-        varieties=varieties)
-
-
-def model2productNV(model) -> Product:
-    return Product(
-        slug=model.slug,
-        title=model.title,
-        author=model.author.name,
-        cover=model.cover_url,
-        description=model.description,
-        varieties=[])
+        products=[])
