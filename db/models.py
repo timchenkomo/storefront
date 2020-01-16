@@ -10,6 +10,8 @@ Base = declarative_base()
 
 
 class User(Base):
+    """User."""
+
     __tablename__ = "users"
     id = Column(Integer, primary_key=True, index=True)
     name = Column(String(250), nullable=False)
@@ -21,6 +23,8 @@ class User(Base):
 
 
 class Author(Base):
+    """Author of a product."""
+
     __tablename__ = "authors"
     id = Column(Integer, primary_key=True, index=True)
     name = Column(String(128), primary_key=False)
@@ -37,6 +41,8 @@ class Series(Base):
 
 
 class Group(Base):
+    """Group of a products gathered by same title but different types."""
+
     __tablename__ = "groups"
     id = Column(Integer, primary_key=True, index=True)
     author_id = Column(Integer, ForeignKey("authors.id"), index=True)
@@ -50,20 +56,24 @@ class Group(Base):
 
 
 class ProductType(Enum):
+    """Type of a product."""
+
     digital = 1
     audio = 2
     printed = 3
 
 
 class Product(Base):
+    """Specific product."""
+
     __tablename__ = "products"
     id = Column(Integer, primary_key=True, index=True)
     group_id = Column(Integer, ForeignKey("groups.id"), index=True)
     series_id = Column(Integer, ForeignKey("series.id"), index=True)
+
     type = Column(EnumColumn(ProductType))
     price = Column(Integer)
     urls = Column(String(1024))
-
     publisher = Column(String(256))
     year_published = Column(Integer)
 
