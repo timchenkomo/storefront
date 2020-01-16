@@ -4,14 +4,14 @@ from pydantic import BaseModel
 
 
 class UrlInfo(BaseModel):
-    """Additional information to URL for specific product variety."""
+    """Additional information to URL for specific product."""
     ext: str
     url: str
     size: str
 
 
-class ProductVariety(BaseModel):
-    """Specific variety of a product."""
+class Product(BaseModel):
+    """Specific product."""
     id: str
     type: str
     price: int
@@ -21,11 +21,11 @@ class ProductVariety(BaseModel):
     urls: List[UrlInfo]
 
 
-class Product(BaseModel):
-    """Product."""
+class Group(BaseModel):
+    """Products gorup."""
     slug: str
     title: str
     author: str
     cover: str
     description: str
-    varieties: List[ProductVariety]
+    products: List[Product]

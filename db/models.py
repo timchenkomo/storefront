@@ -1,14 +1,17 @@
 from enum import Enum
 
-from sqlalchemy import (Boolean, Column, DateTime, ForeignKey, Integer,
-                        String, Table, UnicodeText, Enum as EnumColumn)
-from sqlalchemy.orm import relationship
+from sqlalchemy import Boolean, Column, DateTime
+from sqlalchemy import Enum as EnumColumn
+from sqlalchemy import ForeignKey, Integer, String, UnicodeText
 from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import relationship
 
 Base = declarative_base()
 
 
 class User(Base):
+    """User."""
+
     __tablename__ = "users"
     id = Column(Integer, primary_key=True, index=True)
     name = Column(String(250), nullable=False)
@@ -20,11 +23,13 @@ class User(Base):
 
 
 class Author(Base):
+    """Author of a product."""
+
     __tablename__ = "authors"
     id = Column(Integer, primary_key=True, index=True)
     name = Column(String(128), primary_key=False)
 
-    products = relationship("Product", back_populates="author")
+    products = relationship("Group", back_populates="author")
 
 
 class Series(Base):
@@ -32,11 +37,13 @@ class Series(Base):
     id = Column(Integer, primary_key=True, index=True)
     title = Column(String(64), nullable=False)
 
-    varieties = relationship("ProductVariety", back_populates="series")
+    products = relationship("Product", back_populates="series")
 
 
-class Product(Base):
-    __tablename__ = "products"
+class Group(Base):
+    """Group of a products gathered by same title but different types."""
+
+    __tablename__ = "groups"
     id = Column(Integer, primary_key=True, index=True)
     author_id = Column(Integer, ForeignKey("authors.id"), index=True)
     slug = Column(String(32), nullable=False, index=True)
@@ -45,39 +52,43 @@ class Product(Base):
     cover_url = Column(String(1024), nullable=False)
 
     author = relationship("Author", back_populates="products")
-    varieties = relationship("ProductVariety", back_populates="product")
+    products = relationship("Product", back_populates="group")
 
 
 class ProductType(Enum):
+    """Type of a product."""
+
     digital = 1
     audio = 2
     printed = 3
 
 
-class ProductVariety(Base):
-    __tablename__ = "product_varieties"
+class Product(Base):
+    """Specific product."""
+
+    __tablename__ = "products"
     id = Column(Integer, primary_key=True, index=True)
-    product_id = Column(Integer, ForeignKey("products.id"), index=True)
+    group_id = Column(Integer, ForeignKey("groups.id"), index=True)
     series_id = Column(Integer, ForeignKey("series.id"), index=True)
+
     type = Column(EnumColumn(ProductType))
     price = Column(Integer)
     urls = Column(String(1024))
-
     publisher = Column(String(256))
     year_published = Column(Integer)
 
-    series = relationship("Series", back_populates="varieties")
-    product = relationship("Product", back_populates="varieties")
-    purchases = relationship("Purchase", back_populates="product_variety")
+    series = relationship("Series", back_populates="products")
+    group = relationship("Group", back_populates="products")
+    purchases = relationship("Purchase", back_populates="product")
 
 
 class Purchase(Base):
     __tablename__ = "purchases"
     id = Column(Integer, primary_key=True, index=True)
     user_id = Column(Integer, ForeignKey("users.id"), index=True)
-    product_variety_id = Column(Integer, ForeignKey("product_varieties.id"), index=True)
+    product_id = Column(Integer, ForeignKey("products.id"), index=True)
     price = Column(Integer)
     date = Column(DateTime, nullable=False)
 
-    product_variety = relationship("ProductVariety", back_populates="purchases")
+    product = relationship("Product", back_populates="purchases")
     user = relationship("User", back_populates="purchases")

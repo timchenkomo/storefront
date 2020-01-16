@@ -1,8 +1,9 @@
 from fastapi import APIRouter, Depends
-from db.models import Product
-from db import db_session
 from sqlalchemy.orm import Session
-from mappers.products import model2product
+
+from db import db_session
+from db.models import Group
+from mappers.products import model2group
 
 router = APIRouter()
 
@@ -11,13 +12,13 @@ router = APIRouter()
     "/",
     summary="Returns list of all products."
 )
-async def read_products(db: Session = Depends(db_session)):
+async def get_products(db: Session = Depends(db_session)):
     """Returns list of products."""
-    return list(map(model2product, db.query(Product).all()))
+    return list(map(model2group, db.query(Group).all()))
 
 
 @router.get("/{slug}")
-async def read_book(slug: str, db: Session = Depends(db_session)):
+async def get_product(slug: str, db: Session = Depends(db_session)):
     """Returns specified product."""
-    return model2product(db.query(Product).filter(Product.slug == slug).first())
-
+    return model2group(
+        db.query(Group).filter(Group.slug == slug).first())
