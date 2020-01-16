@@ -1,7 +1,8 @@
 from fastapi import APIRouter, Depends
-from db.models import Group
-from db import db_session
 from sqlalchemy.orm import Session
+
+from db import db_session
+from db.models import Group
 from mappers.products import model2group
 
 router = APIRouter()

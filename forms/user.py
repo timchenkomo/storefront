@@ -1,7 +1,7 @@
 from typing import Optional
 
-from pydantic import BaseModel, Schema
 from fastapi.security import OAuth2PasswordRequestForm
+from pydantic import BaseModel, Schema
 
 
 class SignUp(BaseModel):

@@ -8,10 +8,9 @@ from auth import (ACCESS_TOKEN_EXPIRE_MINUTES, authenticate_user,
 from db import db_session
 from db.models import User
 from forms.auth import Token
-from forms.user import SignUp, SignIn, UserInfo
+from forms.user import SignIn, SignUp, UserInfo
+from mappers.products import model2group, model2groupNV, model2product
 from mappers.user import model2user
-from mappers.products import model2groupNV, model2group, model2product
-
 
 router = APIRouter()
 
