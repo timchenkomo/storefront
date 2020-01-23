@@ -2,49 +2,71 @@
   <div class="flex flex-col sm:flex-row">
     <!-- Product cover image -->
     <div class="w-full sm:w-1/3 mr-8 lg:mr-16 mb-8">
-      <img :src="product.cover" class="rounded">
-
+      <img :src="group.cover" class="rounded">
     </div>
+
     <!-- Content -->
     <div class="sm:w-2/3">
       <!-- Title and author -->
       <h1 class="mb-1 sm:mb-3 text-5xl leading-none font-prata">
-        {{ product.title }}
+        {{ group.title }}
       </h1>
       <div class="text-sm text-gray-500">
-        Автор: <a href="#" class="underline">{{ product.author }}</a>
+        Автор: <a href="#" class="underline">{{ group.author }}</a>
       </div>
       <div class="mt-2 sm:mt-4 text-sm text-gray-900 sm:leading-loose">
-        {{ product.description }}
+        {{ group.description }}
       </div>
 
-      <!-- Variety switcher -->
-      <variery-switcher
-        :active="activeVarietyIdx"
-        :varieties="varieties"
-        @change="onVarietyChanged"
-        class="my-2 sm:my-8"
-      />
+      <!-- Product type switcher -->
+      <ul
+        v-if="hasManyProducts"
+        class="flex mt-4 mb-4"
+      >
+        <li
+          v-for="product in group.products"
+          :key="product.id"
+          class="flex-1 mr-2"
+        >
+          <a
+            :class="{'bg-gray-200 text-blue-500': product.id == productId, '': product.id != productId}"
+            @click="productId = product.id"
+            class="text-center block rounded py-2 px-4 cursor-pointer text-sm"
+          >
+            {{ productType(product.type) }}
+          </a>
+        </li>
+      </ul>
 
-      <!-- Buy button -->
-      <in-cart-button
-        @add="onInCartButtonClicked"
-        @checkout="onCheckoutButtonClicked"
-        :inCart="isInCart"
-        :price="variety.price"
-        class="w-full my-4 sm:my-8"
-      />
+      <!-- Product additional info -->
+      <div
+        v-for="product in group.products"
+        v-if="product.id == productId"
+        :key="product.id"
+      >
+        <!-- Additional components accoring to product type -->
+        <div :is="product.type + '-book'" />
 
-      <!-- Additional info -->
-      <div class="text-sm font-light">
-        <div v-if="variety.series">
-          <span class="text-gray-500">Серия: </span><span class="text-gray-900">{{ variety.series }}</span>
-        </div>
-        <div v-if="variety.year_published">
-          <span class="text-gray-500">Год выпуска: </span><span class="text-gray-900">{{ variety.year_published }}</span>
-        </div>
-        <div v-if="variety.publisher">
-          <span class="text-gray-500">Издательство: </span><span class="text-gray-900">{{ variety.publisher }}</span>
+        <!-- Buy product button -->
+        <in-cart-button
+          @add="putInCart(product)"
+          @checkout="checkout"
+          :inCart="isInCart(product.id)"
+          :price="product.price"
+          class="w-full my-4 sm:my-4"
+        />
+
+        <!-- Additional info -->
+        <div class="text-sm font-light">
+          <div v-if="product.series">
+            <span class="text-gray-500">Серия: </span><span class="text-gray-900">{{ product.series }}</span>
+          </div>
+          <div v-if="product.year_published">
+            <span class="text-gray-500">Год выпуска: </span><span class="text-gray-900">{{ product.year_published }}</span>
+          </div>
+          <div v-if="product.publisher">
+            <span class="text-gray-500">Издательство: </span><span class="text-gray-900">{{ product.publisher }}</span>
+          </div>
         </div>
       </div>
     </div>
@@ -60,59 +82,70 @@ import VarierySwitcher from '@/components/VarietySwitcher.vue'
 import { cartStore } from '~/store'
 import { Product, EmptyBook, ProductVariety } from '@/lib/book'
 
+import DigitalBook from '@/components/product/DigitalBook.vue'
+import AudioBook from '@/components/product/AudioBook.vue'
+import PrintedBook from '@/components/product/PrintedBook.vue'
+
 @Component({
-  components: { IconButton, InCartButton, VarierySwitcher }
+  components: {
+    IconButton,
+    InCartButton,
+    VarierySwitcher,
+    DigitalBook,
+    AudioBook,
+    PrintedBook
+  }
 })
 class BookPage extends Vue {
-  private activeVarietyIdx: number = 0
-  private product: Product = EmptyBook
+  private productId: number = 0
+  private group: Product = EmptyBook
 
   async asyncData(ctx: any) {
-    const { data } = await axios.get(
-      'http://localhost:8000/products/' + ctx.params.id
-    )
+    const { data } = await axios.get('/products/' + ctx.params.id)
 
-    if (!data.varieties) {
+    if (!data.products) {
       // It is an error to get product without varieties
-      throw new Error('There are no varieties for the specified product.')
+      throw new Error('There are no products for the specified group.')
     }
 
     return {
-      product: data,
-      activeVarietyIdx: data.varieties[0].id
+      group: data,
+      productId: data.products[0].id
     }
   }
 
-  private get isInCart(): boolean {
-    return cartStore.items
-      .map(x => x.id)
-      .includes(this.variety.id)
+  /** Are there many products in the group? **/
+  private get hasManyProducts(): boolean {
+    return this.group.products.length > 1
   }
 
-  private get varieties() {
-    return this.product.varieties
-  }
-
-  private get variety(): ProductVariety {
-    return this.varieties.filter(v => v.id === this.activeVarietyIdx)[0]
-  }
-
-  private onVarietyChanged(varietyIdx: number) {
-    this.activeVarietyIdx = varietyIdx
-  }
-
-  private onInCartButtonClicked() {
+  /** Put specified product into the cart **/
+  private putInCart(product: ProductVariety) {
     cartStore.add({
-      id: this.activeVarietyIdx,
-      title: this.product.title,
-      type: this.variety.title,
-      price: this.variety.price,
-      url: this.product.slug
+      id: product.id,
+      title: this.group.title,
+      type: this.productType(product.type),
+      price: product.price,
+      url: this.group.slug
     })
   }
 
-  private onCheckoutButtonClicked() {
+  /** Go to the checkout page **/
+  private checkout() {
     this.$router.push('/cart')
+  }
+
+  /** Is the specified product was added to the cart? **/
+  private isInCart(id: number): boolean {
+    return cartStore.items
+      .map(x => x.id)
+      .includes(id)
+  }
+
+  private productType(type: string): string {
+    if (type === 'digital') { return 'Эл. книга' }
+    if (type === 'audio') { return 'Аудиокнига' }
+    if (type === 'printed') { return 'Печатная' }
   }
 }
 

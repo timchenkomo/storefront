@@ -15,7 +15,7 @@ export interface Product {
   description: string;
 
   /** List of a product varieties. */
-  varieties: ProductVariety[]
+  products: ProductVariety[]
 }
 
 export enum ProductVarietyType {
@@ -52,7 +52,7 @@ export interface UrlInfo {
 }
 
 export const EmptyBook : Product = {
-  slug: 'null', title: 'Empty book', author: 'No one', cover: '', description: '', varieties: []
+  slug: 'null', title: 'Empty book', author: 'No one', cover: '', description: '', products: []
 }
 
 export const EmptyProductVariety: ProductVariety = {
