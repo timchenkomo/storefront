@@ -28,6 +28,16 @@ import { Message } from '@/lib/msg'
   components: { NavBar }
 })
 class DefaultLayout extends Vue {
+  private msgCleanInterval
+
+  private created() {
+    this.msgCleanInterval = setInterval(() => msgStore.clean(), 1000)
+  }
+
+  private destroyed() {
+    clearInterval(this.msgCleanInterval)
+  }
+
   get messages(): Message[] {
     return msgStore.messages
   }

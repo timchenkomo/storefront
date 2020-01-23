@@ -11,12 +11,13 @@ export default class MsgModule extends VuexModule {
 
   @Mutation
   public add(msg: Message) {
+    msg.time = Date.now() + 3000
     this.messages.push(msg)
   }
 
   @Mutation
   public remove(msg: Message) {
-    this.messages.remove(msg)
+    this.messages = this.messages.filter(x => x.msg !== msg.msg)
   }
 
   @Mutation
@@ -24,5 +25,10 @@ export default class MsgModule extends VuexModule {
     if (idx > -1) {
       this.messages.splice(idx, 1)
     }
+  }
+
+  @Mutation
+  public clean() {
+    this.messages = this.messages.filter(x => x.time > Date.now())
   }
 }
