@@ -29,8 +29,7 @@ export default {
    */
   plugins: [
     '~/plugins/icons',
-    '~/plugins/ui-kit',
-    '~/plugins/axios'
+    '~/plugins/ui-kit'
   ],
   /*
    ** Nuxt.js dev-modules
@@ -54,7 +53,11 @@ export default {
    ** Axios module configuration
    ** See https://axios.nuxtjs.org/options
    */
-  axios: {},
+  axios: {
+    credentials: true,
+    baseURL: 'http://localhost:8000/',
+    browserBaseURL: 'http://localhost:8000/'
+  },
   /*
    ** Build configuration
    */

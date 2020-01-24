@@ -32,7 +32,6 @@
 
 <script lang="ts">
 import { Vue, Component } from 'nuxt-property-decorator'
-import axios from 'axios'
 import Bookshelf from '~/components/Bookshelf.vue'
 import BookshelfFilter from '@/components/BookshelfFilter.vue'
 import Downloader from '@/components/Downloader.vue'
@@ -48,8 +47,8 @@ class MeIndexPage extends Vue {
   private downloaderOptions: UrlInfo[] = []
   private query: string = ''
 
-  async asyncData() {
-    const { data } = await axios.get('http://localhost:8000/me/products')
+  async asyncData({ $axios }) {
+    const { data } = await $axios.get('/me/products')
     return { myProducts: data }
   }
 

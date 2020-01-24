@@ -75,7 +75,6 @@
 
 <script lang="ts">
 import { Vue, Component } from 'nuxt-property-decorator'
-import axios from 'axios'
 import IconButton from '@/components/IconButton.vue'
 import InCartButton from '@/components/InCartButton.vue'
 import VarierySwitcher from '@/components/VarietySwitcher.vue'
@@ -101,7 +100,7 @@ class BookPage extends Vue {
   private group: Product = EmptyBook
 
   async asyncData(ctx: any) {
-    const { data } = await axios.get('/products/' + ctx.params.id)
+    const { data } = await ctx.$axios.get('/products/' + ctx.params.id)
 
     if (!data.products) {
       // It is an error to get product without varieties

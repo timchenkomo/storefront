@@ -14,7 +14,6 @@
 
 <script lang="ts">
 import { Vue, Component } from 'nuxt-property-decorator'
-import axios from 'axios'
 import { Product } from '@/lib/book'
 
 import Bookshelf from '@/components/Bookshelf.vue'
@@ -27,8 +26,8 @@ class BooksIndexPage extends Vue {
   private query: string = '';
   private allBooks: Product[] = [];
 
-  async asyncData() {
-    const { data } = await axios.get('/products')
+  async asyncData({ $axios }) {
+    const { data } = await $axios.get('/products')
     return { allBooks: data }
   }
 

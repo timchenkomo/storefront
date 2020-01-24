@@ -28,7 +28,6 @@
 
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator'
-import axios from 'axios'
 import { Product } from '~/lib/book'
 import Bookshelf from '~/components/Bookshelf.vue'
 import NavBar from '~/components/NavBar.vue'
@@ -37,8 +36,8 @@ import NavBar from '~/components/NavBar.vue'
 class IndexPage extends Vue {
   private books: Product[] = [];
 
-  async asyncData() {
-    const { data } = await axios.get('http://localhost:8000/products')
+  async asyncData({ $axios }) {
+    const { data } = await $axios.get('/products')
     return { books: data }
   }
 }
