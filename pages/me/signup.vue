@@ -10,16 +10,14 @@
 
 <script lang="ts">
 import { Vue, Component } from 'nuxt-property-decorator'
-
-import { msgStore, userStore } from '@/store/index'
+import { msgStore } from '@/store/index'
 import { SignUpForm } from '@/lib/forms.ts'
 
 @Component
 class SignUpPage extends Vue {
   private async onSignUpClicked(form: SignUpForm) {
-    const registered = await userStore.signUp(form)
-
-    if (registered) {
+    const { data } = await this.$axios.post('/me/signup', form)
+    if (data.success) {
       msgStore.add({ msg: 'Вы были успешно зарегистрированы!', color: 'green' })
       this.$router.push('/books')
     } else {
