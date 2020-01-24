@@ -11,21 +11,27 @@
 <script lang="ts">
 import { Vue, Component } from 'nuxt-property-decorator'
 import { SignInForm } from '@/lib/forms.ts'
-import { msgStore, userStore } from '@/store/index'
+import { msgStore } from '@/store/index'
 
 @Component
-class LoginPage extends Vue {
+class SignInPage extends Vue {
   private async onSignInClicked(form: SignInForm) {
-    const authenticated = await userStore.signIn(form)
+    const credentials = new FormData()
+    credentials.set('username', form.login)
+    credentials.set('password', form.password)
 
-    if (authenticated) {
-      msgStore.add({ msg: 'Вы вошли', color: 'green' })
-      this.$router.push('/me')
-    } else {
+    try {
+      await this.$auth.loginWith('local', { data: credentials })
+
+      if (this.$auth.loggedIn) {
+        msgStore.add({ msg: 'Вы вошли', color: 'green' })
+        this.$router.push('/me')
+      }
+    } catch {
       msgStore.add({ msg: 'Неверный логин/пароль' })
     }
   }
 }
 
-export default LoginPage
+export default SignInPage
 </script>

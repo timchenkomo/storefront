@@ -46,6 +46,7 @@ export default {
     '@nuxtjs/tailwindcss',
     // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/axios',
+    '@nuxtjs/auth',
     'nuxt-webfontloader',
     'nuxt-svg-loader'
   ],
@@ -67,7 +68,26 @@ export default {
      */
     // extend(config, ctx) {}
   },
-
+  auth: {
+    strategies: {
+      local: {
+        endpoints: {
+          login: { url: '/me/signin', method: 'post', propertyName: 'access_token' },
+          logout: { url: '/me/signout', method: 'post' },
+          user: { url: '/me', method: 'get' }
+        }
+      }
+    },
+    redirect: {
+      login: '/me/signin',
+      logout: '/',
+      home: '/',
+      callback: '/login'
+    }
+  },
+  router: {
+    middleware: ['auth']
+  },
   webfontloader: {
     google: {
       families: ['Montserrat', 'Prata']

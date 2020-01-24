@@ -54,7 +54,7 @@
 import { Vue, Component, Prop } from 'vue-property-decorator'
 import { CartItem } from '../lib/cart'
 import CartButton from '~/components/CartButton.vue'
-import { cartStore, userStore } from '~/store/index'
+import { cartStore } from '~/store/index'
 
 @Component({ components: { CartButton } })
 class NavBar extends Vue {
@@ -65,7 +65,7 @@ class NavBar extends Vue {
   private isCartDropdownOpen: boolean = false;
 
   get isAuthenticated(): boolean {
-    return userStore.isAuthenticated
+    return this.$auth.loggedIn
   }
 
   get logoUrl(): string {
