@@ -83,9 +83,6 @@ export default {
       callback: '/login'
     }
   },
-  router: {
-    middleware: ['auth']
-  },
   webfontloader: {
     google: {
       families: ['Montserrat', 'Prata']

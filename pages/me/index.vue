@@ -38,9 +38,12 @@ import Downloader from '@/components/Downloader.vue'
 import { Product, UrlInfo } from '~/lib/book'
 import DownloadIcon from '~/assets/download.svg'
 
-@Component({ components: {
-  Bookshelf, BookshelfFilter, DownloadIcon, Downloader
-} })
+@Component({
+  middleware: ['auth'],
+  components: {
+    Bookshelf, BookshelfFilter, DownloadIcon, Downloader
+  }
+})
 class MeIndexPage extends Vue {
   private myProducts: Product[] = []
   private isDownloaderVisible: boolean = false
