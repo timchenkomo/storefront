@@ -22,7 +22,7 @@ class InCartButton extends Vue {
   private get text(): string {
     return this.inCart
       ? 'Оформить заказ'
-      : 'В корзину ' + this.price + '  р.'
+      : 'В корзину ' + this.price + ' р.'
   }
 
   private onClicked() {

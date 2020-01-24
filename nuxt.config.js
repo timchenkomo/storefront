@@ -42,11 +42,9 @@ export default {
    ** Nuxt.js modules
    */
   modules: [
-    // Doc: https://github.com/nuxt-community/nuxt-tailwindcss
-    '@nuxtjs/tailwindcss',
-    // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/axios',
     '@nuxtjs/auth',
+    '@nuxtjs/tailwindcss',
     'nuxt-webfontloader',
     'nuxt-svg-loader'
   ],
