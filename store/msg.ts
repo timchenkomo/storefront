@@ -29,6 +29,7 @@ export default class MsgModule extends VuexModule {
 
   @Mutation
   public clean() {
-    this.messages = this.messages.filter(x => x.time > Date.now())
+    this.messages = this.messages
+      .filter(x => x.time ? x.time > Date.now() : true)
   }
 }
