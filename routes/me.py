@@ -1,5 +1,5 @@
-from typing import Dict
 from datetime import timedelta
+from typing import Dict
 
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
@@ -9,8 +9,8 @@ from auth import (ACCESS_TOKEN_EXPIRE_MINUTES, authenticate_user,
 from db import db_session
 from db.models import User
 from forms.auth import Token
-from forms.user import SignIn, SignUp, UserInfo
 from forms.products import Group
+from forms.user import SignIn, SignUp, UserInfo
 from mappers.products import model2groupNV, model2product
 from mappers.user import model2user
 
