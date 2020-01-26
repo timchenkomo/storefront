@@ -79,7 +79,7 @@ import IconButton from '@/components/IconButton.vue'
 import InCartButton from '@/components/InCartButton.vue'
 import VarierySwitcher from '@/components/VarietySwitcher.vue'
 import { cartStore } from '~/store'
-import { Product, EmptyBook, ProductVariety } from '@/lib/book'
+import { Group, EmptyGroup, Product } from '@/lib/book'
 
 import DigitalBook from '@/components/product/DigitalBook.vue'
 import AudioBook from '@/components/product/AudioBook.vue'
@@ -97,7 +97,7 @@ import PrintedBook from '@/components/product/PrintedBook.vue'
 })
 class BookPage extends Vue {
   private productId: number = 0
-  private group: Product = EmptyBook
+  private group: Group = EmptyGroup
 
   async asyncData(ctx: any) {
     const { data } = await ctx.$axios.get('/products/' + ctx.params.id)
@@ -119,7 +119,7 @@ class BookPage extends Vue {
   }
 
   /** Put specified product into the cart **/
-  private putInCart(product: ProductVariety) {
+  private putInCart(product: Product) {
     cartStore.add({
       id: product.id,
       title: this.group.title,

@@ -14,7 +14,7 @@
 
 <script lang="ts">
 import { Vue, Component } from 'nuxt-property-decorator'
-import { Product } from '@/lib/book'
+import { Group } from '@/lib/book'
 
 import Bookshelf from '@/components/Bookshelf.vue'
 import BookshelfFilter from '@/components/BookshelfFilter.vue'
@@ -24,14 +24,14 @@ import BookshelfFilter from '@/components/BookshelfFilter.vue'
 })
 class BooksIndexPage extends Vue {
   private query: string = '';
-  private allBooks: Product[] = [];
+  private allBooks: Group[] = [];
 
   async asyncData({ $axios }) {
     const { data } = await $axios.get('/products')
     return { allBooks: data }
   }
 
-  get books(): Product[] {
+  get books(): Group[] {
     return this.allBooks.filter(
       x =>
         x.title.toLowerCase().includes(this.query.toLowerCase()) ||
@@ -39,7 +39,7 @@ class BooksIndexPage extends Vue {
     )
   }
 
-  private onProductClicked(product: Product) {
+  private onProductClicked(product: Group) {
     this.$router.push('/books/' + product.slug)
   }
 }

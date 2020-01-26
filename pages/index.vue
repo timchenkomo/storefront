@@ -28,13 +28,13 @@
 
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator'
-import { Product } from '~/lib/book'
+import { Group } from '~/lib/book'
 import Bookshelf from '~/components/Bookshelf.vue'
 import NavBar from '~/components/NavBar.vue'
 
 @Component({ layout: 'plain', components: { NavBar, Bookshelf } })
 class IndexPage extends Vue {
-  private books: Product[] = [];
+  private books: Group[] = [];
 
   async asyncData({ $axios }) {
     const { data } = await $axios.get('/products')

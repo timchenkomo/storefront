@@ -37,7 +37,7 @@ import BookshelfFilter from '@/components/BookshelfFilter.vue'
 import Downloader from '@/components/Downloader.vue'
 import DownloadIcon from '~/assets/download.svg'
 
-import { Product, UrlInfo } from '~/lib/book'
+import { Group, UrlInfo } from '~/lib/book'
 import { msgStore } from '@/store/index'
 
 @Component({
@@ -47,7 +47,7 @@ import { msgStore } from '@/store/index'
   }
 })
 class MeIndexPage extends Vue {
-  private myProducts: Product[] = []
+  private myProducts: Group[] = []
   private isDownloaderVisible: boolean = false
   private downloaderOptions: UrlInfo[] = []
   private query: string = ''
@@ -62,16 +62,16 @@ class MeIndexPage extends Vue {
     }
   }
 
-  private get myProductsFiltered(): Product[] {
+  private get myProductsFiltered(): Group[] {
     return this.myProducts.filter(x =>
       x.title.toLowerCase().includes(this.query.toLowerCase()) ||
       x.author.toLowerCase().includes(this.query.toLowerCase())
     )
   }
 
-  private onProductClicked(product: Product) {
+  private onProductClicked(group: Group) {
     this.isDownloaderVisible = true
-    this.downloaderOptions = product.varieties
+    this.downloaderOptions = group.products
       .filter(x => x.urls !== undefined)
       .map(x => x.urls).flat()
   }

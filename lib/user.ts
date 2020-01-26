@@ -1,8 +1,8 @@
-import { Product } from '@/lib/book.ts'
+import { Group } from '@/lib/book.ts'
 
 
 export interface UserInfoData {
   name: string
   email: string
-  products: Product[]
+  products: Group[]
 }

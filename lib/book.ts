@@ -1,4 +1,4 @@
-export interface Product {
+export interface Group {
   /** Unique ID of group of products. */
   slug: string;
 
@@ -15,21 +15,21 @@ export interface Product {
   description: string;
 
   /** List of a product varieties. */
-  products: ProductVariety[]
+  products: Product[]
 }
 
-export enum ProductVarietyType {
+export enum ProductType {
   Digital = 'digital',
   Audio = 'audio',
   Printed = 'printed'
 }
 
-export interface ProductVariety {
+export interface Product {
   /** Unique product ID. */
   id: string;
 
   /** Type of a product variety. */
-  type: ProductVarietyType;
+  type: ProductType;
 
   /** Price of a product */
   price: number;
@@ -51,14 +51,17 @@ export interface UrlInfo {
   ext: string;
 }
 
-export const EmptyBook : Product = {
+export const EmptyGroup: Group = {
   slug: 'null', title: 'Empty book', author: 'No one', cover: '', description: '', products: []
 }
 
-export const EmptyProductVariety: ProductVariety = {
+export const EmptyProduct: Product = {
   id: '',
   price: -1,
-  type: ProductVarietyType.Digital,
+  type: ProductType.Digital,
   title: '',
-  urls: []
+  urls: [],
+  series: '',
+  year_published: 0,
+  publisher: ''
 }
