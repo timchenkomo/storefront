@@ -145,6 +145,7 @@ class BookPage extends Vue {
     if (type === 'digital') { return 'Эл. книга' }
     if (type === 'audio') { return 'Аудиокнига' }
     if (type === 'printed') { return 'Печатная' }
+    return 'Книга'
   }
 }
 
