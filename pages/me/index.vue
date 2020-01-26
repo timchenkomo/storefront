@@ -35,8 +35,10 @@ import { Vue, Component } from 'nuxt-property-decorator'
 import Bookshelf from '~/components/Bookshelf.vue'
 import BookshelfFilter from '@/components/BookshelfFilter.vue'
 import Downloader from '@/components/Downloader.vue'
-import { Product, UrlInfo } from '~/lib/book'
 import DownloadIcon from '~/assets/download.svg'
+
+import { Product, UrlInfo } from '~/lib/book'
+import { msgStore } from '@/store/index'
 
 @Component({
   middleware: ['auth'],
@@ -50,9 +52,14 @@ class MeIndexPage extends Vue {
   private downloaderOptions: UrlInfo[] = []
   private query: string = ''
 
-  async asyncData({ $axios }) {
-    const { data } = await $axios.get('/me/products')
-    return { myProducts: data }
+  async asyncData({ $axios, redirect }) {
+    try {
+      const { data } = await $axios.get('/me/products')
+      return { myProducts: data }
+    } catch (ex) {
+      msgStore.add({ msg: 'Необходима авторизация', color: 'red' })
+      redirect('/me/signin')
+    }
   }
 
   private get myProductsFiltered(): Product[] {
