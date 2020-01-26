@@ -79,8 +79,8 @@ export default {
     redirect: {
       login: '/me/signin',
       logout: '/',
-      home: '/',
-      callback: '/login'
+      home: '/me',
+      callback: '/me'
     }
   },
   webfontloader: {

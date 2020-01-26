@@ -25,7 +25,6 @@ class SignInPage extends Vue {
 
       if (this.$auth.loggedIn) {
         msgStore.add({ msg: 'Вы вошли', color: 'green' })
-        this.$router.push('/me')
       }
     } catch {
       msgStore.add({ msg: 'Неверный логин/пароль' })
