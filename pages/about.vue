@@ -4,7 +4,7 @@
       class="logo-background w-full object-cover mb-8 h-64 flex justify-center align-middle items-center"
     >
       <img
-        src="http://bbt-online.ru/wp-content/themes/bbt/img/about_logo.png"
+        src="~assets/pages/about/logo.png"
       >
     </div>
 
@@ -23,7 +23,7 @@
       </p>
 
       <div class="flex justify-center my-10">
-        <img src="http://bbt-online.ru/wp-content/themes/bbt/img/about_2.png">
+        <img src="~assets/pages/about/about_2.png">
       </div>
 
       <div>
@@ -65,7 +65,7 @@
     </div>
 
     <img
-      src="http://bbt-online.ru/wp-content/uploads/about_3.jpg"
+      src="~assets/pages/about/about_3.jpg"
       class="w-full my-16"
     >
 
@@ -185,7 +185,7 @@ export default AboutPage
 
 <style scoped>
 .logo-background {
-  background-image: url(http://bbt-online.ru/wp-content/uploads/about_1.jpg);
+  background-image: url("~assets/pages/about/about_1.jpg");
   height: 32em;
 }
 </style>

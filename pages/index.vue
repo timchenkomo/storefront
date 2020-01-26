@@ -47,7 +47,7 @@ export default IndexPage
 
 <style scoped>
 .logo-background {
-  background-image: url(http://bbt-online.ru/wp-content/themes/bbt/img/main-bg.png);
+  background-image: url(~assets/pages/index/bg.png);
   height: 32em;
 }
 </style>

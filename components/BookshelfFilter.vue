@@ -5,10 +5,7 @@
     class="p-2 border border-solid rounded flex items-center justify-center"
   >
     <!-- Search icon -->
-    <img
-      class="h-4 mx-2"
-      src="http://bbt-online.ru/wp-content/themes/bbt/img/vector/search.svg"
-    >
+    <search-icon class="h-4 mx-2" />
 
     <!-- Placeholder -->
     <span

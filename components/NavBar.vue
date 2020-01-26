@@ -5,14 +5,17 @@
   >
     <div class="flex items-center justify-between px-4 py-3 sm:p-0">
       <nuxt-link to="/">
-        <img :src="logoUrl">
+        <logo
+          :class="{'text-white': inverted}"
+          class="fill-current"
+        />
       </nuxt-link>
 
       <div class="sm:hidden">
         <button @click="isOpen = !isOpen" type="button" class="block focus:outline-none">
           <svg class="h-6 w-6 fill-current" viewBox="0 0 24 24">
-            <path v-if="isOpen" fill-rule="evenodd" d="M18.278 16.864a1 1 0 0 1-1.414 1.414l-4.829-4.828-4.828 4.828a1 1 0 0 1-1.414-1.414l4.828-4.829-4.828-4.828a1 1 0 0 1 1.414-1.414l4.829 4.828 4.828-4.828a1 1 0 1 1 1.414 1.414l-4.828 4.829 4.828 4.828z"/>
-            <path v-if="!isOpen" fill-rule="evenodd" d="M4 5h16a1 1 0 0 1 0 2H4a1 1 0 1 1 0-2zm0 6h16a1 1 0 0 1 0 2H4a1 1 0 0 1 0-2zm0 6h16a1 1 0 0 1 0 2H4a1 1 0 0 1 0-2z"/>
+            <path v-if="isOpen" fill-rule="evenodd" d="M18.278 16.864a1 1 0 0 1-1.414 1.414l-4.829-4.828-4.828 4.828a1 1 0 0 1-1.414-1.414l4.828-4.829-4.828-4.828a1 1 0 0 1 1.414-1.414l4.829 4.828 4.828-4.828a1 1 0 1 1 1.414 1.414l-4.828 4.829 4.828 4.828z" />
+            <path v-if="!isOpen" fill-rule="evenodd" d="M4 5h16a1 1 0 0 1 0 2H4a1 1 0 1 1 0-2zm0 6h16a1 1 0 0 1 0 2H4a1 1 0 0 1 0-2zm0 6h16a1 1 0 0 1 0 2H4a1 1 0 0 1 0-2z" />
           </svg>
         </button>
       </div>
@@ -55,8 +58,9 @@ import { Vue, Component, Prop } from 'vue-property-decorator'
 import { CartItem } from '../lib/cart'
 import CartButton from '~/components/CartButton.vue'
 import { cartStore } from '~/store/index'
+import Logo from '~/assets/logo.svg'
 
-@Component({ components: { CartButton } })
+@Component({ components: { CartButton, Logo } })
 class NavBar extends Vue {
   private isOpen: boolean = false;
   @Prop({ default: true }) readonly borders!: boolean;
@@ -66,12 +70,6 @@ class NavBar extends Vue {
 
   get isAuthenticated(): boolean {
     return this.$auth.loggedIn
-  }
-
-  get logoUrl(): string {
-    return this.inverted
-      ? 'http://bbt-online.ru/wp-content/themes/bbt/img/main-page-logo.svg'
-      : 'http://bbt-online.ru/wp-content/uploads/logo.svg'
   }
 
   get myCartItems(): CartItem[] {
