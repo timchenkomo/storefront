@@ -75,9 +75,7 @@
 
 <script lang="ts">
 import { Vue, Component } from 'nuxt-property-decorator'
-import IconButton from '@/components/IconButton.vue'
 import InCartButton from '@/components/InCartButton.vue'
-import VarierySwitcher from '@/components/VarietySwitcher.vue'
 import { cartStore } from '~/store'
 import { Group, EmptyGroup, Product } from '@/lib/book'
 
@@ -87,9 +85,7 @@ import PrintedBook from '@/components/product/PrintedBook.vue'
 
 @Component({
   components: {
-    IconButton,
     InCartButton,
-    VarierySwitcher,
     DigitalBook,
     AudioBook,
     PrintedBook
