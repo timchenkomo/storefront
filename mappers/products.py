@@ -32,7 +32,7 @@ def model2group(model) -> Group:
 
 
 def model2groupNV(model) -> Group:
-    return Product(
+    return Group(
         slug=model.slug,
         title=model.title,
         author=model.author.name,
