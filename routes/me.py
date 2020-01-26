@@ -1,3 +1,4 @@
+from typing import Dict
 from datetime import timedelta
 
 from fastapi import APIRouter, Depends, HTTPException
@@ -9,7 +10,8 @@ from db import db_session
 from db.models import User
 from forms.auth import Token
 from forms.user import SignIn, SignUp, UserInfo
-from mappers.products import model2group, model2groupNV, model2product
+from forms.products import Group
+from mappers.products import model2groupNV, model2product
 from mappers.user import model2user
 
 router = APIRouter()
@@ -47,7 +49,7 @@ async def user_signin(
     access_token_expires = timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
     access_token = create_access_token(
         data={"login": user.email}, expires_delta=access_token_expires)
-    return {"access_token": access_token, "token_type": "bearer"}
+    return Token(access_token=access_token, token_type="bearer")
 
 
 @router.get(
@@ -66,8 +68,8 @@ async def user_get_data(
 )
 async def user_get_products(user: User = Depends(get_current_active_user)):
     """Returns list products."""
-    result = {}
-    for purchase in user.purchases:
+    result: Dict[int, Group] = {}
+    for purchase in user.purchases:  # type: ignore
         product = purchase.product
         product_group = product.group
 

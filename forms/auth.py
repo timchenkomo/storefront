@@ -8,4 +8,4 @@ class Token(BaseModel):
 
 
 class TokenPayload(BaseModel):
-    login: str = None
+    login: str = ""

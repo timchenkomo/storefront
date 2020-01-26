@@ -4,7 +4,7 @@ from datetime import datetime, timedelta
 from fastapi import APIRouter, Depends, HTTPException, Security
 from fastapi.security import OAuth2PasswordBearer
 from jwt import PyJWTError, decode, encode
-from passlib.context import CryptContext
+from passlib.context import CryptContext  # type: ignore
 from sqlalchemy.orm import Session
 
 from db import db_session
@@ -19,8 +19,6 @@ TOKEN_SUBJECT = "access"
 ACCESS_TOKEN_EXPIRE_MINUTES = 30
 
 router = APIRouter()
-USERS = {}
-PRODUCTS = []
 
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
@@ -41,7 +39,7 @@ def authenticate_user(s: Session, login: str, password: str) -> User:
     return user if user and verify_password(password, user.hashed_password) else False
 
 
-def create_access_token(*, data: dict, expires_delta: timedelta = None) -> str:
+def create_access_token(*, data: dict, expires_delta: timedelta = None) -> bytes:
     to_encode = data.copy()
     expire = datetime.utcnow() + expires_delta if expires_delta else timedelta(minutes=15)
     to_encode.update({"exp": expire, "sub": TOKEN_SUBJECT})
