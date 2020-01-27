@@ -1,5 +1,6 @@
 
 from datetime import datetime, timedelta
+from typing import Optional
 
 from fastapi import Depends, HTTPException, Security
 from fastapi.security import OAuth2PasswordBearer
@@ -32,10 +33,10 @@ def get_user(session: Session, login: str) -> User:
     return session.query(User).filter_by(email=login).first()
 
 
-def authenticate_user(session: Session, login: str, password: str) -> User:
+def authenticate_user(session: Session, login: str, password: str) -> Optional[User]:
     """Returns User if the login and password are correct."""
     user = get_user(session, login)
-    return user if user and verify_password(password, user.hashed_password) else False
+    return user if user and verify_password(password, user.hashed_password) else None
 
 
 def create_access_token(*, data: dict, expires_delta: timedelta = None) -> bytes:
@@ -49,15 +50,14 @@ def create_access_token(*, data: dict, expires_delta: timedelta = None) -> bytes
 
 async def get_current_user(
         token: str = Security(OAUTH2_SCHEME),
-        session: Session = Depends(db_session)) -> User:
+        session: Session = Depends(db_session)) -> Optional[User]:
     """Returns current user."""
     try:
         payload = decode(token, SECRET_KEY, algorithms=[ALGORITHM])
         token_data = TokenPayload(**payload)
     except PyJWTError:
         raise HTTPException(status_code=401, detail="Not authenticated")
-    user = get_user(session, login=token_data.login)
-    return user if user else None
+    return get_user(session, login=token_data.login)
 
 
 async def get_current_active_user(

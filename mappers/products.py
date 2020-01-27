@@ -12,10 +12,11 @@ def model2url(url: str) -> UrlInfo:
 
 def model2product(model: models.Product) -> Product:
     """Creates API form for Product model."""
-    urls = list(map(model2url, model.urls.split(";")))
+    urls_def = model.urls or ""
+    urls = list(map(model2url, urls_def.split(";")))
     return Product(
         id=model.id,
-        type=model.type.name,
+        type=model.type.name,  # type: ignore
         price=model.price,
         publisher=model.publisher,
         year_published=model.year_published,
@@ -25,7 +26,7 @@ def model2product(model: models.Product) -> Product:
 
 def model2group(model: models.Group) -> Group:
     """Creates API form for Group model."""
-    products = list(map(model2product, model.products))
+    products = list(map(model2product, model.products))  # type: ignore
     return Group(
         slug=model.slug,
         title=model.title,

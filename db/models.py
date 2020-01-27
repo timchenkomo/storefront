@@ -73,7 +73,7 @@ class Product(Base):
     group_id = Column(Integer, ForeignKey("groups.id"), index=True)
     series_id = Column(Integer, ForeignKey("series.id"), index=True)
 
-    type = Column(EnumColumn(ProductType))
+    type = Column(EnumColumn(ProductType), nullable=False)
     price = Column(Integer)
     urls = Column(String(1024))
     publisher = Column(String(256))
