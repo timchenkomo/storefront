@@ -1,24 +1,24 @@
 from fastapi import FastAPI
 from starlette.middleware.cors import CORSMiddleware
 
-from db.db import engine
+from db.db import ENGINE
 from db.models import Base
 from routes import me, products
 
-Base.metadata.create_all(bind=engine)
+Base.metadata.create_all(bind=ENGINE)
 
-app = FastAPI()
-app.include_router(me.router, prefix="/me", tags=["me"])
-app.include_router(products.router, prefix="/products", tags=["products"])
+APP = FastAPI()
+APP.include_router(me.router, prefix="/me", tags=["me"])
+APP.include_router(products.router, prefix="/products", tags=["products"])
 
-origins = [
+ORIGINS = [
     "http://localhost",
     "http://localhost:3000",
 ]
 
-app.add_middleware(
+APP.add_middleware(
     CORSMiddleware,
-    allow_origins=origins,
+    allow_origins=ORIGINS,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

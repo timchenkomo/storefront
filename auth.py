@@ -1,7 +1,8 @@
 
 from datetime import datetime, timedelta
+from typing import Optional
 
-from fastapi import APIRouter, Depends, HTTPException, Security
+from fastapi import Depends, HTTPException, Security
 from fastapi.security import OAuth2PasswordBearer
 from jwt import PyJWTError, decode, encode
 from passlib.context import CryptContext  # type: ignore
@@ -17,29 +18,36 @@ SECRET_KEY = "09d25e094faa6ca2556c818166b7a9563b93f7099f6f0f4caa6cf63b88e8d3e7"
 ALGORITHM = "HS256"
 TOKEN_SUBJECT = "access"
 ACCESS_TOKEN_EXPIRE_MINUTES = 30
-
-router = APIRouter()
-
-
-pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/me/signin")
+PWD_CONTEXT = CryptContext(schemes=["bcrypt"], deprecated="auto")
+OAUTH2_SCHEME = OAuth2PasswordBearer(tokenUrl="/me/signin")
 
 
-def verify_password(plain_password, hashed_password):
-    return pwd_context.verify(plain_password, hashed_password)
+def verify_password(plain_password: str, hashed_password: str) -> bool:
+    """Verifies plain and hashed password to be equal."""
+    return PWD_CONTEXT.verify(plain_password, hashed_password)
 
 
-def get_user(s: Session, login: str):
-    s.expire_on_commit = False
-    return s.query(User).filter_by(email=login).first()
+def get_user(session: Session, login: str) -> User:
+    """Returns User by specified login."""
+    session.expire_on_commit = False
+    return session.query(User).filter_by(email=login).first()
 
 
-def authenticate_user(s: Session, login: str, password: str) -> User:
-    user = get_user(s, login)
-    return user if user and verify_password(password, user.hashed_password) else False
+def authenticate_user(
+        session: Session,
+        login: str,
+        password: str) -> Optional[User]:
+    """Returns User if the login and password are correct."""
+    user = get_user(session, login)
+    password_verified = verify_password(password, user.hashed_password)
+    return user if user and password_verified else None
 
 
-def create_access_token(*, data: dict, expires_delta: timedelta = None) -> bytes:
+def create_access_token(
+        *,
+        data: dict,
+        expires_delta: timedelta = None) -> bytes:
+    """Creates JWT token."""
     to_encode = data.copy()
     expire = datetime.utcnow() + expires_delta if expires_delta else timedelta(minutes=15)
     to_encode.update({"exp": expire, "sub": TOKEN_SUBJECT})
@@ -48,16 +56,15 @@ def create_access_token(*, data: dict, expires_delta: timedelta = None) -> bytes
 
 
 async def get_current_user(
-        token: str = Security(oauth2_scheme),
-        s: Session = Depends(db_session)) -> User:
+        token: str = Security(OAUTH2_SCHEME),
+        session: Session = Depends(db_session)) -> Optional[User]:
     """Returns current user."""
     try:
         payload = decode(token, SECRET_KEY, algorithms=[ALGORITHM])
         token_data = TokenPayload(**payload)
     except PyJWTError:
         raise HTTPException(status_code=401, detail="Not authenticated")
-    user = get_user(s, login=token_data.login)
-    return user if user else None
+    return get_user(session, login=token_data.login)
 
 
 async def get_current_active_user(

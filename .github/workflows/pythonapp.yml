@@ -17,6 +17,12 @@ jobs:
       run: |
         pip install poetry
         poetry install
-    - name: Lint with Mypy
+    - name: pylint
+      run: |
+        poetry run pylint **.py
+    - name: mypy
       run: |
         poetry run mypy .
+    - name: pycodestyle
+      run: |
+        poetry run pycodestyle . --max-line-length=90

@@ -5,7 +5,7 @@ from db import db_session
 from db.models import Group
 from mappers.products import model2group
 
-router = APIRouter()
+router = APIRouter()  # pylint: disable=invalid-name
 
 
 @router.get(

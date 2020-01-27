@@ -6,7 +6,7 @@ from sqlalchemy import ForeignKey, Integer, String, UnicodeText
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
 
-Base = declarative_base()
+Base = declarative_base()  # pylint: disable=invalid-name
 
 
 class User(Base):
@@ -33,6 +33,8 @@ class Author(Base):
 
 
 class Series(Base):
+    """Series of a product."""
+
     __tablename__ = "series"
     id = Column(Integer, primary_key=True, index=True)
     title = Column(String(64), nullable=False)
@@ -71,7 +73,7 @@ class Product(Base):
     group_id = Column(Integer, ForeignKey("groups.id"), index=True)
     series_id = Column(Integer, ForeignKey("series.id"), index=True)
 
-    type = Column(EnumColumn(ProductType))
+    type = Column(EnumColumn(ProductType), nullable=False)
     price = Column(Integer)
     urls = Column(String(1024))
     publisher = Column(String(256))
@@ -83,6 +85,8 @@ class Product(Base):
 
 
 class Purchase(Base):
+    """Purchase."""
+
     __tablename__ = "purchases"
     id = Column(Integer, primary_key=True, index=True)
     user_id = Column(Integer, ForeignKey("users.id"), index=True)
