@@ -14,7 +14,7 @@ from forms.user import SignIn, SignUp, UserInfo
 from mappers.products import model2group_nv, model2product
 from mappers.user import model2user
 
-router = APIRouter() # pylint: disable=invalid-name
+router = APIRouter()  # pylint: disable=invalid-name
 
 
 @router.post(

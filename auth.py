@@ -33,13 +33,20 @@ def get_user(session: Session, login: str) -> User:
     return session.query(User).filter_by(email=login).first()
 
 
-def authenticate_user(session: Session, login: str, password: str) -> Optional[User]:
+def authenticate_user(
+        session: Session,
+        login: str,
+        password: str) -> Optional[User]:
     """Returns User if the login and password are correct."""
     user = get_user(session, login)
-    return user if user and verify_password(password, user.hashed_password) else None
+    password_verified = verify_password(password, user.hashed_password)
+    return user if user and password_verified else None
 
 
-def create_access_token(*, data: dict, expires_delta: timedelta = None) -> bytes:
+def create_access_token(
+        *,
+        data: dict,
+        expires_delta: timedelta = None) -> bytes:
     """Creates JWT token."""
     to_encode = data.copy()
     expire = datetime.utcnow() + expires_delta if expires_delta else timedelta(minutes=15)
