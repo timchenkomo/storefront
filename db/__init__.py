@@ -1,1 +1,1 @@
-from .db import SessionLocal, db_session
+from .db import db_session

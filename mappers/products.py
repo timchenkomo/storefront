@@ -1,14 +1,17 @@
 from pathlib import Path
 
+from db import models
 from forms.products import Group, Product, UrlInfo
 
 
-def model2url(url) -> UrlInfo:
+def model2url(url: str) -> UrlInfo:
+    """Converts url into UrlInfo."""
     ext = ''.join(Path(url).suffixes)
     return UrlInfo(url=url, ext=ext, size="")
 
 
-def model2product(model) -> Product:
+def model2product(model: models.Product) -> Product:
+    """Creates API form for Product model."""
     urls = list(map(model2url, model.urls.split(";")))
     return Product(
         id=model.id,
@@ -20,7 +23,8 @@ def model2product(model) -> Product:
         urls=urls)
 
 
-def model2group(model) -> Group:
+def model2group(model: models.Group) -> Group:
+    """Creates API form for Group model."""
     products = list(map(model2product, model.products))
     return Group(
         slug=model.slug,
@@ -31,7 +35,8 @@ def model2group(model) -> Group:
         products=products)
 
 
-def model2groupNV(model) -> Group:
+def model2group_nv(model: models.Group) -> Group:
+    """Creates API for for Group model."""
     return Group(
         slug=model.slug,
         title=model.title,

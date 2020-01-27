@@ -5,6 +5,7 @@ from pydantic import BaseModel, Schema
 
 
 class SignUp(BaseModel):
+    """SignUp request form."""
     login: str
     password: str
     name: str
@@ -12,10 +13,11 @@ class SignUp(BaseModel):
 
 
 class SignIn(OAuth2PasswordRequestForm):
-    pass
+    """SignIn request form."""
 
 
 class UserInfo(BaseModel):
+    """UserInfo response form."""
     name: str = Schema(
         "", title="User's name",
     )
