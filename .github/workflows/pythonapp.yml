@@ -23,6 +23,6 @@ jobs:
     - name: mypy
       run: |
         poetry run mypy .
-    - name: codestype
+    - name: pycodestyle
       run: |
         poetry run pycodestyle . --max-line-length=90
