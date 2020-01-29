@@ -18,16 +18,17 @@
       @click="toggle(false)"
       tabindex="-1"
       class="fixed inset-0 w-full h-full cursor-default"
+      style="z-index: 98"
     />
 
     <!-- Dropdown content -->
     <div
       v-if="open"
       class="absolute right-0 bg-white rounded py-2 mt-2 shadow-md"
+      style="z-index: 99"
     >
       <slot />
     </div>
-
   </span>
 </template>
 
