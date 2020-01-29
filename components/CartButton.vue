@@ -1,36 +1,34 @@
 <template>
-  <span class="relative">
+  <navmenu
+    ref="navmenu">
     <!-- Main button -->
-    <button @click="onClicked" class="py-2 px-4 bg-blue-500 text-white rounded">
-      Корзина
-      <span v-show="count > 0" class="px-2 bg-red-600 rounded-full inline-block">
-        {{ count }}
-      </span>
-    </button>
-
-    <!-- Overlay -->
-    <button
-      v-if="open"
-      @click="onCloseClicked"
-      tabindex="-1"
-      class="fixed inset-0 w-full h-full cursor-default"
-    />
+    <template v-slot:activator="ctx">
+      <button @click="ctx.toggle(true)" class="py-2 px-4 bg-blue-500 text-white rounded">
+        Корзина
+        <span v-show="count > 0" class="px-2 bg-red-600 rounded-full inline-block">
+          {{ count }}
+        </span>
+      </button>
+    </template>
 
     <!-- Cart is empty -->
     <div
-      v-if="open && isEmpty"
-      class="absolute right-0 bg-white rounded mt-2 w-64 shadow-md text-gray-900 py-4 px-4 text-center"
+      v-if="isEmpty"
+      class="text-center w-32 my-2 mx-4"
     >
       Корзина пуста
     </div>
 
     <!-- Cart -->
     <div
-      v-if="open && !isEmpty"
-      class="absolute right-0 flex flex-col bg-white rounded py-2 mt-2 w-64 shadow-md border-gray-300 text-gray-900"
+      v-if="!isEmpty"
+      class="w-64 flex flex-col"
     >
       <!-- Total price -->
-      <div class="my-2 mx-4 flex">
+      <div
+        v-if="!isEmpty"
+        class="my-2 mx-4 flex"
+      >
         <span class="w-full">Итого:</span>
         <span>{{ totalPrice }}</span>&nbsp;₽
       </div>
@@ -51,11 +49,14 @@
       <hr class="my-2">
 
       <!-- Put an order button -->
-      <button @click="onCheckoutClicked" class="py-2 mx-2 text-white text-center rounded bg-blue-500 hover:bg-blue-600">
+      <button
+        @click="onCheckoutClicked"
+        class="py-2 mx-2 text-white text-center rounded bg-blue-500 hover:bg-blue-600"
+      >
         Оформить заказ
       </button>
     </div>
-  </span>
+  </navmenu>
 </template>
 
 <script lang="ts">
@@ -64,7 +65,6 @@ import { CartItem } from '../lib/cart'
 
 @Component
 class CartButton extends Vue {
-  @Prop({ default: false }) readonly open!: boolean;
   @Prop({ default: [] }) readonly items!: CartItem[];
 
   private get count(): number {
@@ -75,15 +75,8 @@ class CartButton extends Vue {
     return this.count === 0
   }
 
-  private onClicked() {
-    this.$emit('click')
-  }
-
-  private onCloseClicked() {
-    this.$emit('close')
-  }
-
   private onCheckoutClicked() {
+    this.$refs.navmenu.toggle(false)
     this.$emit('checkout')
   }
 
