@@ -1,6 +1,7 @@
 <template>
   <navmenu
-    ref="navmenu">
+    ref="navmenu"
+  >
     <!-- Main button -->
     <template v-slot:activator="ctx">
       <button @click="ctx.toggle(true)" class="py-2 px-4 bg-blue-500 text-white rounded">
@@ -82,6 +83,10 @@ class CartButton extends Vue {
 
   private get totalPrice(): number {
     return this.items.map(x => x.price).reduce((a, b) => a + b, 0)
+  }
+
+  public toggle(value: boolean) {
+    this.$refs.navmenu.toggle(value)
   }
 }
 

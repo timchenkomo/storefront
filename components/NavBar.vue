@@ -61,10 +61,8 @@
       </navmenu>
 
       <cart-button
-        :open="isCartDropdownOpen"
+        ref="cart"
         :items="myCartItems"
-        @close="isCartDropdownOpen=false"
-        @click="onMyBooksDropdownClick"
         @checkout="onCheckoutClicked"
         class="block px-4 py-2"
       />
@@ -73,7 +71,7 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component, Prop } from 'vue-property-decorator'
+import { Vue, Component, Prop, Watch } from 'vue-property-decorator'
 import { CartItem } from '../lib/cart'
 import CartButton from '~/components/CartButton.vue'
 import { cartStore } from '~/store/index'
@@ -81,11 +79,16 @@ import Logo from '~/assets/logo.svg'
 
 @Component({ components: { CartButton, Logo } })
 class NavBar extends Vue {
-  private isOpen: boolean = false;
+  private isOpen: boolean = false
+
   @Prop({ default: true }) readonly borders!: boolean;
   @Prop({ default: false }) readonly inverted!: boolean;
 
-  private isCartDropdownOpen: boolean = false;
+  @Watch('$route.path')
+  private onRouteChanged() {
+    this.$refs.account.toggle(false)
+    this.$refs.cart.toggle(false)
+  }
 
   get isAuthenticated(): boolean {
     return this.$auth.loggedIn
@@ -93,10 +96,6 @@ class NavBar extends Vue {
 
   get myCartItems(): CartItem[] {
     return cartStore.items
-  }
-
-  private onMyBooksDropdownClick() {
-    this.isCartDropdownOpen = !this.isCartDropdownOpen
   }
 
   private onCheckoutClicked() {
