@@ -1,8 +1,11 @@
 <template>
   <span class="relative">
-    <slot name="activator">
+    <slot
+      :toggle="toggle"
+      name="activator"
+    >
       <button
-        @click="onOpenCloseClicked(true)"
+        @click="open = true"
         class="text-white rounded bg-blue-500 px-4 py-2"
       >
         {{ title }}
@@ -12,7 +15,7 @@
     <!-- Overlay -->
     <button
       v-if="open"
-      @click="onOpenCloseClicked(false)"
+      @click="toggle(false)"
       tabindex="-1"
       class="fixed inset-0 w-full h-full cursor-default"
     />
@@ -31,17 +34,17 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component, Prop } from 'nuxt-property-decorator'
+import { Vue, Component, Prop } from 'vue-property-decorator'
 
 @Component
-class Dropdown extends Vue {
-  @Prop({ default: false }) readonly open: boolean
+class NavMenu extends Vue {
   @Prop() readonly title: string
+  private open: bool = false
 
-  private onOpenCloseClicked(value: boolean) {
-    this.$emit('open', value)
+  private toggle(value: bool) {
+    this.open = value
   }
 }
 
-export default Dropdown
+export default NavMenu
 </script>
