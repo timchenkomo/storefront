@@ -90,14 +90,15 @@ async def user_restore_password(
         db: Session = Depends(db_session)):
     """Sends a restore email to user."""
     user: User = db.query(User).filter(User.email == form.email).first()
+    if not user:
+        return {"success": False, "msg": "No user found"}
+
     if user:
         token = create_ot_access_token(user)
         db.add(token)
         db.commit()
         send_email(user.email, "Here is your new password.")
         return {"success": True}
-    else:
-        return {"success": False, "msg": "No user found"}
 
 
 @router.post(
@@ -106,6 +107,7 @@ async def user_restore_password(
 async def user_change_password(
         form: ChangePasswordRequest,
         db: Session = Depends(db_session)):
+    """Change password for user."""
     token: AccessToken = find_ot_access_token(db, form.token)
     if not token:
         return {"success": False}

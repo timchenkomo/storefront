@@ -86,9 +86,9 @@ def create_ot_access_token(user: User, hours: int = 8) -> AccessToken:
 def find_ot_access_token(db: Session, token: str) -> AccessToken:
     """Find one time access token."""
     now = datetime.now()
-    token: AccessToken = db.query(AccessToken) \
-                           .filter(
-                               AccessToken.token == token,
-                               AccessToken.expiry > now) \
-                           .first()
-    return token
+    access_token: AccessToken = db.query(AccessToken) \
+                                  .filter(
+                                      AccessToken.token == token,
+                                      AccessToken.expiry > now) \
+                                  .first()
+    return access_token
