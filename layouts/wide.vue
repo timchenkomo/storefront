@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="font-montserrat">
     <nav-bar />
     <nuxt />
   </div>

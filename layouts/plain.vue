@@ -1,5 +1,7 @@
 <template>
-  <nuxt />
+  <div class="font-montserrat">
+    <nuxt />
+  </div>
 </template>
 
 <script lang="ts">
