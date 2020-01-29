@@ -44,12 +44,13 @@
         title="Мой ББТ"
       >
         <div class="flex flex-col text-black">
-          <nuxt-link
-            to="/me/logout"
+          <a
+            @click="$auth.logout()"
+            href="#"
             class="mx-4 my-2"
           >
             Выйти
-          </nuxt-link>
+          </a>
 
           <nuxt-link
             to="/me"
