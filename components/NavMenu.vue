@@ -5,8 +5,8 @@
       name="activator"
     >
       <button
-        @click="open = true"
-        class="text-white rounded bg-blue-500 px-4 py-2"
+        @click="toggle(true)"
+        class="px-4 py-2"
       >
         {{ title }}
       </button>
@@ -25,9 +25,7 @@
       v-if="open"
       class="absolute right-0 bg-white rounded py-2 mt-2 shadow-md"
     >
-      <slot>
-        Here is some stuff
-      </slot>
+      <slot />
     </div>
 
   </span>
