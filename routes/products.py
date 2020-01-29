@@ -1,9 +1,8 @@
-from fastapi import APIRouter, Depends
-from sqlalchemy.orm import Session
-
 from db import db_session
 from db.models import Group
+from fastapi import APIRouter, Depends
 from mappers.products import model2group
+from sqlalchemy.orm import Session
 
 router = APIRouter()  # pylint: disable=invalid-name
 
