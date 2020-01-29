@@ -37,9 +37,28 @@
         Войти
       </nuxt-link>
 
-      <nuxt-link v-else to="/me" class="block px-4 py-2">
-        Мой ББТ
-      </nuxt-link>
+      <navmenu
+        ref="account"
+        v-if="isAuthenticated"
+        class="block px-4 py-2"
+        title="Мой ББТ"
+      >
+        <div class="flex flex-col text-black">
+          <nuxt-link
+            to="/me/logout"
+            class="mx-4 my-2"
+          >
+            Выйти
+          </nuxt-link>
+
+          <nuxt-link
+            to="/me"
+            class="mx-4 my-2"
+          >
+            Мои книги
+          </nuxt-link>
+        </div>
+      </navmenu>
 
       <cart-button
         :open="isCartDropdownOpen"
