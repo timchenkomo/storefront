@@ -86,7 +86,9 @@ class NavBar extends Vue {
 
   @Watch('$route.path')
   private onRouteChanged() {
-    this.$refs.account.toggle(false)
+    if (this.$refs.account) {
+      this.$refs.account.toggle(false)
+    }
     this.$refs.cart.toggle(false)
   }
 
