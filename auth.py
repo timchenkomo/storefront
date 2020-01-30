@@ -1,16 +1,15 @@
-
 from datetime import datetime, timedelta
 from typing import Optional
+from uuid import uuid4
 
+from db import db_session
+from db.models import AccessToken, User
 from fastapi import Depends, HTTPException, Security
 from fastapi.security import OAuth2PasswordBearer
+from forms.auth import TokenPayload
 from jwt import PyJWTError, decode, encode
 from passlib.context import CryptContext  # type: ignore
 from sqlalchemy.orm import Session
-
-from db import db_session
-from db.models import User
-from forms.auth import TokenPayload
 
 # to get a string like this run:
 # openssl rand -hex 32
@@ -75,3 +74,21 @@ async def get_current_active_user(
     if current_user.disabled:
         raise HTTPException(status_code=400, detail="Inactive user")
     return current_user
+
+
+def create_ot_access_token(user: User, hours: int = 8) -> AccessToken:
+    """Create one-time access token for specified user."""
+    now = datetime.now()
+    delta = timedelta(hours=hours)
+    return AccessToken(user=user, token=uuid4().hex, expiry=now + delta)
+
+
+def find_ot_access_token(db: Session, token: str) -> AccessToken:
+    """Find one time access token."""
+    now = datetime.now()
+    access_token: AccessToken = db.query(AccessToken) \
+                                  .filter(
+                                      AccessToken.token == token,
+                                      AccessToken.expiry > now) \
+                                  .first()
+    return access_token

@@ -96,3 +96,14 @@ class Purchase(Base):
 
     product = relationship("Product", back_populates="purchases")
     user = relationship("User", back_populates="purchases")
+
+
+class AccessToken(Base):
+    """Restore password tokens."""
+    __tablename__ = "access_token"
+    id = Column(Integer, primary_key=True, index=True)
+    user_id = Column(Integer, ForeignKey("users.id"), index=True)
+    token = Column(String(32), index=True, unique=True)
+    expiry = Column(DateTime, nullable=False)
+
+    user = relationship("User")

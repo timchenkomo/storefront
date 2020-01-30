@@ -23,3 +23,14 @@ class UserInfo(BaseModel):
     )
     email: str = ""
     disabled: bool = False
+
+
+class RestorePasswordRequest(BaseModel):
+    """Restore forgotten password."""
+    email: str
+
+
+class ChangePasswordRequest(BaseModel):
+    """Change password using specified token."""
+    token: str
+    password: str
