@@ -1,4 +1,6 @@
 import smtplib
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
 # import ssl
 
 SMTP_SERVER = "localhost"
@@ -7,16 +9,23 @@ SMTP_SENDER = "me@test.com"
 SMTP_PASSWORD = "test"
 
 
-def send_email(receiver: str, message: str):
+def send_email(receiver: str, msg: str, msg_html: str = ""):
     """End email to a specified address."""
-    # context = ssl.create_default_context()
 
     try:
+        # context = ssl.create_default_context()
         server = smtplib.SMTP(SMTP_SERVER, SMTP_PORT)
         # server.starttls(context=context)  # Secure the connection
         # server.login(SMTP_SENDER, SMTP_PASSWORD)
 
-        server.sendmail(SMTP_SENDER, receiver, message)
+        message = MIMEMultipart("alternative")
+        message["Subject"] = "BBT Online"
+        message["From"] = SMTP_SENDER
+        message["To"] = receiver
+        message.attach(MIMEText(msg, "plain"))
+        message.attach(MIMEText(msg_html, "html"))
+
+        server.sendmail(SMTP_SENDER, receiver, message.as_string())
     except smtplib.SMTPException as exception:
         print(exception)
     finally:

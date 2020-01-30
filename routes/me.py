@@ -15,6 +15,7 @@ from mappers.products import model2group_nv, model2product
 from mappers.user import model2user
 from postman import send_email
 from sqlalchemy.orm import Session
+from jinja2 import Environment, FileSystemLoader
 
 router = APIRouter()  # pylint: disable=invalid-name
 
@@ -94,12 +95,22 @@ async def user_restore_password(
     if not user:
         return {"success": False, "msg": "No user found"}
 
-    if user:
-        token = create_ot_access_token(user)
-        db.add(token)
-        db.commit()
-        tasks.add_task(send_email, user.email, "Here is your new password.")
-        return {"success": True}
+    # generate token
+    token = create_ot_access_token(user)
+    db.add(token)
+    db.commit()
+
+    # render email content
+    jinja = Environment(loader=FileSystemLoader("./templates"))
+    template_html = jinja.get_template("change_password.html.jinja2")
+    template_plain = jinja.get_template("change_password.plain.jinja2")
+    msg_html = template_html.render(token=token.token)
+    msg_plain = template_plain.render(token=token.token)
+
+    # send email
+    tasks.add_task(send_email, user.email, msg_plain, msg_html)
+
+    return {"success": True}
 
 
 @router.post(
