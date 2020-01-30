@@ -6,7 +6,7 @@ from auth import (ACCESS_TOKEN_EXPIRE_MINUTES, PWD_CONTEXT, authenticate_user,
                   find_ot_access_token, get_current_active_user)
 from db import db_session
 from db.models import AccessToken, User
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, BackgroundTasks
 from forms.auth import Token
 from forms.products import Group
 from forms.user import (ChangePasswordRequest, RestorePasswordRequest, SignIn,
@@ -87,6 +87,7 @@ async def user_get_products(user: User = Depends(get_current_active_user)):
 )
 async def user_restore_password(
         form: RestorePasswordRequest,
+        tasks: BackgroundTasks,
         db: Session = Depends(db_session)):
     """Sends a restore email to user."""
     user: User = db.query(User).filter(User.email == form.email).first()
@@ -97,7 +98,7 @@ async def user_restore_password(
         token = create_ot_access_token(user)
         db.add(token)
         db.commit()
-        send_email(user.email, "Here is your new password.")
+        tasks.add_task(send_email, user.email, "Here is your new password.")
         return {"success": True}
 
 
@@ -110,7 +111,7 @@ async def user_change_password(
     """Change password for user."""
     token: AccessToken = find_ot_access_token(db, form.token)
     if not token:
-        return {"success": False}
+        return {"success": False, "msg": "Token was not found"}
 
     token.user.hashed_password = PWD_CONTEXT.hash(form.password)
     db.delete(token)
