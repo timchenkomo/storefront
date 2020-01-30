@@ -1,9 +1,7 @@
 <template>
-  <div>
-    <audio controls class="block w-full">
-      <source src="horse.ogg" type="audio/ogg">
-      <source src="horse.mp3" type="audio/mpeg">
-      Your browser does not support the audio element.
-    </audio>
-  </div>
+  <button
+    class="bg-blue-500 rounded text-white px-4 py-2 my-1 md:mr-2 text-sm"
+  >
+    Слушать фрагмент
+  </button>
 </template>

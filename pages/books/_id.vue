@@ -44,17 +44,22 @@
         v-if="product.id == productId"
         :key="product.id"
       >
-        <!-- Additional components accoring to product type -->
-        <div :is="product.type + '-book'" />
+        <div class="flex flex-col md:flex-row my-4">
+          <!-- Additional components accoring to product type -->
+          <div
+            :is="product.type + '-book'"
+            :data="product"
+          />
 
-        <!-- Buy product button -->
-        <in-cart-button
-          @add="putInCart(product)"
-          @checkout="checkout"
-          :inCart="isInCart(product.id)"
-          :price="product.price"
-          class="w-full my-4 sm:my-4"
-        />
+          <!-- Buy product button -->
+          <in-cart-button
+            @add="putInCart(product)"
+            @checkout="checkout"
+            :inCart="isInCart(product.id)"
+            :price="product.price"
+            class="flex-grow my-1"
+          />
+        </div>
 
         <!-- Additional info -->
         <div class="text-sm font-light">
