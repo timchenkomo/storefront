@@ -19,20 +19,20 @@
 
     <nuxt-link
       to="/me/signup"
-      class="block text-blue-500 text-center font-bold my-1 py-2 px-4 w-full rounded focus:outline-none"
+      class="block text-blue-500 text-sm text-center my-1 px-4 py-2 w-full rounded focus:outline-none"
       type="button"
     >
       Регистрация
     </nuxt-link>
+
     <!-- Restore password -->
-    <!--
-         <a
-         class="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800"
-         href="#"
-         >
-         Забыли пароль?
-         </a>
-    -->
+    <nuxt-link
+      to="/me/restore"
+      class="block text-blue-500 text-sm text-center my-1 px-4 py-2 w-full rounded focus:outline-none"
+      href="#"
+    >
+      Забыли пароль?
+    </nuxt-link>
   </form>
 </template>
 
