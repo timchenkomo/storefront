@@ -29,7 +29,8 @@ export default {
    */
   plugins: [
     '~/plugins/icons',
-    '~/plugins/ui-kit'
+    '~/plugins/ui-kit',
+    { src: '~/plugins/local-storage.js', ssr: false }
   ],
   /*
    ** Nuxt.js dev-modules

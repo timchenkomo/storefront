@@ -28,7 +28,8 @@
     "nuxt": "^2.0.0",
     "nuxt-property-decorator": "^2.5.0",
     "nuxt-svg-loader": "^1.0.1",
-    "vuex-module-decorators": "^0.11.0"
+    "vuex-module-decorators": "^0.11.0",
+    "vuex-persistedstate": "^2.7.0"
   },
   "devDependencies": {
     "@nuxt/typescript-build": "^0.3.4",
