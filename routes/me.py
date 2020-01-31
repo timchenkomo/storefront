@@ -77,7 +77,7 @@ async def user_get_products(user: User = Depends(get_current_active_user)):
         product = purchase.product
         product_group = product.group
 
-        if product.id not in result:
+        if product_group.id not in result:
             result[product_group.id] = model2group_nv(product_group)
 
         result[product_group.id].products.append(model2product(product))
