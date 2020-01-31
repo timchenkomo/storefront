@@ -1,12 +1,14 @@
 from datetime import timedelta
 from typing import Dict
 
+from jinja2 import Environment, FileSystemLoader
+
 from auth import (ACCESS_TOKEN_EXPIRE_MINUTES, PWD_CONTEXT, authenticate_user,
                   create_access_token, create_ot_access_token,
                   find_ot_access_token, get_current_active_user)
 from db import db_session
 from db.models import AccessToken, User
-from fastapi import APIRouter, Depends, HTTPException, BackgroundTasks
+from fastapi import APIRouter, BackgroundTasks, Depends, HTTPException
 from forms.auth import Token
 from forms.products import Group
 from forms.user import (ChangePasswordRequest, RestorePasswordRequest, SignIn,
@@ -15,7 +17,6 @@ from mappers.products import model2group_nv, model2product
 from mappers.user import model2user
 from postman import send_email
 from sqlalchemy.orm import Session
-from jinja2 import Environment, FileSystemLoader
 
 router = APIRouter()  # pylint: disable=invalid-name
 
