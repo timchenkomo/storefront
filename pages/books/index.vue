@@ -27,7 +27,7 @@ class BooksIndexPage extends Vue {
   private allBooks: Group[] = [];
 
   async asyncData({ $axios }) {
-    const { data } = await $axios.get('/products')
+    const { data } = await $axios.get('/products/')
     return { allBooks: data }
   }
 
