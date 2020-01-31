@@ -1,4 +1,4 @@
-from typing import Optional
+from typing import Optional, List
 
 from fastapi.security import OAuth2PasswordRequestForm
 from pydantic import BaseModel, Schema
@@ -23,6 +23,7 @@ class UserInfo(BaseModel):
     )
     email: str = ""
     disabled: bool = False
+    products: List[str]
 
 
 class RestorePasswordRequest(BaseModel):
