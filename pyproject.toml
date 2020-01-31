@@ -15,6 +15,7 @@ psycopg2-binary = "^2.8"
 bcrypt = "^3.1"
 python-multipart = "^0.0.5"
 jinja2 = "^2.11"
+aiofiles = "^0.4.0"
 
 [tool.poetry.dev-dependencies]
 pylint = "^2.4"

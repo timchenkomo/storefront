@@ -3,13 +3,14 @@ from starlette.middleware.cors import CORSMiddleware
 from db.db import ENGINE
 from db.models import Base
 from fastapi import FastAPI
-from routes import me, products
+from routes import download, me, products
 
 Base.metadata.create_all(bind=ENGINE)
 
 APP = FastAPI()
 APP.include_router(me.router, prefix="/me", tags=["me"])
 APP.include_router(products.router, prefix="/products", tags=["products"])
+APP.include_router(download.router, prefix="/download", tags=["download"])
 
 ORIGINS = [
     "http://localhost",
