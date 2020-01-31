@@ -34,7 +34,7 @@ async def download_product(
         db: Session = Depends(db_session)) -> FileResponse:
     """Download a product file if user have bought it."""
     # Check if product exists
-    product = db.query(Product).filter(Product.id == product_slug).first()
+    product = db.query(Product).filter(Product.slug == product_slug).first()
     if not product:
         raise HTTPException(status_code=404, detail="No product found")
 

@@ -15,13 +15,13 @@ def model2product(model: models.Product) -> Product:
     urls_def = model.urls or ""
     urls = list(map(model2url, urls_def.split(";")))
     return Product(
-        id=model.id,
         type=model.type.name,  # type: ignore
         price=model.price,
         publisher=model.publisher,
         year_published=model.year_published,
         series=model.series.title if model.series else None,
-        urls=urls)
+        urls=urls,
+        slug=model.slug)
 
 
 def model2group(model: models.Group) -> Group:

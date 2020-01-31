@@ -12,8 +12,8 @@ class UrlInfo(BaseModel):
 
 class Product(BaseModel):
     """Specific product."""
-    id: str
     type: str
+    slug: str
     price: int
     publisher: Optional[str]
     year_published: Optional[int]

@@ -72,6 +72,7 @@ class Product(Base):
     id = Column(Integer, primary_key=True, index=True)
     group_id = Column(Integer, ForeignKey("groups.id"), index=True)
     series_id = Column(Integer, ForeignKey("series.id"), index=True)
+    slug = Column(String(32), nullable=False, index=True, unique=True)
 
     type = Column(EnumColumn(ProductType), nullable=False)
     price = Column(Integer)
