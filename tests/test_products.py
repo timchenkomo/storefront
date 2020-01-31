@@ -6,5 +6,5 @@ client = TestClient(APP)
 
 
 def test_read_products_index():
-    response = client.get("/products")
+    response = client.get("/api/products")
     assert response.status_code == 200
