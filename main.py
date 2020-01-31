@@ -8,9 +8,9 @@ from routes import download, me, products
 Base.metadata.create_all(bind=ENGINE)
 
 APP = FastAPI()
-APP.include_router(me.router, prefix="/me", tags=["me"])
-APP.include_router(products.router, prefix="/products", tags=["products"])
-APP.include_router(download.router, prefix="/download", tags=["download"])
+APP.include_router(me.router, prefix="/api/me", tags=["me"])
+APP.include_router(products.router, prefix="/api/products", tags=["products"])
+APP.include_router(download.router, prefix="/api/download", tags=["download"])
 
 ORIGINS = [
     "http://localhost",
