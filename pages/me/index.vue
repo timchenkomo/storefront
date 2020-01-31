@@ -70,10 +70,18 @@ class MeIndexPage extends Vue {
   }
 
   private onProductClicked(group: Group) {
+    const getProductUrls = function(product) {
+      return product.urls.map(url => ({
+        ...url, // get all the data from original object
+        'url': '/download/' + product.id + '/' + url.url // fix url to point to right place
+      }))
+    }
+
     this.isDownloaderVisible = true
     this.downloaderOptions = group.products
-      .filter(x => x.urls !== undefined)
-      .map(x => x.urls).flat()
+      .filter(x => x.urls !== undefined) // remove products without urls, like printed books
+      .map(x => getProductUrls(x)) // fix urls
+      .flat()
   }
 
   private onDownloaderClose() {
