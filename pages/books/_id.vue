@@ -25,12 +25,12 @@
       >
         <li
           v-for="product in group.products"
-          :key="product.id"
+          :key="product.slug"
           class="flex-1 mr-2"
         >
           <a
-            :class="{'bg-gray-200 text-blue-500': product.id == productId, '': product.id != productId}"
-            @click="productId = product.id"
+            :class="{'bg-gray-200 text-blue-500': product.slug == productSlug, '': product.slug != productSlug}"
+            @click="productSlug = product.slug"
             class="text-center block rounded py-2 px-4 cursor-pointer text-sm"
           >
             {{ productType(product.type) }}
@@ -41,8 +41,8 @@
       <!-- Product additional info -->
       <div
         v-for="product in group.products"
-        v-if="product.id == productId"
-        :key="product.id"
+        v-if="product.slug == productSlug"
+        :key="product.slug"
       >
         <div class="flex flex-col md:flex-row my-4">
           <!-- Additional components accoring to product type -->
@@ -56,7 +56,7 @@
           <in-cart-button
             @add="putInCart(product)"
             @checkout="checkout"
-            :inCart="isInCart(product.id)"
+            :inCart="isInCart(product.slug)"
             :price="product.price"
             class="flex-grow my-1"
           />
@@ -98,7 +98,7 @@ import PrintedBook from '@/components/product/PrintedBook.vue'
   }
 })
 class BookPage extends Vue {
-  private productId: number = 0
+  private productSlug: string = ''
   private group: Group = EmptyGroup
 
   async asyncData(ctx: any) {
@@ -111,7 +111,7 @@ class BookPage extends Vue {
 
     return {
       group: data,
-      productId: data.products[0].id
+      productSlug: data.products[0].slug
     }
   }
 
@@ -123,7 +123,7 @@ class BookPage extends Vue {
   /** Put specified product into the cart **/
   private putInCart(product: Product) {
     cartStore.add({
-      id: product.id,
+      id: product.slug,
       title: this.group.title,
       type: this.productType(product.type),
       price: product.price,
@@ -137,10 +137,10 @@ class BookPage extends Vue {
   }
 
   /** Is the specified product was added to the cart? **/
-  private isInCart(id: number): boolean {
+  private isInCart(slug: String): boolean {
     return cartStore.items
       .map(x => x.id)
-      .includes(id)
+      .includes(slug)
   }
 
   private productType(type: string): string {
