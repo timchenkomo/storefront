@@ -55,15 +55,20 @@ def create_access_token(
     return encoded_jwt
 
 
-async def get_current_user(
-        token: str = Security(OAUTH2_SCHEME),
-        session: Session = Depends(db_session)) -> Optional[User]:
-    """Returns current user."""
+def _decode_token(token: str):
     try:
         payload = decode(token, SECRET_KEY, algorithms=[ALGORITHM])
         token_data = TokenPayload(**payload)
     except PyJWTError:
         raise HTTPException(status_code=401, detail="Not authenticated")
+    return token_data
+
+
+async def get_current_user(
+        token: str = Security(OAUTH2_SCHEME),
+        session: Session = Depends(db_session)) -> Optional[User]:
+    """Returns current user."""
+    token_data = _decode_token(token)
     return get_user(session, login=token_data.login)
 
 
@@ -71,12 +76,8 @@ async def get_current_user_by_cookie(
         token: str = Security(COOKIE_SCHEME),
         session: Session = Depends(db_session)) -> Optional[User]:
     """Returns current user."""
-    try:
-        token = token[len("Bearer%20"):]
-        payload = decode(token, SECRET_KEY, algorithms=[ALGORITHM])
-        token_data = TokenPayload(**payload)
-    except PyJWTError:
-        raise HTTPException(status_code=401, detail="Not authenticated")
+    token = token[len("Bearer%20"):]
+    token_data = _decode_token(token)
     return get_user(session, login=token_data.login)
 
 
