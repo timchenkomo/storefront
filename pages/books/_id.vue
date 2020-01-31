@@ -44,7 +44,10 @@
         v-if="product.slug == productSlug"
         :key="product.slug"
       >
-        <div class="flex flex-col md:flex-row my-4">
+        <div
+          v-if="!hasAlreadyBought(product)"
+          class="flex flex-col md:flex-row my-4"
+        >
           <!-- Additional components accoring to product type -->
           <div
             :is="product.type + '-book'"
@@ -60,6 +63,22 @@
             :price="product.price"
             class="flex-grow my-1"
           />
+        </div>
+
+        <!-- User has already bought this product -->
+        <div
+          v-else
+          class="flex flex-col"
+        >
+          <a
+            v-for="url in product.urls"
+            :key="url.url"
+            :href="'/download/' + product.slug + '/' + url.url"
+            class="bg-gray-200 rounded text-blue-500 text-center px-4 py-2 my-1 text-sm"
+            download
+          >
+            Скачать {{ url.ext.toUpperCase() }}
+          </a>
         </div>
 
         <!-- Additional info -->
@@ -141,6 +160,14 @@ class BookPage extends Vue {
     return cartStore.items
       .map(x => x.id)
       .includes(slug)
+  }
+
+  /** Has the user already bought this product? **/
+  private hasAlreadyBought(product: Product): boolean {
+    if (!this.$auth.loggedIn) {
+      return false
+    }
+    return this.$auth.user.products.includes(product.slug)
   }
 
   private productType(type: string): string {
