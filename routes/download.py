@@ -3,15 +3,17 @@ from os.path import join
 
 from starlette.responses import FileResponse
 
-from auth import get_current_active_user
+from auth import get_current_user_by_cookie
 from db import db_session
 from db.models import Product, Purchase, User
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, Cookie, Security
 from sqlalchemy.orm import Session
+from fastapi.security import APIKeyCookie
 
-ROOT = environ.get("DOWNLOADS_PATH", "")
+ROOT = environ.get("DOWNLOADS_PATH", "../downloads")
 
 router = APIRouter()  # pylint: disable=invalid-name
+
 
 
 @router.get(
@@ -30,7 +32,7 @@ async def download_sample(product_slug: str, filename: str) -> FileResponse:
 async def download_product(
         product_slug: str,
         filename: str,
-        user: User = Depends(get_current_active_user),
+        user: User = Depends(get_current_user_by_cookie),
         db: Session = Depends(db_session)) -> FileResponse:
     """Download a product file if user have bought it."""
     # Check if product exists

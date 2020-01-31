@@ -5,7 +5,7 @@ from uuid import uuid4
 from db import db_session
 from db.models import AccessToken, User
 from fastapi import Depends, HTTPException, Security
-from fastapi.security import OAuth2PasswordBearer
+from fastapi.security import OAuth2PasswordBearer, APIKeyCookie
 from forms.auth import TokenPayload
 from jwt import PyJWTError, decode, encode
 from passlib.context import CryptContext  # type: ignore
@@ -19,6 +19,7 @@ TOKEN_SUBJECT = "access"
 ACCESS_TOKEN_EXPIRE_MINUTES = 30
 PWD_CONTEXT = CryptContext(schemes=["bcrypt"], deprecated="auto")
 OAUTH2_SCHEME = OAuth2PasswordBearer(tokenUrl="/me/signin")
+COOKIE_SCHEME = APIKeyCookie(name="auth._token.local")
 
 
 def verify_password(plain_password: str, hashed_password: str) -> bool:
@@ -59,6 +60,19 @@ async def get_current_user(
         session: Session = Depends(db_session)) -> Optional[User]:
     """Returns current user."""
     try:
+        payload = decode(token, SECRET_KEY, algorithms=[ALGORITHM])
+        token_data = TokenPayload(**payload)
+    except PyJWTError:
+        raise HTTPException(status_code=401, detail="Not authenticated")
+    return get_user(session, login=token_data.login)
+
+
+async def get_current_user_by_cookie(
+        token: str = Security(COOKIE_SCHEME),
+        session: Session = Depends(db_session)) -> Optional[User]:
+    """Returns current user."""
+    try:
+        token = token[len("Bearer%20"):]
         payload = decode(token, SECRET_KEY, algorithms=[ALGORITHM])
         token_data = TokenPayload(**payload)
     except PyJWTError:
