@@ -26,7 +26,7 @@ export enum ProductType {
 
 export interface Product {
   /** Unique product ID. */
-  id: string;
+  slug: string;
 
   /** Type of a product variety. */
   type: ProductType;

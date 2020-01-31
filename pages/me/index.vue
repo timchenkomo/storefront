@@ -70,10 +70,10 @@ class MeIndexPage extends Vue {
   }
 
   private onProductClicked(group: Group) {
-    const getProductUrls = function(product) {
+    const getProductUrls = function(product: Product) {
       return product.urls.map(url => ({
         ...url, // get all the data from original object
-        'url': '/download/' + product.id + '/' + url.url // fix url to point to right place
+        'url': '/download/' + product.slug + '/' + url.url // fix url to point to right place
       }))
     }
 
