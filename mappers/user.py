@@ -1,10 +1,14 @@
-from db.models import User
+from typing import List
+
+from db.models import User, Purchase
 from forms.user import UserInfo
 
 
 def model2user(model: User) -> UserInfo:
     """Creates API for for User model."""
-    products = list(map(lambda x: x.product.slug, model.purchases))
+    # convert all the purcahes to the list of product slugs
+    purchases: List[Purchase] = list(model.purchases)  # type: ignore
+    products: List[str] = list(map(lambda x: x.product.slug, purchases))
 
     return UserInfo(
         name=model.name,
