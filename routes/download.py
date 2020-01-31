@@ -6,14 +6,12 @@ from starlette.responses import FileResponse
 from auth import get_current_user_by_cookie
 from db import db_session
 from db.models import Product, Purchase, User
-from fastapi import APIRouter, Cookie, Depends, HTTPException, Security
-from fastapi.security import APIKeyCookie
+from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 
 ROOT = environ.get("DOWNLOADS_PATH", "../downloads")
 
 router = APIRouter()  # pylint: disable=invalid-name
-
 
 
 @router.get(

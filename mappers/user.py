@@ -1,6 +1,6 @@
 from typing import List
 
-from db.models import User, Purchase
+from db.models import Purchase, User
 from forms.user import UserInfo
 
 
