@@ -8,8 +8,9 @@
     <a
       v-for="url in props.data.urls"
       :key="url.ext"
-      :href="'sample_' + url.url"
+      :href="'/download/' + props.group.slug + '/sample_' + url.url"
       class="hover:text-blue-200"
+      download
     >
       {{ url.ext.toUpperCase() }}
     </a>

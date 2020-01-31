@@ -49,6 +49,7 @@
           <div
             :is="product.type + '-book'"
             :data="product"
+            :group="group"
           />
 
           <!-- Buy product button -->
