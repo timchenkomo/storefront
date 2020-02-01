@@ -2,7 +2,8 @@
   <span class="relative">
     <button
       @click="toggle(true)"
-      class="hidden sm:block px-4 py-2 whitespace-no-wrap"
+      :class="{'bg-blue-500 hover:bg-blue-600 rounded text-white': fill}"
+      class="hidden sm:block whitespace-no-wrap px-4 py-2"
     >
       <slot name="activator">{{ title }}</slot>
     </button>
@@ -41,6 +42,7 @@ import { Vue, Component, Prop } from 'vue-property-decorator'
 class NavMenu extends Vue {
   @Prop({ default: '' }) readonly title!: string
   @Prop({ default: '' }) readonly link!: string
+  @Prop({ default: false }) readonly fill: boolean
   private open: bool = false
 
   private toggle(value: bool) {

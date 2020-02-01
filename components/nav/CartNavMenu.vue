@@ -3,13 +3,14 @@
     ref="navmenu"
     title="Корзина"
     link="/cart"
+    fill="true"
   >
     <!-- Main button -->
     <template v-slot:activator>
       <!-- wide screen button -->
       <span>Корзина</span>
-      <span v-show="count > 0" class="rounded-full inline-block">
-        ({{ count }})
+      <span v-show="count > 0" class="bg-blue-800 rounded-full inline-block w-5">
+        {{ count }}
       </span>
     </template>
 
