@@ -38,10 +38,12 @@ def send_email(receiver: str, msg: str, msg_html: str = ""):
 
 
 def send(receiver: str, template: str):
+    """Send email usung specified template."""
     send_email(receiver,
                JINJA.get_template(template + ".plain.jinja2").render(),
                JINJA.get_template(template + ".html.jinja2").render())
 
 
 def send_welcome_email(receiver: str):
+    """Send welcome email to specified receiver."""
     send(receiver, "welcome")
