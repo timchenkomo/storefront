@@ -15,7 +15,7 @@ from forms.user import (ChangePasswordRequest, RestorePasswordRequest, SignIn,
                         SignUp, UserInfo)
 from mappers.products import model2group_nv, model2product
 from mappers.user import model2user
-from postman import send_email
+from postman import send_email, send_welcome_email
 from sqlalchemy.orm import Session
 
 router = APIRouter()  # pylint: disable=invalid-name
@@ -27,6 +27,7 @@ router = APIRouter()  # pylint: disable=invalid-name
 )
 async def user_signup(
         form: SignUp,
+        task: BackgroundTasks,
         db: Session = Depends(db_session)):
     """Register a new user."""
     user = User()
@@ -36,6 +37,7 @@ async def user_signup(
     user.disabled = False
     db.add(user)
     db.commit()
+    task.add_task(send_welcome_email, user.email)
     return {"success": True}
 
 
