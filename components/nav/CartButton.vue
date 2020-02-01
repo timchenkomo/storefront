@@ -1,5 +1,5 @@
 <template>
-  <navmenu
+  <nav-menu
     ref="navmenu"
     title="Корзина"
   >
@@ -57,7 +57,7 @@
         Оформить заказ
       </button>
     </div>
-  </navmenu>
+  </nav-menu>
 </template>
 
 <script lang="ts">

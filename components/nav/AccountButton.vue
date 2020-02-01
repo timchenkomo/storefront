@@ -1,5 +1,5 @@
 <template>
-  <navmenu
+  <nav-menu
     class="block px-4 py-2"
     title="Мой ББТ"
   >
@@ -21,5 +21,5 @@
         Выйти
       </a>
     </div>
-  </navmenu>
+  </nav-menu>
 </template>
