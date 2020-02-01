@@ -37,9 +37,9 @@
         Войти
       </nuxt-link>
 
-      <account-button />
+      <account-nav-nemu />
 
-      <cart-button
+      <cart-nav-menu
         ref="cart"
         :items="myCartItems"
         @checkout="onCheckoutClicked"
@@ -52,12 +52,12 @@
 <script lang="ts">
 import { Vue, Component, Prop, Watch } from 'vue-property-decorator'
 import { CartItem } from '../lib/cart'
-import CartButton from '~/components/nav/CartButton.vue'
-import AccountButton from '~/components/nav/AccountButton.vue'
+import CartNavMenu from '~/components/nav/CartNavMenu.vue'
+import AccountNavMenu from '~/components/nav/AccountNavMenu.vue'
 import { cartStore } from '~/store/index'
 import Logo from '~/assets/logo.svg'
 
-@Component({ components: { AccountButton, CartButton, Logo } })
+@Component({ components: { AccountNavMenu, CartNavMenu, Logo } })
 class NavBar extends Vue {
   private isOpen: boolean = false
 

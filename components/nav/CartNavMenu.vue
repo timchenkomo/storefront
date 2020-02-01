@@ -65,7 +65,7 @@ import { Vue, Component, Prop } from 'vue-property-decorator'
 import { CartItem } from '../lib/cart'
 
 @Component
-class CartButton extends Vue {
+class CartNavMenu extends Vue {
   @Prop({ default: [] }) readonly items!: CartItem[];
 
   private get count(): number {
@@ -90,5 +90,5 @@ class CartButton extends Vue {
   }
 }
 
-export default CartButton
+export default CartNavMenu
 </script>
