@@ -36,8 +36,9 @@
       <nuxt-link v-if="!isAuthenticated" to="/me/signin" class="block px-4 py-2 whitespace-no-wrap">
         Войти
       </nuxt-link>
-
-      <account-nav-nemu />
+      <account-nav-menu
+        v-else
+      />
 
       <cart-nav-menu
         ref="cart"
