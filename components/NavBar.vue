@@ -25,41 +25,19 @@
       :class="{'text-white': inverted, 'block': isOpen, 'hidden': !isOpen }"
       class="px-2 pt-2 pb-4 sm:flex sm:p-0 items-center"
     >
-      <nuxt-link to="/about" class="block px-4 py-2">
+      <nuxt-link to="/about" class="block px-4 py-2 whitespace-no-wrap">
         Об издательстве
       </nuxt-link>
 
-      <nuxt-link to="/books" class="block px-4 py-2">
+      <nuxt-link to="/books" class="block px-4 py-2 whitespace-no-wrap">
         Библиотека
       </nuxt-link>
 
-      <nuxt-link v-if="!isAuthenticated" to="/me/signin" class="block px-4 py-2">
+      <nuxt-link v-if="!isAuthenticated" to="/me/signin" class="block px-4 py-2 whitespace-no-wrap">
         Войти
       </nuxt-link>
 
-      <navmenu
-        ref="account"
-        v-if="isAuthenticated"
-        class="block px-4 py-2"
-        title="Мой ББТ"
-      >
-        <div class="flex flex-col text-black">
-          <a
-            @click="$auth.logout()"
-            href="#"
-            class="mx-4 my-2"
-          >
-            Выйти
-          </a>
-
-          <nuxt-link
-            to="/me"
-            class="mx-4 my-2"
-          >
-            Мои книги
-          </nuxt-link>
-        </div>
-      </navmenu>
+      <account-button />
 
       <cart-button
         ref="cart"
@@ -75,10 +53,11 @@
 import { Vue, Component, Prop, Watch } from 'vue-property-decorator'
 import { CartItem } from '../lib/cart'
 import CartButton from '~/components/CartButton.vue'
+import AccountButton from '~/components/AccountButton.vue'
 import { cartStore } from '~/store/index'
 import Logo from '~/assets/logo.svg'
 
-@Component({ components: { CartButton, Logo } })
+@Component({ components: { AccountButton, CartButton, Logo } })
 class NavBar extends Vue {
   private isOpen: boolean = false
 

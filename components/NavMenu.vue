@@ -1,16 +1,18 @@
 <template>
   <span class="relative">
-    <slot
-      :toggle="toggle"
-      name="activator"
+    <button
+      @click="toggle(true)"
+      class="hidden sm:block px-4 py-2 whitespace-no-wrap"
     >
-      <button
-        @click="toggle(true)"
-        class="px-4 py-2"
-      >
-        {{ title }}
-      </button>
-    </slot>
+      <slot name="activator">{{ title }}</slot>
+    </button>
+
+    <nuxt-link
+      :to="link"
+      class="sm:hidden"
+    >
+      {{ title }}
+    </nuxt-link>
 
     <!-- Overlay -->
     <button
@@ -37,7 +39,8 @@ import { Vue, Component, Prop } from 'vue-property-decorator'
 
 @Component
 class NavMenu extends Vue {
-  @Prop() readonly title: string
+  @Prop({ default: '' }) readonly title!: string
+  @Prop({ default: '' }) readonly link!: string
   private open: bool = false
 
   private toggle(value: bool) {

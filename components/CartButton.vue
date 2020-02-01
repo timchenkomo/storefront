@@ -1,15 +1,15 @@
 <template>
   <navmenu
     ref="navmenu"
+    title="Корзина"
   >
     <!-- Main button -->
-    <template v-slot:activator="ctx">
-      <button @click="ctx.toggle(true)" class="py-2 px-4 bg-blue-500 text-white rounded">
-        Корзина
-        <span v-show="count > 0" class="px-2 bg-red-600 rounded-full inline-block">
-          {{ count }}
-        </span>
-      </button>
+    <template v-slot:activator>
+      <!-- wide screen button -->
+      <span>Корзина</span>
+      <span v-show="count > 0" class="rounded-full inline-block">
+        ({{ count }})
+      </span>
     </template>
 
     <!-- Cart is empty -->
