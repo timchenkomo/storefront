@@ -2,10 +2,21 @@
   <form>
     <!-- Email and password -->
     <div class="mb-4">
-      <input v-model="login" class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="text" placeholder="EMail">
+      <input
+        v-model="login"
+        class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+        type="email"
+        placeholder="EMail"
+        autocomplete="on"
+      >
     </div>
     <div class="mb-6">
-      <input v-model="password" class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="password" placeholder="Пароль">
+      <input
+        v-model="password"
+        class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+        type="password"
+        placeholder="Пароль"
+      >
     </div>
 
     <!-- Sign In -->
