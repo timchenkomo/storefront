@@ -30,9 +30,8 @@
 import { Vue, Component } from 'vue-property-decorator'
 import { Group } from '~/lib/book'
 import Bookshelf from '~/components/Bookshelf.vue'
-import NavBar from '~/components/NavBar.vue'
 
-@Component({ layout: 'plain', components: { NavBar, Bookshelf } })
+@Component({ layout: 'plain', components: { Bookshelf } })
 class IndexPage extends Vue {
   private books: Group[] = [];
 

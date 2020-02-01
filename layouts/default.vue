@@ -20,13 +20,10 @@
 
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator'
-import NavBar from '@/components/NavBar.vue'
 import { msgStore } from '@/store/index'
 import { Message } from '@/lib/msg'
 
-@Component({
-  components: { NavBar }
-})
+@Component()
 class DefaultLayout extends Vue {
   private msgCleanInterval
 

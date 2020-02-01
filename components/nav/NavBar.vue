@@ -52,8 +52,8 @@
 <script lang="ts">
 import { Vue, Component, Prop, Watch } from 'vue-property-decorator'
 import { CartItem } from '../lib/cart'
-import CartButton from '~/components/CartButton.vue'
-import AccountButton from '~/components/AccountButton.vue'
+import CartButton from '~/components/nav/CartButton.vue'
+import AccountButton from '~/components/nav/AccountButton.vue'
 import { cartStore } from '~/store/index'
 import Logo from '~/assets/logo.svg'
 
