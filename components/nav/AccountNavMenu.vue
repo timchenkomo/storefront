@@ -2,6 +2,7 @@
   <nav-menu
     class="block px-4 py-2"
     title="Мой ББТ"
+    link="/me"
   >
     <div class="flex flex-col text-black">
       <nuxt-link

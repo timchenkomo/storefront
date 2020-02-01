@@ -2,6 +2,7 @@
   <nav-menu
     ref="navmenu"
     title="Корзина"
+    link="/cart"
   >
     <!-- Main button -->
     <template v-slot:activator>
