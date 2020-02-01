@@ -50,4 +50,5 @@ def send_welcome_email(receiver: str):
 
 
 def send_change_password_email(receiver: str, token: str):
+    """Send change password email to specified receiver."""
     send(receiver, "change_password", token=token)
