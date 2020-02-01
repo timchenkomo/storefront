@@ -37,13 +37,17 @@ def send_email(receiver: str, msg: str, msg_html: str = ""):
         server.quit()
 
 
-def send(receiver: str, template: str):
+def send(receiver: str, template: str, **args):
     """Send email usung specified template."""
     send_email(receiver,
-               JINJA.get_template(template + ".plain.jinja2").render(),
-               JINJA.get_template(template + ".html.jinja2").render())
+               JINJA.get_template(template + ".plain.jinja2").render(**args),
+               JINJA.get_template(template + ".html.jinja2").render(**args))
 
 
 def send_welcome_email(receiver: str):
     """Send welcome email to specified receiver."""
     send(receiver, "welcome")
+
+
+def send_change_password_email(receiver: str, token: str):
+    send(receiver, "change_password", token=token)

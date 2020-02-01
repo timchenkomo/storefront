@@ -1,8 +1,6 @@
 from datetime import timedelta
 from typing import Dict
 
-from jinja2 import Environment, FileSystemLoader
-
 from auth import (ACCESS_TOKEN_EXPIRE_MINUTES, PWD_CONTEXT, authenticate_user,
                   create_access_token, create_ot_access_token,
                   find_ot_access_token, get_current_active_user)
@@ -15,7 +13,7 @@ from forms.user import (ChangePasswordRequest, RestorePasswordRequest, SignIn,
                         SignUp, UserInfo)
 from mappers.products import model2group_nv, model2product
 from mappers.user import model2user
-from postman import send_email, send_welcome_email
+from postman import send_change_password_email, send_email, send_welcome_email
 from sqlalchemy.orm import Session
 
 router = APIRouter()  # pylint: disable=invalid-name
@@ -103,15 +101,8 @@ async def user_restore_password(
     db.add(token)
     db.commit()
 
-    # render email content
-    jinja = Environment(loader=FileSystemLoader("./templates"))
-    template_html = jinja.get_template("change_password.html.jinja2")
-    template_plain = jinja.get_template("change_password.plain.jinja2")
-    msg_html = template_html.render(token=token.token)
-    msg_plain = template_plain.render(token=token.token)
-
     # send email
-    tasks.add_task(send_email, user.email, msg_plain, msg_html)
+    tasks.add_task(send_change_password_email, user.email, token=token.token)
 
     return {"success": True}
 
