@@ -39,6 +39,7 @@ import DownloadIcon from '~/assets/download.svg'
 
 import { Group, UrlInfo } from '~/lib/book'
 import { msgStore } from '@/store/index'
+import { getProductUrl } from '@/lib/download'
 
 @Component({
   middleware: ['auth'],
@@ -73,7 +74,7 @@ class MeIndexPage extends Vue {
     const getProductUrls = function(product: Product) {
       return product.urls.map(url => ({
         ...url, // get all the data from original object
-        'url': '/download/' + product.slug + '/' + url.url // fix url to point to right place
+        'url': getProductUrl(product, url.url) // fix url to point to right place
       }))
     }
 

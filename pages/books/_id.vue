@@ -45,14 +45,14 @@
         :key="product.slug"
       >
         <div
-          v-if="!hasAlreadyBought(product)"
           class="flex flex-col md:flex-row my-4"
         >
           <!-- Additional components accoring to product type -->
           <div
             :is="product.type + '-book'"
-            :data="product"
+            :product="product"
             :group="group"
+            :bought="hasAlreadyBought(product)"
           />
 
           <!-- Buy product button -->
@@ -63,22 +63,6 @@
             :price="product.price"
             class="flex-grow my-1"
           />
-        </div>
-
-        <!-- User has already bought this product -->
-        <div
-          v-else
-          class="flex flex-col"
-        >
-          <a
-            v-for="url in product.urls"
-            :key="url.url"
-            :href="'/download/' + product.slug + '/' + url.url"
-            class="bg-gray-200 rounded text-blue-500 text-center px-4 py-2 my-1 text-sm"
-            download
-          >
-            Скачать {{ url.ext.toUpperCase() }}
-          </a>
         </div>
 
         <!-- Additional info -->
