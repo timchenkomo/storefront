@@ -51,7 +51,6 @@
           <div
             :is="product.type + '-book'"
             :product="product"
-            :group="group"
             :bought="hasAlreadyBought(product)"
           />
 
