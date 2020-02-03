@@ -7,7 +7,7 @@ from forms.products import Group, Product, UrlInfo
 def model2url(url: str) -> UrlInfo:
     """Converts url into UrlInfo."""
     ext = ''.join(Path(url).suffixes)
-    return UrlInfo(url=url, ext=ext, size="")
+    return UrlInfo(url=url, ext=ext[1:], size="")
 
 
 def model2product(model: models.Product) -> Product:
