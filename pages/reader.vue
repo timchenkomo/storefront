@@ -2,6 +2,7 @@
   <client-only>
     <div>
       <div id="area" />
+
       <button
         @click="prevPage"
         class="mx-1 px-1 py-2 rounded text-black left"
@@ -14,6 +15,8 @@
       >
         →
       </button>
+      <keypress :key-code="39" @pressed="nextPage" event="keydown" />
+      <keypress :key-code="37" @pressed="prevPage" event="keydown" />
     </div>
   </client-only>
 </template>
@@ -21,17 +24,19 @@
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator'
 import Epub from 'epubjs'
+import Keypress from 'vue-keypress'
 import { getSampleUrl } from '@/lib/download'
 
-@Component({ layout: 'wide' })
+@Component({
+  components: { Keypress },
+  layout: 'wide'
+})
 class ReaderPage extends Vue {
   private redention: any;
 
   private mounted() {
     const productSlug = this.$route.query.p
     const epubUrl = this.downloadUrl(productSlug)
-
-    console.log(epubUrl)
 
     const book = Epub(epubUrl)
     this.rendition = book.renderTo('area', {
