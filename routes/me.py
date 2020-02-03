@@ -1,20 +1,21 @@
 from datetime import timedelta
 from typing import Dict
 
+from fastapi import APIRouter, BackgroundTasks, Depends, HTTPException
+from sqlalchemy.orm import Session
+
 from auth import (ACCESS_TOKEN_EXPIRE_MINUTES, PWD_CONTEXT, authenticate_user,
                   create_access_token, create_ot_access_token,
                   find_ot_access_token, get_current_active_user)
 from db import db_session
 from db.models import AccessToken, User
-from fastapi import APIRouter, BackgroundTasks, Depends, HTTPException
 from forms.auth import Token
 from forms.products import Group
 from forms.user import (ChangePasswordRequest, RestorePasswordRequest, SignIn,
                         SignUp, UserInfo)
 from mappers.products import model2group_nv, model2product
 from mappers.user import model2user
-from postman import send_change_password_email, send_email, send_welcome_email
-from sqlalchemy.orm import Session
+from postman import send_change_password_email, send_welcome_email
 
 router = APIRouter()  # pylint: disable=invalid-name
 

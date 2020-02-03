@@ -2,14 +2,15 @@ from datetime import datetime, timedelta
 from typing import Optional
 from uuid import uuid4
 
-from db import db_session
-from db.models import AccessToken, User
 from fastapi import Depends, HTTPException, Security
 from fastapi.security import APIKeyCookie, OAuth2PasswordBearer
-from forms.auth import TokenPayload
 from jwt import PyJWTError, decode, encode
 from passlib.context import CryptContext  # type: ignore
 from sqlalchemy.orm import Session
+
+from db import db_session
+from db.models import AccessToken, User
+from forms.auth import TokenPayload
 
 # to get a string like this run:
 # openssl rand -hex 32
