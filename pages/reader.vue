@@ -74,4 +74,12 @@ export default ReaderPage
     right: 0%;
     transform: translate(0%, -50%);
   }
+
+  #area {
+    background: white url('~assets/pages/reader/loader.gif') center center no-repeat;
+  }
+
+  #area .epub-view > iframe {
+    background: white;
+  }
 </style>
