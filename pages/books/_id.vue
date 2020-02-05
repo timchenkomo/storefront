@@ -83,7 +83,6 @@
 
 <script lang="ts">
 import { Vue, Component } from 'nuxt-property-decorator'
-import InCartButton from '@/components/InCartButton.vue'
 import { cartStore } from '~/store'
 import { Group, EmptyGroup, Product } from '@/lib/book'
 
@@ -93,7 +92,6 @@ import PrintedBook from '@/components/product/PrintedBook.vue'
 
 @Component({
   components: {
-    InCartButton,
     DigitalBook,
     AudioBook,
     PrintedBook
