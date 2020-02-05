@@ -16,6 +16,6 @@ export default class CartModule extends VuexModule {
 
   @Mutation
   public remove(id: string) {
-    this.items = this.items.filter(x => false)
+    this.items = this.items.filter(x => x.id !== id)
   }
 }
