@@ -111,13 +111,13 @@ class NavBar extends Vue {
   }
 
   private get components(): str {
-    if (this.$route.path === '/reader/') {
+    if (this.$route.path.startsWith('/reader')) {
       return 'ReaderNavExtension'
     }
   }
 
   private get showMainComponents(): boolean {
-    if (this.$route.path === '/reader/') {
+    if (this.$route.path.startsWith('/reader')) {
       return false
     }
     return true
