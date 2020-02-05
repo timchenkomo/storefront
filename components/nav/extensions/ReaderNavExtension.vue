@@ -1,16 +1,18 @@
 <template>
-  <div class="flex flex-row items-center">
+  <div class="flex flex-col sm:flex-row items-center">
+    <!-- Return back button -->
     <button
-      class="px-2 py-4"
       @click="onReturnClicked"
+      class="px-4 py-4"
     >
       ← Назад
     </button>
 
+    <!-- Put in cart button -->
     <in-cart-button
       v-if="product.price"
-      @add="putInCart(product)"
-      @checkout="checkout"
+      @add="onPutInCartClicked(product)"
+      @checkout="onCheckoutClicked"
       @remove="onRemoveClicked"
       :inCart="isInCart(product.slug)"
       :price="product.price"
@@ -27,19 +29,24 @@ import { productType } from '~/lib/book'
 class ReaderNavExtension extends Vue {
   private product: any = {}
 
-  /** Returns slug of a product opened in a reader. **/
-  private get productSlug(): string {
-    return this.$route.query.p
-  }
-
   /** Fetch all the information about product when opened **/
   private async mounted() {
     const { data } = await this.$axios.get('/product/' + this.productSlug)
     this.product = data
   }
 
+  /** Returns slug of a product opened in a reader. **/
+  private get productSlug(): string {
+    return this.$route.query.p
+  }
+
+  /** Is the specified product was added to the cart? **/
+  private isInCart(slug: String): boolean {
+    return cartStore.items.map(x => x.id).includes(slug)
+  }
+
   /** Put specified product into the cart **/
-  private putInCart(product: Product) {
+  private onPutInCartClicked(product: Product) {
     cartStore.add({
       id: product.slug,
       title: product.title,
@@ -50,17 +57,11 @@ class ReaderNavExtension extends Vue {
   }
 
   /** Go to the checkout page **/
-  private checkout() {
+  private onCheckoutClicked() {
     this.$router.push('/cart')
   }
 
-  /** Is the specified product was added to the cart? **/
-  private isInCart(slug: String): boolean {
-    return cartStore.items
-      .map(x => x.id)
-      .includes(slug)
-  }
-
+  /** On return button clicker. Return back **/
   private onReturnClicked() {
     this.$router.back()
   }
