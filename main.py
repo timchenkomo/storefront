@@ -9,7 +9,7 @@ Base.metadata.create_all(bind=ENGINE)
 
 APP = FastAPI()
 APP.include_router(me.router, prefix="/api/me", tags=["me"])
-APP.include_router(products.router, prefix="/api/products", tags=["products"])
+APP.include_router(products.router, prefix="/api", tags=["products"])
 APP.include_router(download.router, prefix="/api/download", tags=["download"])
 
 ORIGINS = [

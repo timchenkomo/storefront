@@ -19,6 +19,8 @@ class Product(BaseModel):
     year_published: Optional[int]
     series: Optional[str]
     urls: List[UrlInfo]
+    title: Optional[str]
+    group_slug: Optional[str]
 
 
 class Group(BaseModel):
