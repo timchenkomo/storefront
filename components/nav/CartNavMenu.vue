@@ -25,15 +25,15 @@
     <!-- Cart -->
     <div
       v-if="!isEmpty"
-      class="w-64 flex flex-col"
+      class="flex flex-col whitespace-no-wrap"
     >
       <!-- Total price -->
       <div
         v-if="!isEmpty"
-        class="my-2 mx-4 flex"
+        class="my-2 mx-4 flex items-baseline"
       >
-        <span class="w-full">Итого:</span>
-        <span>{{ totalPrice }}</span>&nbsp;₽
+        <span class="w-full mx-2">Итого:</span>
+        <span class="text-2xl">{{ totalPrice }}</span>&nbsp;₽
       </div>
       <hr class="my-2">
 
@@ -42,10 +42,10 @@
         v-for="item in items"
         :key="item.id"
         :to="'/books/' + item.url"
-        class="flex mx-4 my-2 items-baseline"
+        class="flex mx-2 my-1 px-2 py-2 items-baseline hover:bg-gray-200 rounded"
       >
         <span class="w-full">{{ item.title }}</span>
-        <span v-if="item.type" class="px-2 text-gray-100 text-xs bg-gray-600 rounded-full">
+        <span v-if="item.type" class="ml-4 px-2 text-gray-100 text-xs bg-gray-500 rounded-full">
           {{ item.type }}
         </span>
       </nuxt-link>
