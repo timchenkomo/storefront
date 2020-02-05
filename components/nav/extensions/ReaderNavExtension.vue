@@ -11,6 +11,7 @@
       v-if="product.price"
       @add="putInCart(product)"
       @checkout="checkout"
+      @remove="onRemoveClicked"
       :inCart="isInCart(product.slug)"
       :price="product.price"
     />
@@ -61,6 +62,11 @@ class ReaderNavExtension extends Vue {
 
   private onReturnClicked() {
     this.$router.back()
+  }
+
+  /** Remove product from cart. **/
+  private onRemoveClicked() {
+    cartStore.remove(this.productSlug)
   }
 }
 

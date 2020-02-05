@@ -58,6 +58,7 @@
           <in-cart-button
             @add="putInCart(product)"
             @checkout="checkout"
+            @remove="removeFromCart(product)"
             :inCart="isInCart(product.slug)"
             :price="product.price"
             class="flex-grow my-1"
@@ -129,6 +130,11 @@ class BookPage extends Vue {
       price: product.price,
       url: this.group.slug
     })
+  }
+
+  /** Remove product from cart **/
+  private removeFromCart(product: Product) {
+    cartStore.remove(product.slug)
   }
 
   /** Go to the checkout page **/
