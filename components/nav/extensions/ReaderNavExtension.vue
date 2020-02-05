@@ -52,7 +52,7 @@ class ReaderNavExtension extends Vue {
       title: product.title,
       type: productType(product.type),
       price: product.price,
-      url: product.slug
+      url: product.group_slug
     })
   }
 

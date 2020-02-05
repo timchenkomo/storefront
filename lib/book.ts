@@ -43,6 +43,7 @@ export interface Product {
   series: string;
   year_published: number;
   publisher: string;
+  group_slug: string;
 }
 
 export interface UrlInfo {
