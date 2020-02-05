@@ -55,8 +55,8 @@ export default {
    */
   axios: {
     credentials: true,
-    baseURL: 'http://localhost:8000/',
-    browserBaseURL: 'http://localhost:8000/'
+    baseURL: 'http://localhost:8000/api',
+    browserBaseURL: 'http://localhost:8000/api'
   },
   /*
    ** Build configuration
