@@ -25,23 +25,42 @@
       :class="{'text-white': inverted, 'block': isOpen, 'hidden': !isOpen }"
       class="px-2 pt-2 pb-4 sm:flex sm:p-0 items-center"
     >
-      <nuxt-link to="/about" class="block px-4 py-2 whitespace-no-wrap">
+      <!-- Static links -->
+      <nuxt-link
+        v-if="showMainComponents"
+        to="/about"
+        class="block px-4 py-2 whitespace-no-wrap"
+      >
         Об издательстве
       </nuxt-link>
 
-      <nuxt-link to="/books" class="block px-4 py-2 whitespace-no-wrap">
+      <nuxt-link
+        v-if="showMainComponents"
+        to="/books"
+        class="block px-4 py-2 whitespace-no-wrap"
+      >
         Библиотека
       </nuxt-link>
 
-      <nuxt-link v-if="!isAuthenticated" to="/me/signin" class="block px-4 py-2 whitespace-no-wrap">
+      <!-- Account -->
+      <nuxt-link
+        v-if="!isAuthenticated && showMainComponents"
+        to="/me/signin"
+        class="block px-4 py-2 whitespace-no-wrap"
+      >
         Войти
       </nuxt-link>
       <account-nav-menu
-        v-else
+        v-if="isAuthenticated && showMainComponents"
       />
 
+      <!-- Additional components -->
+      <div :is="components" />
+
+      <!-- Cart button -->
       <cart-nav-menu
         ref="cart"
+        v-if="showMainComponents"
         :items="myCartItems"
         @checkout="onCheckoutClicked"
         class="block px-4 py-2"
@@ -57,8 +76,11 @@ import CartNavMenu from '~/components/nav/CartNavMenu.vue'
 import AccountNavMenu from '~/components/nav/AccountNavMenu.vue'
 import { cartStore } from '~/store/index'
 import Logo from '~/assets/logo.svg'
+import ReaderNavExtension from '~/components/nav/extensions/ReaderNavExtension.vue'
 
-@Component({ components: { AccountNavMenu, CartNavMenu, Logo } })
+@Component({
+  components: { AccountNavMenu, CartNavMenu, Logo, ReaderNavExtension }
+})
 class NavBar extends Vue {
   private isOpen: boolean = false
 
@@ -70,7 +92,9 @@ class NavBar extends Vue {
     if (this.$refs.account) {
       this.$refs.account.toggle(false)
     }
-    this.$refs.cart.toggle(false)
+    if (this.$refs.cart) {
+      this.$refs.cart.toggle(false)
+    }
   }
 
   get isAuthenticated(): boolean {
@@ -84,6 +108,19 @@ class NavBar extends Vue {
   private onCheckoutClicked() {
     this.isCartDropdownOpen = false
     this.$router.push('/cart')
+  }
+
+  private get components(): str {
+    if (this.$route.path.startsWith('/reader')) {
+      return 'ReaderNavExtension'
+    }
+  }
+
+  private get showMainComponents(): boolean {
+    if (this.$route.path.startsWith('/reader')) {
+      return false
+    }
+    return true
   }
 }
 

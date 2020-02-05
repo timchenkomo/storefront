@@ -13,4 +13,9 @@ export default class CartModule extends VuexModule {
   public add(item: CartItem) {
     this.items.push(item)
   }
+
+  @Mutation
+  public remove(id: string) {
+    this.items = this.items.filter(x => false)
+  }
 }

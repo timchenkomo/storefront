@@ -24,10 +24,12 @@
     "@nuxtjs/axios": "^5.9.3",
     "@typescript-eslint/eslint-plugin": "^2.8.0",
     "@typescript-eslint/parser": "^2.8.0",
+    "epubjs": "^0.3.85",
     "md5": "^2.2.1",
     "nuxt": "^2.0.0",
     "nuxt-property-decorator": "^2.5.0",
     "nuxt-svg-loader": "^1.0.1",
+    "vue-keypress": "^1.1.0",
     "vuex-module-decorators": "^0.11.0",
     "vuex-persistedstate": "^2.7.0"
   },

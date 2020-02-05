@@ -43,6 +43,7 @@ export interface Product {
   series: string;
   year_published: number;
   publisher: string;
+  group_slug: string;
 }
 
 export interface UrlInfo {
@@ -64,4 +65,11 @@ export const EmptyProduct: Product = {
   series: '',
   year_published: 0,
   publisher: ''
+}
+
+export function productType(t: string): string {
+  if (t === 'digital') { return 'Эл. книга' }
+  if (t === 'audio') { return 'Аудиокнига' }
+  if (t === 'printed') { return 'Печатная' }
+  return 'Книга'
 }

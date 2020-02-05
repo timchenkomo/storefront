@@ -74,7 +74,7 @@ class MeIndexPage extends Vue {
     const getProductUrls = function(product: Product) {
       return product.urls.map(url => ({
         ...url, // get all the data from original object
-        'url': getProductUrl(product, url.url) // fix url to point to right place
+        'url': getProductUrl(product, url.ext) // fix url to point to right place
       }))
     }
 

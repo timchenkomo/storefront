@@ -51,7 +51,6 @@
           <div
             :is="product.type + '-book'"
             :product="product"
-            :group="group"
             :bought="hasAlreadyBought(product)"
           />
 
@@ -59,6 +58,7 @@
           <in-cart-button
             @add="putInCart(product)"
             @checkout="checkout"
+            @remove="removeFromCart(product)"
             :inCart="isInCart(product.slug)"
             :price="product.price"
             class="flex-grow my-1"
@@ -84,9 +84,8 @@
 
 <script lang="ts">
 import { Vue, Component } from 'nuxt-property-decorator'
-import InCartButton from '@/components/InCartButton.vue'
 import { cartStore } from '~/store'
-import { Group, EmptyGroup, Product } from '@/lib/book'
+import { Group, EmptyGroup, Product, productType } from '@/lib/book'
 
 import DigitalBook from '@/components/product/DigitalBook.vue'
 import AudioBook from '@/components/product/AudioBook.vue'
@@ -94,7 +93,6 @@ import PrintedBook from '@/components/product/PrintedBook.vue'
 
 @Component({
   components: {
-    InCartButton,
     DigitalBook,
     AudioBook,
     PrintedBook
@@ -134,6 +132,11 @@ class BookPage extends Vue {
     })
   }
 
+  /** Remove product from cart **/
+  private removeFromCart(product: Product) {
+    cartStore.remove(product.slug)
+  }
+
   /** Go to the checkout page **/
   private checkout() {
     this.$router.push('/cart')
@@ -155,10 +158,7 @@ class BookPage extends Vue {
   }
 
   private productType(type: string): string {
-    if (type === 'digital') { return 'Эл. книга' }
-    if (type === 'audio') { return 'Аудиокнига' }
-    if (type === 'printed') { return 'Печатная' }
-    return 'Книга'
+    return productType(type)
   }
 }
 
