@@ -21,6 +21,7 @@
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator'
 import { cartStore } from '~/store'
+import { productType } from '~/lib/book'
 
 @Component
 class ReaderNavExtension extends Vue {
@@ -42,7 +43,7 @@ class ReaderNavExtension extends Vue {
     cartStore.add({
       id: product.slug,
       title: product.title,
-      type: 'Залупа',
+      type: productType(product.type),
       price: product.price,
       url: product.slug
     })

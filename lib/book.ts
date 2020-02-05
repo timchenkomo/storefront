@@ -65,3 +65,10 @@ export const EmptyProduct: Product = {
   year_published: 0,
   publisher: ''
 }
+
+export function productType(t: string): string {
+  if (t === 'digital') { return 'Эл. книга' }
+  if (t === 'audio') { return 'Аудиокнига' }
+  if (t === 'printed') { return 'Печатная' }
+  return 'Книга'
+}

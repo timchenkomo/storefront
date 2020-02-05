@@ -85,7 +85,7 @@
 <script lang="ts">
 import { Vue, Component } from 'nuxt-property-decorator'
 import { cartStore } from '~/store'
-import { Group, EmptyGroup, Product } from '@/lib/book'
+import { Group, EmptyGroup, Product, productType } from '@/lib/book'
 
 import DigitalBook from '@/components/product/DigitalBook.vue'
 import AudioBook from '@/components/product/AudioBook.vue'
@@ -158,10 +158,7 @@ class BookPage extends Vue {
   }
 
   private productType(type: string): string {
-    if (type === 'digital') { return 'Эл. книга' }
-    if (type === 'audio') { return 'Аудиокнига' }
-    if (type === 'printed') { return 'Печатная' }
-    return 'Книга'
+    return productType(type)
   }
 }
 
