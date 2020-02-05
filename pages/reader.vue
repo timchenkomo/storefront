@@ -54,7 +54,7 @@ class ReaderPage extends Vue {
   }
 
   private downloadUrl(productSlug: str) {
-    return 'http://localhost' + getSampleUrl({ slug: productSlug }, 'epub')
+    return 'http://localhost:8000' + getSampleUrl({ slug: productSlug }, 'epub')
   }
 }
 
