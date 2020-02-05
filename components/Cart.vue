@@ -12,26 +12,36 @@
       v-if="!isEmpty"
     >
       <!-- List of items in cart -->
-      <nuxt-link
-        v-for="(item, idx) in items"
+      <div
+        v-for="item in items"
         :key="item.id"
-        :to="'/books/' + item.url"
-        class="flex mx-4 my-2 items-baseline"
+        class="flex mx-4 my-2 items-baseline hover:bg-gray-200 px-1 py-1 rounded"
       >
         <span class="w-full">
-          <span>{{ idx +1 }}. </span>
-          <span>{{ item.title }}</span>
-          <span v-if="item.type" class="px-2 text-gray-100 text-xs bg-gray-600 rounded-full">
-            {{ item.type }}
-          </span>
+          <!-- Delete item button -->
+          <span
+            @click.stop="onDeleteItemClicked(item)"
+            class="mr-1 px-2 font rounded text-red-500 bg-red-200 opacity-25 hover:opacity-100 cursor-pointer"
+          >✕</span>
+
+          <!-- Title and type -->
+          <nuxt-link :to="'/books/' + item.url">
+            {{ item.title }}
+
+            <span v-if="item.type" class="px-2 mx-2 text-gray-100 text-xs bg-gray-500 rounded-full">
+              {{ item.type }}
+            </span>
+          </nuxt-link>
         </span>
+
+        <!-- Price -->
         <span>{{ item.price }}&nbsp;₽</span>
-      </nuxt-link>
+      </div>
 
       <!-- Total price -->
-      <div class="my-2 mx-4 flex">
-        <span class="w-full">Итого:</span>
-        <span>{{ totalPrice }}</span>&nbsp;₽
+      <div class="mx-4 flex items-baseline">
+        <span class="w-full" />
+        <span class="text-3xl font-bold">{{ totalPrice }}</span>&nbsp;₽
       </div>
 
       <!-- Put an order -->
@@ -58,6 +68,7 @@
 import { Vue, Component, Prop } from 'vue-property-decorator'
 import md5 from 'md5'
 import { CartItem } from '../lib/cart'
+import { cartStore } from '~/store/index'
 
 @Component
 class Cart extends Vue {
@@ -77,6 +88,10 @@ class Cart extends Vue {
 
   private get signature(): string {
     return md5('bbt-online:' + this.totalPrice + ':0:BJYhRoXsT454wP7aEz5y')
+  }
+
+  private onDeleteItemClicked(item: CartItem) {
+    cartStore.remove(item.id)
   }
 }
 
