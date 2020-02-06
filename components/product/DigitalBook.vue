@@ -1,16 +1,16 @@
 <template>
-  <div class="flex flex-row">
+  <div class="flex flex-col sm:flex-row">
     <!-- Read sample -->
     <nuxt-link
       :to="readerUrl"
-      class="bg-blue-500 rounded text-white text-center px-4 py-2 my-1 md:mr-2 text-sm"
+      class="w-full bg-blue-500 rounded text-white text-center px-4 py-2 my-1 mr-2 text-sm"
     >
       Читать
     </nuxt-link>
 
     <!-- Download sample -->
     <div
-      class="bg-blue-500 rounded text-white text-center px-4 py-2 my-1 md:mr-2 text-sm"
+      class="bg-blue-500 rounded text-white text-center px-4 py-2 my-1 md:mr-2 text-sm whitespace-no-wrap"
     >
       {{ actionText }}
       <a
