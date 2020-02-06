@@ -31,7 +31,7 @@
           <a
             :class="{'bg-gray-200 text-blue-500': product.slug == productSlug, '': product.slug != productSlug}"
             @click="productSlug = product.slug"
-            class="text-center block rounded py-2 px-4 cursor-pointer text-sm"
+            class="text-center block rounded py-2 px-4 cursor-pointer text-sm whitespace-no-wrap"
           >
             {{ productType(product.type) }}
           </a>
