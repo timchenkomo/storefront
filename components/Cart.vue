@@ -16,26 +16,28 @@
       <div
         v-for="item in items"
         :key="item.id"
-        class="flex mx-4 my-2 items-baseline hover:bg-gray-200 px-1 py-1 rounded"
+        class="flex sm:mx-4 my-2 hover:bg-gray-200 px-1 py-1 rounded items-baseline"
       >
-        <span class="w-full">
-          <!-- Delete item button -->
-          <span
-            @click.stop="onDeleteItemClicked(item)"
-            class="mr-1 px-2 font rounded text-red-500 bg-red-200 opacity-25 hover:opacity-100 cursor-pointer"
-          >✕</span>
+        <!-- Delete item button -->
+        <span
+          @click.stop="onDeleteItemClicked(item)"
+          class="mr-1 px-2 font rounded text-red-500 bg-red-200 opacity-25 hover:opacity-100 cursor-pointer"
+        >✕</span>
 
-          <!-- Title and type -->
-          <nuxt-link :to="'/books/' + item.url">
-            {{ item.title }}
+        <!-- Title and type -->
+        <nuxt-link
+          :to="'/books/' + item.url"
+          class="truncate"
+        >
+          {{ item.title }}
+        </nuxt-link>
 
-            <span v-if="item.type" class="px-2 mx-2 text-gray-100 text-xs bg-gray-500 rounded-full">
-              {{ item.type }}
-            </span>
-          </nuxt-link>
+        <span v-if="item.type" class="truncate px-2 mx-2 text-gray-100 text-xs bg-gray-400 rounded-full">
+          {{ item.type }}
         </span>
 
         <!-- Price -->
+        <span class="flex-grow" />
         <span>{{ item.price }}&nbsp;₽</span>
       </div>
 
