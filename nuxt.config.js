@@ -1,7 +1,8 @@
 export default {
   mode: 'universal',
   env: {
-    baseUrl: process.env.BASE_URL || 'http://localhost:8000'
+    baseUrl: process.env.BASE_URL || 'http://localhost:3000',
+    baseUrlApi: process.env.BASE_URL_API || 'http://localhost:8000'
   },
   /*
    ** Headers of the page
@@ -58,8 +59,8 @@ export default {
    */
   axios: {
     credentials: true,
-    baseURL: 'http://localhost:8000/api',
-    browserBaseURL: 'http://localhost:8000/api'
+    baseURL: (process.env.BASE_URL || 'http://localhost:8000') + '/api',
+    browserBaseURL: (process.env.BASE_URL_API || 'http://localhost:8000') + '/api'
   },
   /*
    ** Build configuration

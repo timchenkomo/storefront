@@ -30,7 +30,7 @@ import { getSampleUrl } from '~/lib/download.ts'
     const url = getSampleUrl(this.product, 'mp3')
 
     if (!this.audio) {
-      this.audio = this.createAudio(process.env.baseUrl + url)
+      this.audio = this.createAudio(process.env.baseUrlApi + url)
       this.audio.play()
     } else if (this.playing) {
       this.audio.pause()
