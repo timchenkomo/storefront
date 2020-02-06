@@ -14,5 +14,5 @@ function initialiseStores(store: Store<any>): void {
 export {
   initialiseStores,
   cartStore,
-  msgStore,
+  msgStore
 }

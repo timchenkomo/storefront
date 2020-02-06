@@ -32,12 +32,10 @@ import { getSampleUrl } from '~/lib/download.ts'
     if (!this.audio) {
       this.audio = this.createAudio(process.env.baseUrl + url)
       this.audio.play()
+    } else if (this.playing) {
+      this.audio.pause()
     } else {
-      if (this.playing) { // eslint-disable-line
-        this.audio.pause()
-      } else {
-        this.audio.play()
-      }
+      this.audio.play()
     }
   }
 
