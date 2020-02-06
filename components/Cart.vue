@@ -3,8 +3,9 @@
     <!-- Cart is empty -->
     <div
       v-if="isEmpty"
+      class="text-center text-xl"
     >
-      Корзина пуста
+      Ваша корзина пуста
     </div>
 
     <!-- Cart -->
