@@ -19,7 +19,7 @@ class User(Base):
     hashed_password = Column(String(100), nullable=False)
     disabled = Column(Boolean, nullable=False)
 
-    purchases = relationship("Purchase", back_populates="user")
+    purchases = relationship("Purchase", back_populates="user", lazy="dynamic")
 
 
 class Author(Base):
@@ -90,10 +90,12 @@ class Purchase(Base):
 
     __tablename__ = "purchases"
     id = Column(Integer, primary_key=True, index=True)
+    invoice_id = Column(Integer, nullable=False, index=True)
     user_id = Column(Integer, ForeignKey("users.id"), index=True)
     product_id = Column(Integer, ForeignKey("products.id"), index=True)
     price = Column(Integer)
     date = Column(DateTime, nullable=False)
+    paid = Column(Boolean, nullable=False, default=False)
 
     product = relationship("Product", back_populates="purchases")
     user = relationship("User", back_populates="purchases")
