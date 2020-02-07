@@ -3,7 +3,7 @@ from starlette.middleware.cors import CORSMiddleware
 
 from db.db import ENGINE
 from db.models import Base
-from routes import download, me, products, payment
+from routes import download, me, payment, products
 
 Base.metadata.create_all(bind=ENGINE)
 

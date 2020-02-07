@@ -1,15 +1,14 @@
-from typing import List
-from os import environ
-from hashlib import md5
 from datetime import datetime
+from hashlib import md5
+from os import environ
+from typing import List
 
+from fastapi import APIRouter, Depends, Form, HTTPException
 from sqlalchemy.orm import Session
-from fastapi import APIRouter, HTTPException, Form, Depends
 
+from auth import get_current_active_user
 from db import db_session
 from db.models import Product, Purchase, User
-from auth import get_current_active_user
-
 
 PASS1 = environ.get("MRH_PASS_1", "BJYhRoXsT454wP7aEz5y")
 PASS2 = environ.get("MRH_PASS_2", "eJG4iAeXYZ2xMd9Ob4y3")

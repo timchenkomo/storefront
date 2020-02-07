@@ -8,7 +8,7 @@ from auth import (ACCESS_TOKEN_EXPIRE_MINUTES, PWD_CONTEXT, authenticate_user,
                   create_access_token, create_ot_access_token,
                   find_ot_access_token, get_current_active_user)
 from db import db_session
-from db.models import AccessToken, User, Purchase
+from db.models import AccessToken, Purchase, User
 from forms.auth import Token
 from forms.products import Group
 from forms.user import (ChangePasswordRequest, RestorePasswordRequest, SignIn,
