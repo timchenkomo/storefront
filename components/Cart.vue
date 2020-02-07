@@ -48,21 +48,13 @@
       </div>
 
       <!-- Put an order -->
-      <form action="https://auth.robokassa.ru/Merchant/Index.aspx" method="POST">
-        <input type="hidden" name="IsTest" value="1">
-        <input type="hidden" name="MerchantLogin" value="bbt-online">
-        <input :value="totalPrice" type="hidden" name="OutSum">
-        <input type="hidden" name="InvId" value="0">
-        <input type="hidden" name="Description" value="Книжечек прикупил">
-        <input :value="signature" type="hidden" name="SignatureValue">
-        <input type="hidden" name="Culture" value="ru">
-        <input type="hidden" name="Email" value="test@test.ru">
-        <input type="hidden" name="ExpirationDate" value="2029-01-16T12:00">
-
-        <hr class="my-4">
-
-        <input class="px-4 py-2 text-white bg-blue-500 hover:bg-blue-600 rounded float-right" type="submit" value="Оплатить">
-      </form>
+      <hr class="mt-2 mb-4">
+      <input
+        @click="save"
+        class="px-4 py-2 text-white bg-blue-500 hover:bg-blue-600 rounded float-right"
+        type="submit"
+        value="Оплатить"
+      >
     </div>
   </div>
 </template>
@@ -77,6 +69,25 @@ import { cartStore } from '~/store/index'
 class Cart extends Vue {
   @Prop({ default: [] }) readonly items!: CartItem[];
 
+  private async save() {
+    // save invoice at server and get invoice ID
+    const itemsId = this.items.map(x => x.id)
+    const { data } = await this.$axios.post('/payment/create', itemsId)
+    const invoiceId = data.invoice_id
+
+    // calculate signature
+    const signature = md5('bbt-online:' + this.totalPrice + ':' + invoiceId + ':BJYhRoXsT454wP7aEz5y')
+
+    // redirect to robocassa
+    const url = 'https://auth.robokassa.ru/Merchant/Index.aspx' +
+                '?IsTest=1' +
+                '&MerchantLogin=bbt-online' +
+                '&OutSum=' + this.totalPrice +
+                '&InvId=' + invoiceId +
+                '&SignatureValue=' + signature
+    window.location = url
+  }
+
   private get count(): number {
     return this.items.length
   }
@@ -87,10 +98,6 @@ class Cart extends Vue {
 
   private get totalPrice(): number {
     return this.items.map(x => x.price).reduce((a, b) => a + b, 0)
-  }
-
-  private get signature(): string {
-    return md5('bbt-online:' + this.totalPrice + ':0:BJYhRoXsT454wP7aEz5y')
   }
 
   private onDeleteItemClicked(item: CartItem) {
