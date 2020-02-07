@@ -6,7 +6,6 @@ from fastapi import APIRouter, HTTPException, Form, Depends
 from db import db_session
 from db.models import Product, Purchase, User
 
-ROOT = environ.get("DOWNLOADS_PATH", "../downloads")
 PASS1 = environ.get("MRH_PASS_1", "BJYhRoXsT454wP7aEz5y")
 PASS2 = environ.get("MRH_PASS_2", "eJG4iAeXYZ2xMd9Ob4y3")
 
