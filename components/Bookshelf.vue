@@ -1,5 +1,5 @@
 <template functional>
-  <div class="flex flex-row flex-wrap justify-around">
+  <div class="flex flex-row flex-wrap justify-center">
     <book-card
       v-for="book in props.books"
       :key="book.slug"
@@ -9,7 +9,7 @@
       :url="'/book/' + book.slug"
       :class="props.productClass"
       @click="listeners.click ? listeners.click(book) : null"
-      class="mx-4 w-40"
+      class="mx-4 w-64 sm:w-40"
     >
       <template v-slot:cover>
         <slot v-bind:product="book" name="cover" />
