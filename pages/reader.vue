@@ -36,7 +36,7 @@ class ReaderPage extends Vue {
 
   private mounted() {
     const productSlug = this.$route.query.p
-    const epubUrl = this.downloadUrl(productSlug)
+    const epubUrl = getSampleUrl({ slug: productSlug }, 'epub')
 
     const book = Epub(epubUrl)
     this.rendition = book.renderTo('area', {
@@ -51,10 +51,6 @@ class ReaderPage extends Vue {
 
   private nextPage() {
     this.rendition.next()
-  }
-
-  private downloadUrl(productSlug: str) {
-    return process.env.baseUrlApi + getSampleUrl({ slug: productSlug }, 'epub')
   }
 }
 
