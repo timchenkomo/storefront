@@ -5,11 +5,11 @@ import { Group, Product } from '@/lib/book.ts'
 // Reader : /{product_slug}.epub         : {product_slug}/{product_slug}.epub
 
 export function getSampleUrl(product: Product, ext: string) {
-  return '/api/download/' + product.slug + '/sample.' + ext
+  return process.env.baseUrlApi + '/api/download/' + product.slug + '/sample.' + ext
 }
 
 export function getProductUrl(product: Product, ext: string) {
-  return '/api/download/' + product.slug + '.' + ext
+  return process.env.baseUrlApi + '/api/download/' + product.slug + '.' + ext
 }
 
 export function getReaderUrl(product: Product) {
