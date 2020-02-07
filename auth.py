@@ -19,7 +19,7 @@ ALGORITHM = "HS256"
 TOKEN_SUBJECT = "access"
 ACCESS_TOKEN_EXPIRE_MINUTES = 30
 PWD_CONTEXT = CryptContext(schemes=["bcrypt"], deprecated="auto")
-OAUTH2_SCHEME = OAuth2PasswordBearer(tokenUrl="/me/signin")
+OAUTH2_SCHEME = OAuth2PasswordBearer(tokenUrl="/api/me/signin")
 COOKIE_SCHEME = APIKeyCookie(name="auth._token.local")
 
 
