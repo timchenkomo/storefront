@@ -103,7 +103,7 @@ class Purchase(Base):
 
 class AccessToken(Base):
     """Restore password tokens."""
-    __tablename__ = "access_token"
+    __tablename__ = "access_tokens"
     id = Column(Integer, primary_key=True, index=True)
     user_id = Column(Integer, ForeignKey("users.id"), index=True)
     token = Column(String(32), index=True, unique=True)

@@ -1,12 +1,9 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
-SQLALCHEMY_DATABASE_URL = "sqlite:///./test.db"
-# SQLALCHEMY_DATABASE_URL = "postgresql://user:password@postgresserver/db"
+SQLALCHEMY_DATABASE_URL = "postgresql://bbtadm:bbtpass@127.0.0.1/bbt"
 
-ENGINE = create_engine(
-    SQLALCHEMY_DATABASE_URL, connect_args={"check_same_thread": False}
-)
+ENGINE = create_engine(SQLALCHEMY_DATABASE_URL)
 DB_SESSION_LOCAL = sessionmaker(autocommit=False, autoflush=False, bind=ENGINE)
 
 
