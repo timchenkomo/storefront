@@ -8,7 +8,7 @@ from auth import (ACCESS_TOKEN_EXPIRE_MINUTES, PWD_CONTEXT, authenticate_user,
                   create_access_token, create_ot_access_token,
                   find_ot_access_token, get_current_active_user)
 from db import db_session
-from db.models import AccessToken, User
+from db.models import AccessToken, User, Purchase
 from forms.auth import Token
 from forms.products import Group
 from forms.user import (ChangePasswordRequest, RestorePasswordRequest, SignIn,
@@ -74,7 +74,8 @@ async def user_get_data(
 async def user_get_products(user: User = Depends(get_current_active_user)):
     """Returns list products."""
     result: Dict[int, Group] = {}
-    for purchase in user.purchases:  # type: ignore
+    paid_purchases = user.purchases.filter(Purchase.paid == True)  # noqa
+    for purchase in paid_purchases:  # type: ignore
         product = purchase.product
         product_group = product.group
 
