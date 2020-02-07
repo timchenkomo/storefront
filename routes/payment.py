@@ -1,15 +1,45 @@
+from typing import List
 from os import environ
 from hashlib import md5
+from datetime import datetime
+
 from sqlalchemy.orm import Session
 from fastapi import APIRouter, HTTPException, Form, Depends
 
 from db import db_session
 from db.models import Product, Purchase, User
+from auth import get_current_active_user
+
 
 PASS1 = environ.get("MRH_PASS_1", "BJYhRoXsT454wP7aEz5y")
 PASS2 = environ.get("MRH_PASS_2", "eJG4iAeXYZ2xMd9Ob4y3")
+INVOICE_ID_SEQ = 0
 
 router = APIRouter()  # pylint: disable=invalid-name
+
+
+@router.post(
+    "/create"
+)
+async def payment_create(
+        items: List[str],
+        user: User = Depends(get_current_active_user),
+        db: Session = Depends(db_session)):
+    global INVOICE_ID_SEQ
+    INVOICE_ID_SEQ = INVOICE_ID_SEQ + 1
+
+    invoice_id = INVOICE_ID_SEQ
+    # invoice_id_seq.next_value()
+    now = datetime.now()
+    for item_slug in items:
+        product = db.query(Product).filter(Product.slug == item_slug).first()
+        purchase = Purchase(
+            invoice_id=invoice_id, paid=False,
+            user=user, product=product,
+            price=product.price, date=now)
+        db.add(purchase)
+    db.commit()
+    return {"invoice_id": invoice_id}
 
 
 @router.post(
