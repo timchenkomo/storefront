@@ -16,6 +16,7 @@ APP.include_router(payment.router, prefix="/api/payment", tags=["payment"])
 ORIGINS = [
     "http://localhost",
     "http://localhost:3000",
+    "http://bbt-online.ru"
 ]
 
 APP.add_middleware(
