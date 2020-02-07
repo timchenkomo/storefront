@@ -1,7 +1,7 @@
 <template>
   <section>
     <div class="flex justify-center pb-8">
-      <bookshelf-filter v-model="query" class="m-4 w-2/3" />
+      <bookshelf-filter v-model="query" class="md:m-4 w-full md:w-2/3" />
     </div>
 
     <bookshelf

@@ -12,7 +12,7 @@
       v-show="!focused"
       class="text-gray-400"
     >
-      Введите название книги или автора
+      Название или автор
     </span>
 
     <!-- Input field -->
