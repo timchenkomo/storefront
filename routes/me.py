@@ -74,7 +74,7 @@ async def user_get_data(
 async def user_get_products(user: User = Depends(get_current_active_user)):
     """Returns list products."""
     result: Dict[int, Group] = {}
-    paid_purchases = user.purchases.filter(Purchase.paid == True)  # noqa
+    paid_purchases = user.purchases.filter(Purchase.paid)  # type: ignore
     for purchase in paid_purchases:  # type: ignore
         product = purchase.product
         product_group = product.group
