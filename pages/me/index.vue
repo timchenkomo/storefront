@@ -5,10 +5,13 @@
     </div>
 
     <!-- List of my products -->
-    <bookshelf :books="myProductsFiltered">
+    <bookshelf
+      @click="onProductClicked($event)"
+      :books="myProductsFiltered"
+    >
       <!-- Add downlaod button to each book. -->
       <template v-slot:cover="{ product }">
-        <div class="absolute flex justify-center items-center w-full h-full opacity-0 hover:opacity-100">
+        <div class="absolute hidden md:flex justify-center items-center w-full h-full opacity-0 hover:opacity-100">
           <div
             @click="onProductClicked(product)"
             class="p-4 bg-blue-500 hover:bg-blue-400 rounded-full cursor-pointer"
