@@ -10,7 +10,6 @@ from db import db_session
 from db.models import Product, User
 from logic.users import get_user_products
 
-
 ROOT = environ.get("DOWNLOADS_PATH", "../downloads")
 
 router = APIRouter()  # pylint: disable=invalid-name
