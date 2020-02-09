@@ -58,7 +58,7 @@ async def payment_result(
 
     # update flag
     db.query(Invoice) \
-        .filter(Invoice.invoice_id == inv_id) \
+        .filter(Invoice.id == inv_id) \
         .update({Invoice.paid_date: datetime.utcnow()})
     db.commit()
 
