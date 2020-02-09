@@ -9,7 +9,7 @@ def model2user(model: User, db) -> UserInfo:
     """Creates API for for User model."""
     # convert all the purcahes to the list of product slugs
     products: List[Product] = get_user_products(db, model)
-    product_slugs: List[str] = list(map(lambda x: x.product.slug, products))
+    product_slugs: List[str] = list(map(lambda x: x.slug, products))
 
     return UserInfo(
         name=model.name,
