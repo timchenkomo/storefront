@@ -52,10 +52,12 @@
             :is="product.type + '-book'"
             :product="product"
             :bought="hasAlreadyBought(product)"
+            class="flex-grow"
           />
 
           <!-- Buy product button -->
           <in-cart-button
+            v-if="!hasAlreadyBought(product)"
             @add="putInCart(product)"
             @checkout="checkout"
             @remove="removeFromCart(product)"
