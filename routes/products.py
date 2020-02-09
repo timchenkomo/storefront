@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 
 from db import db_session
@@ -20,13 +20,17 @@ async def get_groups(db: Session = Depends(db_session)):
 @router.get("/products/{slug}")
 async def get_group(slug: str, db: Session = Depends(db_session)):
     """Returns specified product."""
-    return model2group(
-        db.query(Group).filter(Group.slug == slug).first())
+    group = db.query(Group).filter(Group.slug == slug).first()
+    if not group:
+        raise HTTPException(status_code=404, detail="No group found")
+    return model2group(group)
 
 
 @router.get(
     "/product/{slug}"
 )
 async def get_product(slug: str, db: Session = Depends(db_session)):
-    return model2product(
-        db.query(Product).filter(Product.slug == slug).first())
+    product = db.query(Product).filter(Product.slug == slug).first()
+    if not product:
+        raise HTTPException(status_code=404, detail="No product found")
+    return model2product(product)
