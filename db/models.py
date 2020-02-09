@@ -1,3 +1,4 @@
+from datetime import datetime
 from enum import Enum
 
 from sqlalchemy import Boolean, Column, DateTime
@@ -19,7 +20,7 @@ class User(Base):
     hashed_password = Column(String(100), nullable=False)
     disabled = Column(Boolean, nullable=False)
 
-    purchases = relationship("Purchase", back_populates="user", lazy="dynamic")
+    invoices = relationship("Invoice", back_populates="user", lazy="dynamic")
 
 
 class Author(Base):
@@ -82,23 +83,30 @@ class Product(Base):
 
     series = relationship("Series", back_populates="products")
     group = relationship("Group", back_populates="products")
-    purchases = relationship("Purchase", back_populates="product")
 
 
-class Purchase(Base):
-    """Purchase."""
-
-    __tablename__ = "purchases"
+class Invoice(Base):
+    """Invoice."""
+    __tablename__ = "invoices"
     id = Column(Integer, primary_key=True, index=True)
-    invoice_id = Column(Integer, nullable=False, index=True)
     user_id = Column(Integer, ForeignKey("users.id"), index=True)
+    created_date = Column(DateTime, nullable=False, default=datetime.utcnow)
+    paid_date = Column(DateTime, nullable=True)
+
+    user = relationship("User", back_populates="invoices")
+    items = relationship("InvoiceItem", back_populates="invoice")
+
+
+class InvoiceItem(Base):
+    """Invoice item."""
+    __tablename__ = "invoice_items"
+    id = Column(Integer, primary_key=True, index=True)
+    invoice_id = Column(Integer, ForeignKey("invoices.id"), nullable=False, index=True)
     product_id = Column(Integer, ForeignKey("products.id"), index=True)
     price = Column(Integer)
-    date = Column(DateTime, nullable=False)
-    paid = Column(Boolean, nullable=False, default=False)
 
-    product = relationship("Product", back_populates="purchases")
-    user = relationship("User", back_populates="purchases")
+    invoice = relationship("Invoice", back_populates="items")
+    product = relationship("Product")
 
 
 class AccessToken(Base):

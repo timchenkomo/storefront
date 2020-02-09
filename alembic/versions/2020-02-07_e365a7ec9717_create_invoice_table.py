@@ -5,6 +5,7 @@ Revises: d4e897cc4f57
 Create Date: 2020-02-07 18:17:28.362451
 
 """
+from datetime import datetime
 from alembic import op
 import sqlalchemy as sa
 
@@ -18,16 +19,22 @@ depends_on = None
 
 def upgrade():
     op.create_table(
-        "purchases",
+        "invoices",
         sa.Column("id", sa.Integer, primary_key=True, index=True),
-        sa.Column("invoice_id", sa.Integer, nullable=False, index=True),
         sa.Column("user_id", sa.Integer, sa.ForeignKey("users.id"), index=True),
+        sa.Column("created_date", sa.DateTime, nullable=False, default=datetime.utcnow),
+        sa.Column("paid_date", sa.DateTime, nullable=True)
+    )
+
+    op.create_table(
+        "invoice_items",
+        sa.Column("id", sa.Integer, primary_key=True, index=True),
+        sa.Column("invoice_id", sa.Integer, sa.ForeignKey("invoices.id"), nullable=False, index=True),
         sa.Column("product_id", sa.Integer, sa.ForeignKey("products.id"), index=True),
-        sa.Column("price", sa.Integer),
-        sa.Column("date", sa.DateTime, nullable=False),
-        sa.Column("paid", sa.Boolean, nullable=False, default=False)
+        sa.Column("price", sa.Integer)
     )
 
 
 def downgrade():
-    op.drop_table("purchases")
+    op.drop_table("invoice_items")
+    op.drop_table("invoices")
