@@ -40,8 +40,9 @@ def authenticate_user(
         password: str) -> Optional[User]:
     """Returns User if the login and password are correct."""
     user = get_user(session, login)
-    password_verified = verify_password(password, user.hashed_password)
-    return user if user and password_verified else None
+    if not user:
+        return None
+    return user if verify_password(password, user.hashed_password) else None
 
 
 def create_access_token(
