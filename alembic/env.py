@@ -1,3 +1,4 @@
+from os import environ
 from logging.config import fileConfig
 
 from sqlalchemy import engine_from_config
@@ -25,6 +26,13 @@ target_metadata = None
 # ... etc.
 
 
+def get_url():
+    """Get connection string."""
+    default_url = config.get_main_option("sqlalchemy.url")
+    env_url = environ.get("DB_CONNECTION", None)
+    return env_url or default_url
+
+
 def run_migrations_offline():
     """Run migrations in 'offline' mode.
 
@@ -37,9 +45,8 @@ def run_migrations_offline():
     script output.
 
     """
-    url = config.get_main_option("sqlalchemy.url")
     context.configure(
-        url=url,
+        url=get_url(),
         target_metadata=target_metadata,
         literal_binds=True,
         dialect_opts={"paramstyle": "named"},
@@ -60,6 +67,7 @@ def run_migrations_online():
         config.get_section(config.config_ini_section),
         prefix="sqlalchemy.",
         poolclass=pool.NullPool,
+        url=get_url()
     )
 
     with connectable.connect() as connection:
