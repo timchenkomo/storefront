@@ -1,11 +1,7 @@
 from fastapi import FastAPI
 from starlette.middleware.cors import CORSMiddleware
 
-from db.db import ENGINE
-from db.models import Base
 from routes import download, me, payment, products
-
-Base.metadata.create_all(bind=ENGINE)
 
 APP = FastAPI()
 APP.include_router(me.router, prefix="/api/me", tags=["me"])

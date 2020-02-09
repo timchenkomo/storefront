@@ -7,7 +7,8 @@ from starlette.responses import FileResponse
 
 from auth import get_current_user_by_cookie
 from db import db_session
-from db.models import Product, Purchase, User
+from db.models import Product, User
+from logic.users import get_user_products
 
 ROOT = environ.get("DOWNLOADS_PATH", "../downloads")
 
@@ -43,10 +44,7 @@ async def download_product(
         raise HTTPException(status_code=404, detail="No product found")
 
     # Has the user bought it before?
-    purchase = db.query(Purchase).filter(
-        Purchase.user_id == user.id, Purchase.product_id == product.id) \
-        .first()
-    if not purchase:
+    if product not in get_user_products(db, user):
         raise HTTPException(status_code=403, detail="Doesn't belong to you")
 
     return FileResponse(join(ROOT, product_slug, product_slug + "." + ext))
