@@ -10,6 +10,6 @@ def get_user_products(
         user: User) -> List[Product]:
     return db.query(Product) \
              .join(InvoiceItem) \
-             .join(Invoice)\
-             .filter(Invoice.paid_date != None) \
+             .join(Invoice) \
+             .filter(Invoice.paid_date.isnot(None)) \
              .filter(User.id == user.id)
