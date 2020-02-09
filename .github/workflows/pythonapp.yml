@@ -23,9 +23,6 @@ jobs:
     - name: mypy
       run: |
         poetry run mypy .
-    - name: pycodestyle
-      run: |
-        poetry run pycodestyle . --max-line-length=90
     - name: tests
       run: |
         poetry run python3 -m pytest
