@@ -34,6 +34,7 @@ export default {
   plugins: [
     '~/plugins/icons',
     '~/plugins/ui-kit',
+    '~/plugins/axios-accessor',
     { src: '~/plugins/local-storage.js', ssr: false }
   ],
   /*
