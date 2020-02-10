@@ -1,5 +1,6 @@
-import { Module, VuexModule, Mutation } from 'vuex-module-decorators'
+import { Module, VuexModule, Mutation, Action } from 'vuex-module-decorators'
 import { CartItem } from '~/lib/cart'
+import { $axios } from '~/utils/api'
 
 @Module({
   name: 'cart',
@@ -17,5 +18,12 @@ export default class CartModule extends VuexModule {
   /** Remove item from cart using specified id. */
   @Mutation public remove(id: string) {
     this.items = this.items.filter(x => x.id !== id)
+  }
+
+  /** Create invoice **/
+  @Action({ rawError: true }) async createInvoice(): Promise<number> {
+    const itemsId = this.items.map(x => x.id)
+    const { data } = await $axios.post('/payment/create', itemsId)
+    return data.invoice_id
   }
 }
