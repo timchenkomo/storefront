@@ -30,7 +30,7 @@
     "nuxt-property-decorator": "^2.5.0",
     "nuxt-svg-loader": "^1.0.1",
     "vue-keypress": "^1.1.0",
-    "vuex-module-decorators": "^0.11.0",
+    "vuex-module-decorators": "^0.16.1",
     "vuex-persistedstate": "^2.7.0"
   },
   "devDependencies": {
