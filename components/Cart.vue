@@ -50,7 +50,7 @@
       <!-- Put an order -->
       <hr class="mt-2 mb-4">
       <input
-        @click="save"
+        @click="pay"
         class="px-4 py-2 text-white bg-blue-500 hover:bg-blue-600 rounded float-right"
         type="submit"
         value="Оплатить"
@@ -60,20 +60,33 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component, Prop } from 'vue-property-decorator'
+import { Vue, Component } from 'vue-property-decorator'
+import { getModule } from 'vuex-module-decorators'
 import md5 from 'md5'
-import { CartItem } from '../lib/cart'
-import { cartStore } from '~/store/index'
+import { CartItem } from '~/lib/cart'
+import CartModule from '@/store/cart'
+import MsgModule from '@/store/msg'
 
 @Component
 class Cart extends Vue {
-  @Prop({ default: [] }) readonly items!: CartItem[];
+  private cartStore: CartModule
+  private msgStore: MsgModule
 
-  private async save() {
-    // save invoice at server and get invoice ID
-    const itemsId = this.items.map(x => x.id)
-    const { data } = await this.$axios.post('/payment/create', itemsId)
-    const invoiceId = data.invoice_id
+  private created() {
+    this.cartStore = getModule(CartModule, this.$store)
+    this.msgStore = getModule(MsgModule, this.$store)
+  }
+
+  /** Pay */
+  private async pay() {
+    // lets create invoice and get id fo it
+    let invoiceId = -1
+    try {
+      invoiceId = await this.cartStore.createInvoice()
+    } catch {
+      this.msgStore.add({ msg: 'Ошибка при создании чека', color: 'red' })
+      return
+    }
 
     // calculate signature
     const signature = md5('bbt-online:' + this.totalPrice + ':' + invoiceId + ':BJYhRoXsT454wP7aEz5y')
@@ -86,6 +99,10 @@ class Cart extends Vue {
                 '&InvId=' + invoiceId +
                 '&SignatureValue=' + signature
     window.location = url
+  }
+
+  private get items(): CartItem[] {
+    return this.cartStore.items
   }
 
   private get count(): number {
@@ -101,7 +118,7 @@ class Cart extends Vue {
   }
 
   private onDeleteItemClicked(item: CartItem) {
-    cartStore.remove(item.id)
+    this.cartStore.remove(item.id)
   }
 }
 
