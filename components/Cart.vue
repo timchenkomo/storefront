@@ -2,10 +2,17 @@
   <div>
     <!-- Cart is empty -->
     <div
-      v-if="isEmpty"
+      v-if="isEmpty && !isRedirecting"
       class="text-center text-xl"
     >
       Ваша корзина пуста
+    </div>
+
+    <div
+      v-if="isRedirecting"
+      class="text-center text-xl"
+    >
+      Сейчас вы будете перенаправлены на платёный терминал
     </div>
 
     <!-- Cart -->
@@ -71,6 +78,7 @@ import MsgModule from '@/store/msg'
 class Cart extends Vue {
   private cartStore: CartModule
   private msgStore: MsgModule
+  private isRedirecting: boolean = false
 
   private created() {
     this.cartStore = getModule(CartModule, this.$store)
@@ -98,6 +106,8 @@ class Cart extends Vue {
                 '&OutSum=' + this.totalPrice +
                 '&InvId=' + invoiceId +
                 '&SignatureValue=' + signature
+    this.isRedirecting = true
+    this.cartStore.empty()
     window.location = url
   }
 

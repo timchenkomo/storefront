@@ -20,6 +20,11 @@ export default class CartModule extends VuexModule {
     this.items = this.items.filter(x => x.id !== id)
   }
 
+  /** Remove all items from cart */
+  @Mutation public empty() {
+    this.items = []
+  }
+
   /** Create invoice **/
   @Action({ rawError: true }) async createInvoice(): Promise<number> {
     const itemsId = this.items.map(x => x.id)
