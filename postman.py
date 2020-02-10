@@ -6,7 +6,7 @@ from jinja2 import Environment, FileSystemLoader
 
 # import ssl
 
-SMTP_SERVER = "localhost"
+SMTP_SERVER = "smtp"
 SMTP_PORT = 1025
 SMTP_SENDER = "me@test.com"
 SMTP_PASSWORD = "test"
