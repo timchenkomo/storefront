@@ -9,13 +9,13 @@ import { CartItem } from '~/lib/cart'
 export default class CartModule extends VuexModule {
   items: CartItem[] = []
 
-  @Mutation
-  public add(item: CartItem) {
+  /** Add new item to the cart. */
+  @Mutation public add(item: CartItem) {
     this.items.push(item)
   }
 
-  @Mutation
-  public remove(id: string) {
+  /** Remove item from cart using specified id. */
+  @Mutation public remove(id: string) {
     this.items = this.items.filter(x => x.id !== id)
   }
 }
