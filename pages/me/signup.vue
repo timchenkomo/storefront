@@ -18,6 +18,13 @@ class SignUpPage extends Vue {
   private async onSignUpClicked(form: SignUpForm) {
     const { data } = await this.$axios.post('/me/signup', form)
     if (data.success) {
+      // login after registration
+      const credentials = new FormData()
+      credentials.set('username', form.login)
+      credentials.set('password', form.password)
+      await this.$auth.loginWith('local', { data: credentials })
+
+      // go to the /books page
       msgStore.add({ msg: 'Вы были успешно зарегистрированы!', color: 'green' })
       this.$router.push('/books')
     } else {
