@@ -56,3 +56,5 @@ services:
       POSTGRES_PASSWORD: bbtpass
       POSTGRES_USER: bbtadm
       POSTGRES_DB: bbt
+    volumes:
+      - ./db:/var/lib/postgresql/data
