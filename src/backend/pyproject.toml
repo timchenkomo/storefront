@@ -1,0 +1,38 @@
+[tool.poetry]
+name = "bbt-storefront"
+version = "0.1.0"
+description = "BBT Storefront"
+authors = ["Advaita Kṛṣṇa Dāsa <advaita.krishna.das@gmail.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.7"
+fastapi = "^0.44.1"
+uvicorn = "^0.10.8"
+pyjwt = "^1.7"
+passlib = "^1.7"
+sqlalchemy = "^1.3"
+psycopg2-binary = "^2.8"
+bcrypt = "^3.1"
+python-multipart = "^0.0.5"
+jinja2 = "^2.11"
+aiofiles = "^0.4.0"
+alembic = "^1.4"
+
+[tool.poetry.dev-dependencies]
+pylint = "^2.4"
+isort = "^4.3"
+mypy = "^0.761.0"
+sqlalchemy-stubs = "^0.3.0"
+pyls-isort = "^0.1.1"
+pyls-mypy = "^0.1.8"
+autoflake = "^1.3"
+pycodestyle = "^2.5"
+pytest = "^5.3"
+requests = "^2.22"
+
+[tool.poetry.scripts]
+dev = "poetry run uvicorn main:APP --reload"
+
+[build-system]
+requires = ["poetry>=0.12"]
+build-backend = "poetry.masonry.api"
