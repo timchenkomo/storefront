@@ -9,5 +9,4 @@ npm run dev
 pip install poetry
 poetry install
 poetry run uvicorn main:APP --reload
->>>>>>> monorepo-d
 ```
