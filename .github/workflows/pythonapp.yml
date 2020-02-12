@@ -25,21 +25,27 @@ jobs:
       with:
         python-version: 3.7
     - name: Install dependencies
+      working-directory: ./src/backend
       run: |
         pip install poetry
         poetry install
     - name: pylint
+      working-directory: ./src/backend
       run: |
         poetry run pylint **.py
     - name: mypy
+      working-directory: ./src/backend
       run: |
         poetry run mypy .
     - name: pycodestyle
+      working-directory: ./src/backend
       run: |
         poetry run pycodestyle . --max-line-length=90 --exclude=alembic
     - name: migrations
+      working-directory: ./src/backend
       run: |
         poetry run alembic upgrade head
     - name: tests
+      working-directory: ./src/backend
       run: |
         poetry run python3 -m pytest
