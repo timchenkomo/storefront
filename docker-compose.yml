@@ -1,0 +1,55 @@
+version: '3'
+services:
+  frontend:
+    build: ./src/storefront
+    environment:
+      - BASE_URL_API=http://backend:8000
+      - BASE_URL=http://localhost
+    depends_on:
+      - backend
+
+  backend:
+    build: ./src/backend
+    environment:
+      - DB_CONNECTION=postgresql://bbtadm:bbtpass@postgres/bbt
+      - PORT=8000
+      - DOWNLOADS_PATH=/downloads
+    volumes:
+      - ./downloads:/downloads
+    depends_on:
+      - smtp
+      - postgres
+    expose:
+      - 8000
+
+  smtp:
+    image: namshi/smtp
+    ports:
+      - 1025:1025
+    expose:
+     - 1205
+    environment:
+      - PORT=1025
+      - GMAIL_USER=
+      - GMAIL_PASSWORD=
+
+  nginx:
+    build: ./src/nginx
+    ports:
+      - 80:80
+    environment:
+     - NGINX_PORT=80
+    depends_on:
+     - backend
+     - frontend
+
+  postgres:
+    # todo: do not expose port to the whole world
+    image: postgres
+    restart: always
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_PASSWORD: bbtpass
+      POSTGRES_USER: bbtadm
+      POSTGRES_DB: bbt
