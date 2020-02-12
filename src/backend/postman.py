@@ -1,4 +1,6 @@
+from os import environ
 import smtplib
+
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 
@@ -6,8 +8,8 @@ from jinja2 import Environment, FileSystemLoader
 
 # import ssl
 
-SMTP_SERVER = "smtp"
-SMTP_PORT = 1025
+SMTP_SERVER = environ.get("SMTP_HOST", "smtp")
+SMTP_PORT = int(environ.get("SMTP_PORT", 1025))
 SMTP_SENDER = "me@test.com"
 SMTP_PASSWORD = "test"
 
