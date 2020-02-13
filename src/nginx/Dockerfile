@@ -1,2 +1,4 @@
 FROM nginx:1.17.8-alpine
-COPY nginx.conf /etc/nginx/conf.d/default.conf
+COPY . /app
+ENTRYPOINT [ "/app/entrypoint.sh" ]
+CMD ["nginx", "-g", "daemon off;"]
