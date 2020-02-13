@@ -1,4 +1,3 @@
-// tsconfig.json
 {
   "compilerOptions": {
     "experimentalDecorators": true,
@@ -16,7 +15,7 @@
       "~/*": ["./*"],
       "@/*": ["./*"]
     },
-    "types": ["@types/node", "@nuxt/types"]
+    "types": ["@types/node", "@nuxt/types", "@types/nuxtjs__auth"]
   },
   "exclude": ["node_modules"]
 }
