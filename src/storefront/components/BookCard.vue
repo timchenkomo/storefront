@@ -8,7 +8,9 @@
     class="overflow-hidden mb-3"
   >
     <div class="flex relative justify-center items-center">
-      <img :src="props.cover" class="rounded w-full">
+      <div v-lazy-container="{ selector: 'img' }" class="rounded w-full">
+        <img :data-src="props.cover" data-loading="/loading-book.jpg" class="rounded w-full">
+      </div>
       <slot name="cover" />
     </div>
 
