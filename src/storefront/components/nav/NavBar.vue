@@ -51,6 +51,7 @@
         Войти
       </nuxt-link>
       <account-nav-menu
+        ref="account"
         v-if="isAuthenticated && showMainComponents"
       />
 
@@ -71,7 +72,7 @@
 
 <script lang="ts">
 import { Vue, Component, Prop, Watch } from 'vue-property-decorator'
-import { CartItem } from '../lib/cart'
+import { CartItem } from '@/lib/cart'
 import CartNavMenu from '~/components/nav/CartNavMenu.vue'
 import AccountNavMenu from '~/components/nav/AccountNavMenu.vue'
 import { cartStore } from '~/store/index'
@@ -89,11 +90,14 @@ class NavBar extends Vue {
 
   @Watch('$route.path')
   private onRouteChanged() {
-    if (this.$refs.account) {
-      this.$refs.account.toggle(false)
+    const account = (this.$refs.account as AccountNavMenu)
+    const cart = (this.$refs.cart as CartNavMenu)
+
+    if (account) {
+      account.toggle(false)
     }
-    if (this.$refs.cart) {
-      this.$refs.cart.toggle(false)
+    if (cart) {
+      cart.toggle(false)
     }
   }
 
@@ -106,14 +110,14 @@ class NavBar extends Vue {
   }
 
   private onCheckoutClicked() {
-    this.isCartDropdownOpen = false
     this.$router.push('/cart')
   }
 
-  private get components(): str {
+  private get components(): string | undefined {
     if (this.$route.path.startsWith('/reader')) {
       return 'ReaderNavExtension'
     }
+    return undefined
   }
 
   private get showMainComponents(): boolean {

@@ -34,13 +34,14 @@
 </template>
 
 <script lang="ts">
+import { Context } from '@nuxt/types'
 import { Vue, Component } from 'nuxt-property-decorator'
 import Bookshelf from '~/components/Bookshelf.vue'
 import BookshelfFilter from '@/components/BookshelfFilter.vue'
 import Downloader from '@/components/Downloader.vue'
 import DownloadIcon from '~/assets/download.svg'
 
-import { Group, UrlInfo } from '~/lib/book'
+import { Product, Group, UrlInfo } from '~/lib/book'
 import { msgStore } from '@/store/index'
 import { getProductUrl } from '@/lib/download'
 
@@ -56,13 +57,13 @@ class MeIndexPage extends Vue {
   private downloaderOptions: UrlInfo[] = []
   private query: string = ''
 
-  async asyncData({ $axios, redirect }) {
+  async asyncData(ctx: Context) {
     try {
-      const { data } = await $axios.get('/me/products')
+      const { data } = await ctx.$axios.get('/me/products')
       return { myProducts: data }
     } catch (ex) {
       msgStore.add({ msg: 'Необходима авторизация', color: 'red' })
-      redirect('/me/signin')
+      ctx.redirect('/me/signin')
     }
   }
 
@@ -77,7 +78,7 @@ class MeIndexPage extends Vue {
     const getProductUrls = function(product: Product) {
       return product.urls.map(url => ({
         ...url, // get all the data from original object
-        'url': getProductUrl(product, url.ext) // fix url to point to right place
+        'url': getProductUrl(product.slug, url.ext) // fix url to point to right place
       }))
     }
 

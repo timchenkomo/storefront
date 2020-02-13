@@ -23,12 +23,14 @@ import { Vue, Component } from 'vue-property-decorator'
 import { msgStore } from '@/store/index'
 import { Message } from '@/lib/msg'
 
-@Component()
+@Component
 class DefaultLayout extends Vue {
-  private msgCleanInterval
+  private msgCleanInterval: number | undefined = undefined
 
   private created() {
-    this.msgCleanInterval = setInterval(() => msgStore.clean(), 1000)
+    if (process.browser) {
+      this.msgCleanInterval = window.setInterval(() => msgStore.clean(), 1000)
+    }
   }
 
   private destroyed() {

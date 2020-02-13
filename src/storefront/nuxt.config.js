@@ -2,7 +2,8 @@ export default {
   mode: 'universal',
   env: {
     baseUrl: process.env.BASE_URL || 'http://localhost:3000',
-    baseUrlApi: process.env.BASE_URL_API || 'http://localhost:8000'
+    baseUrlApi: process.env.BASE_URL_API || 'http://localhost:8000',
+    baseUrlApiBrowser: process.env.BASE_URL_API_BROWSER || 'http://localhost:8000'
   },
   /*
    ** Headers of the page

@@ -76,14 +76,9 @@ import MsgModule from '@/store/msg'
 
 @Component
 class Cart extends Vue {
-  private cartStore: CartModule
-  private msgStore: MsgModule
+  private cartStore: CartModule = getModule(CartModule, this.$store)
+  private msgStore: MsgModule = getModule(MsgModule, this.$store)
   private isRedirecting: boolean = false
-
-  private created() {
-    this.cartStore = getModule(CartModule, this.$store)
-    this.msgStore = getModule(MsgModule, this.$store)
-  }
 
   /** Pay */
   private async pay() {
@@ -108,7 +103,7 @@ class Cart extends Vue {
                 '&SignatureValue=' + signature
     this.isRedirecting = true
     this.cartStore.empty()
-    window.location = url
+    window.location.href = url
   }
 
   private get items(): CartItem[] {

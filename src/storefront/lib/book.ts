@@ -57,14 +57,15 @@ export const EmptyGroup: Group = {
 }
 
 export const EmptyProduct: Product = {
-  id: '',
+  slug: '',
   price: -1,
   type: ProductType.Digital,
   title: '',
   urls: [],
   series: '',
   year_published: 0,
-  publisher: ''
+  publisher: '',
+  group_slug: ''
 }
 
 export function productType(t: string): string {

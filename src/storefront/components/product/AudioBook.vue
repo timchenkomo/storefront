@@ -13,21 +13,22 @@
 <script lang="ts">
 import { Vue, Prop, Component } from 'vue-property-decorator'
 import { getSampleUrl } from '~/lib/download.ts'
+import { Product } from '@/lib/book.ts'
 
 @Component class AudioBookControls extends Vue {
   @Prop() private readonly product!:Product
   @Prop() private readonly bought!:boolean
 
-  private audio: Audio
+  private audio: HTMLAudioElement | undefined
   private playing: boolean = false
-  private progress: float = 0
+  private progress: number = 0
 
   private destroyed() {
     if (this.audio) { this.audio.pause() }
   }
 
   private onPlayClicked() {
-    const url = getSampleUrl(this.product, 'mp3')
+    const url = getSampleUrl(this.product.slug, 'mp3')
 
     if (!this.audio) {
       this.audio = this.createAudio(url)
@@ -43,8 +44,11 @@ import { getSampleUrl } from '~/lib/download.ts'
     const audio = new Audio(url)
     audio.onplay = () => { this.playing = true }
     audio.onpause = () => { this.playing = false }
-    audio.ontimeupdate = (value) => {
-      this.progress = value.target.currentTime / value.target.duration
+    audio.ontimeupdate = (value: Event) => {
+      if (value !== null && value !== undefined && value.target) {
+        const target = (value.target as HTMLMediaElement)
+        this.progress = target.currentTime / target.duration
+      }
     }
     return audio
   }

@@ -42,10 +42,10 @@ import { Vue, Component, Prop } from 'vue-property-decorator'
 class NavMenu extends Vue {
   @Prop({ default: '' }) readonly title!: string
   @Prop({ default: '' }) readonly link!: string
-  @Prop({ default: false }) readonly fill: boolean
-  private open: bool = false
+  @Prop({ default: false }) readonly fill!: boolean
+  private open: boolean = false
 
-  private toggle(value: bool) {
+  public toggle(value: boolean) {
     this.open = value
   }
 }

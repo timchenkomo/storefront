@@ -30,10 +30,10 @@ class ChangePasswordForm extends Vue {
   private password: string = ''
   private onSaveClicked() {
     if (this.isPasswordValid) {
-      this.$emit('save', { password: this.password })
+      this.$emit('save', this.password)
     }
   }
-  private get isPasswordValid(): bool {
+  private get isPasswordValid(): boolean {
     return this.password.length > 3
   }
 }

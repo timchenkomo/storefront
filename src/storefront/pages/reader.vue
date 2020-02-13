@@ -32,11 +32,11 @@ import { getSampleUrl } from '@/lib/download'
   layout: 'wide'
 })
 class ReaderPage extends Vue {
-  private redention: any;
+  private rendition: any;
 
   private mounted() {
-    const productSlug = this.$route.query.p
-    const epubUrl = getSampleUrl({ slug: productSlug }, 'epub')
+    const productSlug = (this.$route.query.p as string)
+    const epubUrl = getSampleUrl(productSlug, 'epub')
 
     const book = Epub(epubUrl)
     this.rendition = book.renderTo('area', {

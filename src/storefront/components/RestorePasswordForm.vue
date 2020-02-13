@@ -31,10 +31,10 @@ class RestorePasswordForm extends Vue {
   private login: string = ''
   private onRestoreClicked() {
     if (this.isLoginValid) {
-      this.$emit('restore', { login: this.login })
+      this.$emit('restore', this.login)
     }
   }
-  private get isLoginValid(): bool {
+  private get isLoginValid(): boolean {
     return this.login.length > 0
   }
 }

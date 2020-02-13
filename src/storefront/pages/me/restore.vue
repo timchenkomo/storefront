@@ -15,7 +15,7 @@ import RestorePasswordForm from '@/components/RestorePasswordForm.vue'
 
 @Component({ components: { RestorePasswordForm } })
 class RestorePage extends Vue {
-  async private onRestoreClicked({ login }) {
+  private async onRestoreClicked(login: string) {
     try {
       await this.$axios.post('/me/password/restore', { email: login })
       msgStore.add({ msg: 'Инструкция по восстановлению пароля выслана', color: 'green' })

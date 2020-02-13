@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "experimentalDecorators": true,
-    "target": "esnext",
+    "target": "es2018",
     "module": "esnext",
     "moduleResolution": "node",
     "lib": ["esnext", "esnext.asynciterable", "dom"],
@@ -15,7 +15,12 @@
       "~/*": ["./*"],
       "@/*": ["./*"]
     },
-    "types": ["@types/node", "@nuxt/types", "@types/nuxtjs__auth"]
+    "types": [
+      "@types/node",
+      "@nuxt/types",
+      "@types/nuxtjs__auth",
+      "@types/md5"
+    ]
   },
   "exclude": ["node_modules"]
 }

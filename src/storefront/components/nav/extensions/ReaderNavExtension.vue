@@ -23,7 +23,7 @@
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator'
 import { cartStore } from '~/store'
-import { productType } from '~/lib/book'
+import { Product, productType } from '~/lib/book'
 
 @Component
 class ReaderNavExtension extends Vue {
@@ -37,11 +37,11 @@ class ReaderNavExtension extends Vue {
 
   /** Returns slug of a product opened in a reader. **/
   private get productSlug(): string {
-    return this.$route.query.p
+    return (this.$route.query.p as string)
   }
 
   /** Is the specified product was added to the cart? **/
-  private isInCart(slug: String): boolean {
+  private isInCart(slug: string): boolean {
     return cartStore.items.map(x => x.id).includes(slug)
   }
 

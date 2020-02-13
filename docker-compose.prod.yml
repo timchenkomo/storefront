@@ -2,11 +2,13 @@ version: '3'
 services:
   storefront:
     environment:
+      - BASE_URL_API_BROWSER=http://bbt-online.ru
       - BASE_URL_API=http://backend:8000
       - BASE_URL=http://bbt-online.ru
     depends_on:
       - backend
     image: bbtrust/storefront
+    command: npm run prod
 
   backend:
     environment:

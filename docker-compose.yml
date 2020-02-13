@@ -3,11 +3,13 @@ services:
   storefront:
     build: ./src/storefront
     environment:
+      - BASE_URL_API_BROWSER=http://localhost:8000
       - BASE_URL_API=http://backend:8000
       - BASE_URL=http://localhost
     depends_on:
       - backend
     image: bbtrust/storefront
+    command: npm run dev
 
   backend:
     build: ./src/backend

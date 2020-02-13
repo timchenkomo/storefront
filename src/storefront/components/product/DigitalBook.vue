@@ -36,11 +36,11 @@ import { getSampleUrl, getProductUrl } from '@/lib/download'
   @Prop() private readonly bought!:boolean
 
   private sampleUrl(ext: string): string {
-    return getSampleUrl(this.product, ext)
+    return getSampleUrl(this.product.slug, ext)
   }
 
   private productUrl(ext: string): string {
-    return getProductUrl(this.product, ext)
+    return getProductUrl(this.product.slug, ext)
   }
 
   private get readerUrl(): string {

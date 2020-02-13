@@ -15,7 +15,7 @@ import ChangePasswordForm from '@/components/ChangePasswordForm.vue'
 
 @Component({ components: { ChangePasswordForm } })
 class ChangePasswordPage extends Vue {
-  async private onSaveClicked({ password }) {
+  private async onSaveClicked(password: string) {
     try {
       const token = this.$route.query.token
       const { data } = await this.$axios.post('/me/password/change', { token, password })

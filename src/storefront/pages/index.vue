@@ -27,7 +27,8 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component } from 'vue-property-decorator'
+import { Context } from '@nuxt/types'
+import { Vue, Component } from 'nuxt-property-decorator'
 import { Group } from '~/lib/book'
 import Bookshelf from '~/components/Bookshelf.vue'
 
@@ -35,8 +36,8 @@ import Bookshelf from '~/components/Bookshelf.vue'
 class IndexPage extends Vue {
   private books: Group[] = [];
 
-  async asyncData({ $axios }) {
-    const { data } = await $axios.get('/products')
+  async asyncData(ctx: Context) {
+    const { data } = await ctx.$axios.get('/products')
     return { books: data }
   }
 }

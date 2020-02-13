@@ -64,7 +64,8 @@
 
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator'
-import { CartItem } from '../lib/cart'
+import { CartItem } from '@/lib/cart'
+import NavMenu from '@/components/nav/NavMenu.vue'
 
 @Component
 class CartNavMenu extends Vue {
@@ -79,7 +80,7 @@ class CartNavMenu extends Vue {
   }
 
   private onCheckoutClicked() {
-    this.$refs.navmenu.toggle(false)
+    (this.$refs.navmenu as NavMenu).toggle(false)
     this.$emit('checkout')
   }
 
@@ -88,7 +89,7 @@ class CartNavMenu extends Vue {
   }
 
   public toggle(value: boolean) {
-    this.$refs.navmenu.toggle(value)
+    (this.$refs.navmenu as NavMenu).toggle(value)
   }
 }
 

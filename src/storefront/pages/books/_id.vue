@@ -145,7 +145,7 @@ class BookPage extends Vue {
   }
 
   /** Is the specified product was added to the cart? **/
-  private isInCart(slug: String): boolean {
+  private isInCart(slug: string): boolean {
     return cartStore.items
       .map(x => x.id)
       .includes(slug)
