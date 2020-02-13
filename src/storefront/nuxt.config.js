@@ -36,7 +36,8 @@ export default {
     '~/plugins/icons',
     '~/plugins/ui-kit',
     '~/plugins/axios-accessor',
-    { src: '~/plugins/local-storage.js', ssr: false }
+    { src: '~/plugins/local-storage.js', ssr: false },
+    { src: '~/plugins/vue-lazyimage', ssr: false }
   ],
   /*
    ** Nuxt.js dev-modules
