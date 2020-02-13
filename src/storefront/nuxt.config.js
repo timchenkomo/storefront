@@ -53,7 +53,8 @@ export default {
     '@nuxtjs/auth',
     '@nuxtjs/tailwindcss',
     'nuxt-webfontloader',
-    'nuxt-svg-loader'
+    'nuxt-svg-loader',
+    'nuxt-purgecss'
   ],
   /*
    ** Axios module configuration
@@ -72,6 +73,14 @@ export default {
      ** You can extend webpack config here
      */
     // extend(config, ctx) {}
+    postcss: {
+      plugins: {
+        tailwindcss: 'tailwind.config.js'
+      }
+    }
+  },
+  purgeCSS: {
+    mode: 'postcss'
   },
   auth: {
     strategies: {
