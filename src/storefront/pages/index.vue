@@ -47,7 +47,7 @@ export default IndexPage
 
 <style scoped>
 .logo-background {
-  background-image: url(~assets/pages/index/bg.png);
+  background-image: url(~assets/pages/index/bg.jpg);
   height: 32em;
 }
 </style>
