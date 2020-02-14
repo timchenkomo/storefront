@@ -1,4 +1,4 @@
 FROM nginx:1.17.8-alpine
-COPY . /app
-ENTRYPOINT [ "/app/entrypoint.sh" ]
+COPY . /etc/nginx
+ENTRYPOINT [ "/etc/nginx/entrypoint.sh" ]
 CMD ["nginx", "-g", "daemon off;"]
