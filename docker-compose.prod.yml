@@ -44,6 +44,8 @@ services:
     environment:
      - NGINX_PORT=80
      - ENV=prod
+    volumes:
+     - ./downloads:/downloads
     depends_on:
      - backend
      - storefront
