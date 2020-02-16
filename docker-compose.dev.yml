@@ -1,0 +1,13 @@
+version: '3'
+services:
+  storefront:
+    stdin_open: true
+    tty: true
+    volumes:
+      - ./src/storefront:/app
+
+  backend:
+    stdin_open: true
+    tty: true
+    volumes:
+      - ./src/backend:/app
