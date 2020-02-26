@@ -12,12 +12,15 @@ SMTP_SERVER = environ.get("SMTP_HOST", "smtp")
 SMTP_PORT = int(environ.get("SMTP_PORT", 1025))
 SMTP_SENDER = "me@test.com"
 SMTP_PASSWORD = "test"
+DO_NOT_SEND_EMAIL = environ.get("DO_NOT_SEND_EMAIL", None)
 
 JINJA = Environment(loader=FileSystemLoader("./templates"))
 
 
 def send_email(receiver: str, msg: str, msg_html: str = ""):
     """End email to a specified address."""
+    if DO_NOT_SEND_EMAIL:
+        return  # just skip email sending, good for testing
 
     server = smtplib.SMTP(SMTP_SERVER, SMTP_PORT)
     try:

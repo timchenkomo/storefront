@@ -47,5 +47,7 @@ jobs:
         poetry run alembic upgrade head
     - name: tests
       working-directory: ./src/backend
+      env:
+        DO_NOT_SEND_EMAIL: 1
       run: |
         poetry run python3 -m pytest
