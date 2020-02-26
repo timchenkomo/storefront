@@ -19,9 +19,9 @@ JINJA = Environment(loader=FileSystemLoader("./templates"))
 def send_email(receiver: str, msg: str, msg_html: str = ""):
     """End email to a specified address."""
 
+    server = smtplib.SMTP(SMTP_SERVER, SMTP_PORT)
     try:
         # context = ssl.create_default_context()
-        server = smtplib.SMTP(SMTP_SERVER, SMTP_PORT)
         # server.starttls(context=context)  # Secure the connection
         # server.login(SMTP_SENDER, SMTP_PASSWORD)
 
