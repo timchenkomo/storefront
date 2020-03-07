@@ -55,7 +55,7 @@ async def user_signin(
     access_token_expires = timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
     access_token = create_access_token(
         data={"login": user.email}, expires_delta=access_token_expires)
-    user.last_signin_date = datetime.now()
+    user.last_signin_date = datetime.utcnow()
     db.add(user)
     db.commit()
     return Token(access_token=access_token, token_type="bearer")
