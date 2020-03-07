@@ -35,7 +35,6 @@ async def user_signup(
     user.email = form.login
     user.hashed_password = PWD_CONTEXT.hash(form.password)
     user.disabled = False
-    user.signup_date = datetime.now()
     db.add(user)
     db.commit()
     task.add_task(send_welcome_email, user.email)
