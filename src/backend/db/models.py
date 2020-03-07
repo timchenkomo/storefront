@@ -19,7 +19,7 @@ class User(Base):  # pylint: disable=too-few-public-methods
     email = Column(String(50), nullable=False, index=True)
     hashed_password = Column(String(100), nullable=False)
     disabled = Column(Boolean, nullable=False)
-    signup_date = Column(DateTime, nullable=True)
+    signup_date = Column(DateTime, default=datetime.utcnow, nullable=True)
     last_signin_date = Column(DateTime, nullable=True)
 
     invoices = relationship("Invoice", back_populates="user", lazy="dynamic")
