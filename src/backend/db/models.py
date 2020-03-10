@@ -10,7 +10,7 @@ from sqlalchemy.orm import relationship
 Base = declarative_base()  # pylint: disable=invalid-name
 
 
-class User(Base):
+class User(Base):  # pylint: disable=too-few-public-methods
     """User."""
 
     __tablename__ = "users"
@@ -19,11 +19,13 @@ class User(Base):
     email = Column(String(50), nullable=False, index=True)
     hashed_password = Column(String(100), nullable=False)
     disabled = Column(Boolean, nullable=False)
+    signup_date = Column(DateTime, default=datetime.utcnow, nullable=True)
+    last_signin_date = Column(DateTime, nullable=True)
 
     invoices = relationship("Invoice", back_populates="user", lazy="dynamic")
 
 
-class Author(Base):
+class Author(Base):  # pylint: disable=too-few-public-methods
     """Author of a product."""
 
     __tablename__ = "authors"
@@ -33,7 +35,7 @@ class Author(Base):
     products = relationship("Group", back_populates="author")
 
 
-class Series(Base):
+class Series(Base):  # pylint: disable=too-few-public-methods
     """Series of a product."""
 
     __tablename__ = "series"
@@ -43,7 +45,7 @@ class Series(Base):
     products = relationship("Product", back_populates="series")
 
 
-class Group(Base):
+class Group(Base):  # pylint: disable=too-few-public-methods
     """Group of a products gathered by same title but different types."""
 
     __tablename__ = "groups"
@@ -58,7 +60,7 @@ class Group(Base):
     products = relationship("Product", back_populates="group")
 
 
-class ProductType(Enum):
+class ProductType(Enum):  # pylint: disable=too-few-public-methods
     """Type of a product."""
 
     digital = 1
@@ -66,7 +68,7 @@ class ProductType(Enum):
     printed = 3
 
 
-class Product(Base):
+class Product(Base):  # pylint: disable=too-few-public-methods
     """Specific product."""
 
     __tablename__ = "products"
@@ -85,7 +87,7 @@ class Product(Base):
     group = relationship("Group", back_populates="products")
 
 
-class Invoice(Base):
+class Invoice(Base):  # pylint: disable=too-few-public-methods
     """Invoice."""
     __tablename__ = "invoices"
     id = Column(Integer, primary_key=True, index=True)
@@ -97,7 +99,7 @@ class Invoice(Base):
     items = relationship("InvoiceItem", back_populates="invoice")
 
 
-class InvoiceItem(Base):
+class InvoiceItem(Base):  # pylint: disable=too-few-public-methods
     """Invoice item."""
     __tablename__ = "invoice_items"
     id = Column(Integer, primary_key=True, index=True)
@@ -109,7 +111,7 @@ class InvoiceItem(Base):
     product = relationship("Product")
 
 
-class AccessToken(Base):
+class AccessToken(Base):  # pylint: disable=too-few-public-methods
     """Restore password tokens."""
     __tablename__ = "access_tokens"
     id = Column(Integer, primary_key=True, index=True)
