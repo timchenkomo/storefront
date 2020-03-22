@@ -24,19 +24,17 @@ def test_register_user_signup_date(db):
     #       between request and response
     assert (datetime.now() - user.signup_date).total_seconds() < 10
 
+
 def test_check_user_email_uniqueness(db):
     """Check constraint - email must be unique"""
     # register a new user
     form = SignUp(login="test@test.com", password="123456", name="test das")
     response = client.post("/api/me/signup", json=form.dict())
     assert response.status_code == 200
-    # register same user 
+
+    # register same user
     form = SignUp(login="test@test.com", password="123456", name="test das")
     response = client.post("/api/me/signup", json=form.dict())
     assert response.status_code == 200
     dataJson = response.json()
     assert dataJson['msg'] == "Пользователь уже зарегистрирован"
-
-
-    
-
