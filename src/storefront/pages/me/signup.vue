@@ -28,7 +28,8 @@ class SignUpPage extends Vue {
       msgStore.add({ msg: 'Вы были успешно зарегистрированы!', color: 'green' })
       this.$router.push('/books')
     } else {
-      msgStore.add({ msg: 'Ошибка во время регистрации', color: 'red' })
+      const errorMsg = Object.prototype.hasOwnProperty.call(data, 'msg') && data.msg.length > 0 ? data.msg : ''
+      msgStore.add({ msg: 'Ошибка во время регистрации. ' + errorMsg, color: 'red' })
     }
   }
 }

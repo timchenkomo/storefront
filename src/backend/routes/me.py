@@ -17,6 +17,7 @@ from logic.users import get_user_products
 from mappers.products import model2group_nv, model2product
 from mappers.user import model2user
 from postman import send_change_password_email, send_welcome_email
+from sqlalchemy import exc
 
 router = APIRouter()  # pylint: disable=invalid-name
 
@@ -36,7 +37,12 @@ async def user_signup(
     user.hashed_password = PWD_CONTEXT.hash(form.password)
     user.disabled = False
     db.add(user)
-    db.commit()
+    try:
+        db.commit()
+    except exc.IntegrityError:
+        db.rollback
+        return {"success": False, "msg": "Пользователь уже зарегистрирован"}
+
     task.add_task(send_welcome_email, user.email)
     return {"success": True}
 
