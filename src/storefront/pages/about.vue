@@ -8,7 +8,7 @@
       >
     </div>
 
-    <div class="mx-auto">
+    <div class="container mx-auto px-2 text-justify md:text-left">
       <h1 class="text-5xl text-center font-serif">
         Бхактиведанта Бук Траст
       </h1>
@@ -26,7 +26,7 @@
         <img src="~assets/pages/about/about_2.png">
       </div>
 
-      <div class="px-2 sm:mx-auto mt-4 leading-loose text-justify sm:text-left">
+      <div class="leading-loose">
         <p class="mb-4">
           Издательство основано в 1972-м году А.Ч. Бхактиведантой Свами
           Прабхупадой (учредителем Международного общества сознания Кришны) и
@@ -64,14 +64,14 @@
 
     <img
       src="~assets/pages/about/about_3.jpg"
-      class="w-full my-16"
+      class="w-full my-8 sm:my-16"
     >
 
     <div class="text-center font-serif">
       <h2 class="text-2xl">
         Его Божественная милость
       </h2>
-      <h1 class="text-5xl -mt-5">
+      <h1 class="text-5xl sm:-mt-2 leading-tight">
         А.Ч. Бхактиведанта Свами Прабхупада
       </h1>
 
@@ -80,7 +80,7 @@
       </h3>
     </div>
 
-    <div class="px-2 sm:mx-auto mt-4 leading-loose text-justify sm:text-left">
+    <div class="container mx-auto px-2 text-justify md:text-left leading-loose">
       <p class="mb-4">
         Его Божественная Милость А. Ч. Бхактиведанта Свами Прабхупада явился в
         этот мир в 1896 г. в Калькутте (Индия). Там же, в Калькутте, в 1922 г.
