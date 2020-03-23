@@ -1,7 +1,7 @@
 <template>
   <div>
     <div
-      class="logo-background w-full object-cover mb-12"
+      class="logo-background w-full object-cover mb-12 pb-2"
     >
       <nav-bar :borders="false" :inverted="true" />
 
@@ -48,6 +48,6 @@ export default IndexPage
 <style scoped>
 .logo-background {
   background-image: url(~assets/pages/index/bg.jpg);
-  height: 32em;
+  min-height: 32em;
 }
 </style>
