@@ -25,8 +25,8 @@
 
       <!-- list of books -->
       <bookshelf
-        @click="onProductClicked"
-        :books="books"
+        @click="onGroupClicked"
+        :books="groups"
         product-class="cursor-pointer"
       />
     </div>
@@ -41,14 +41,14 @@ import Bookshelf from '~/components/Bookshelf.vue'
 
 @Component({ layout: 'plain', components: { Bookshelf } })
 class IndexPage extends Vue {
-  private books: Group[] = [];
+  private groups: Group[] = [];
 
   async asyncData(ctx: Context) {
     const { data } = await ctx.$axios.get('/products')
-    return { books: data }
+    return { groups: data }
   }
 
-  private onProductClicked(group: Group) {
+  private onGroupClicked(group: Group) {
     this.$router.push('/books/' + group.slug)
   }
 }
