@@ -4,12 +4,14 @@
       <div id="area" />
 
       <button
+        v-if="ready"
         @click="prevPage"
         class="mx-1 px-1 py-2 rounded text-black left"
       >
         ←
       </button>
       <button
+        v-if="ready"
         @click="nextPage"
         class="mx-1 px-1 py-2 rounded text-black right"
       >
@@ -32,13 +34,16 @@ import { getSampleUrl } from '@/lib/download'
   layout: 'wide'
 })
 class ReaderPage extends Vue {
-  private rendition: any;
+  private rendition: any
+  private ready: bool = false
 
   private mounted() {
     const productSlug = (this.$route.query.p as string)
     const epubUrl = getSampleUrl(productSlug, 'epub')
 
     const book = Epub(epubUrl)
+    book.ready.then(() => { this.ready = true })
+
     this.rendition = book.renderTo('area', {
       width: '100%', height: 600, spread: 'always'
     })
