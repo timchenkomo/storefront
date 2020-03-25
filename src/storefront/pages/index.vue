@@ -1,7 +1,8 @@
 <template>
   <div>
+    <!-- index page hero component -->
     <div
-      class="logo-background w-full object-cover mb-12 pb-2"
+      class="logo-background w-full object-cover mb-6 lg:mb-12 pb-2"
     >
       <nav-bar :borders="false" :inverted="true" />
 
@@ -16,12 +17,18 @@
       </div>
     </div>
 
-    <div class="container mx-auto">
+    <!-- description -->
+    <div class="px-2 container mx-auto">
       <p class="mb-12">
         В 1972 году для публикации книг Шрилы Прабхупады было основано издательство «Бхактиведанта Бук Траст», которое является на данный момент самым большим в мире издательством в области индийской религии и философии, публикующим книги более чем на восьмидесяти языках
       </p>
 
-      <bookshelf :books="books" />
+      <!-- list of books -->
+      <bookshelf
+        @click="onProductClicked"
+        :books="books"
+        product-class="cursor-pointer"
+      />
     </div>
   </div>
 </template>
@@ -39,6 +46,10 @@ class IndexPage extends Vue {
   async asyncData(ctx: Context) {
     const { data } = await ctx.$axios.get('/products')
     return { books: data }
+  }
+
+  private onProductClicked(group: Group) {
+    this.$router.push('/books/' + group.slug)
   }
 }
 
