@@ -31,7 +31,6 @@
     <nuxt-link
       to="/me/signup"
       class="block text-blue-500 text-sm text-center my-1 px-4 py-2 w-full rounded focus:outline-none"
-      type="button"
     >
       Регистрация
     </nuxt-link>
