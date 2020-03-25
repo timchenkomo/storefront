@@ -17,7 +17,7 @@
     <!-- Cart is empty -->
     <div
       v-if="isEmpty"
-      class="text-center w-32 my-2 mx-4"
+      class="text-center text-black w-32 my-2 mx-4"
     >
       Корзина пуста
     </div>
@@ -25,7 +25,7 @@
     <!-- Cart -->
     <div
       v-if="!isEmpty"
-      class="flex flex-col whitespace-no-wrap"
+      class="flex flex-col text-black whitespace-no-wrap"
     >
       <!-- Total price -->
       <div
