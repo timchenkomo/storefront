@@ -35,7 +35,7 @@ import { getSampleUrl } from '@/lib/download'
 })
 class ReaderPage extends Vue {
   private rendition: any
-  private ready: bool = false
+  private ready: boolean = false
 
   private mounted() {
     const productSlug = (this.$route.query.p as string)
