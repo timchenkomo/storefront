@@ -25,6 +25,8 @@ class SignInPage extends Vue {
 
       if (this.$auth.loggedIn) {
         msgStore.add({ msg: 'Вы вошли', color: 'green' })
+        const returnBackUrl = this.$route.query.r || '/books'
+        this.$router.push(returnBackUrl)
       }
     } catch {
       msgStore.add({ msg: 'Неверный логин/пароль' })

@@ -96,9 +96,10 @@ export default {
     redirect: {
       login: '/me/signin',
       logout: '/',
-      home: '/me',
+      home: false,
       callback: '/me'
-    }
+    },
+    rewriteRedirects: false
   },
   webfontloader: {
     google: {
