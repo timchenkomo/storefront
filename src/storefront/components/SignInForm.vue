@@ -59,7 +59,7 @@ class SignInForm extends Vue {
   }
 
   private get returnBackUrl(): string {
-    return this.$route.query.r
+    return (this.$route.query.r as string)
   }
 }
 

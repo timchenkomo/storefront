@@ -26,7 +26,7 @@ class SignUpPage extends Vue {
 
       // go to the /books page
       msgStore.add({ msg: 'Вы были успешно зарегистрированы!', color: 'green' })
-      const returnBackUrl = this.$route.query.r || '/books'
+      const returnBackUrl = (this.$route.query.r as string) || '/books'
       this.$router.push(returnBackUrl)
     } else {
       const errorMsg = Object.prototype.hasOwnProperty.call(data, 'msg') && data.msg.length > 0 ? data.msg : ''
