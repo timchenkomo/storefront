@@ -45,8 +45,8 @@
     </button>
 
     <nuxt-link
-      class="block text-blue-500 text-center font-bold my-1 py-2 px-4 w-full rounded focus:outline-none"
       :to="returnBackUrl ? '/me/signin?r=' + returnBackUrl : '/me/signin'"
+      class="block text-blue-500 text-sm text-center my-1 py-2 px-4 w-full rounded focus:outline-none"
       type="button"
     >
       Войти
