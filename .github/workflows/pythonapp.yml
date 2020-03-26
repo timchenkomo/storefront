@@ -43,6 +43,8 @@ jobs:
         poetry run pycodestyle . --max-line-length=90 --exclude=alembic
     - name: migrations
       working-directory: ./src/backend
+      env:
+        PYTHONPATH: .
       run: |
         poetry run alembic upgrade head
     - name: tests
