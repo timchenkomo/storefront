@@ -16,7 +16,7 @@ class User(Base):  # pylint: disable=too-few-public-methods
     __tablename__ = "users"
     id = Column(Integer, primary_key=True, index=True)
     name = Column(String(250), nullable=False)
-    email = Column(String(50), nullable=False, index=True)
+    email = Column(String(50), nullable=False, index=True, unique=True)
     hashed_password = Column(String(100), nullable=False)
     disabled = Column(Boolean, nullable=False)
     signup_date = Column(DateTime, default=datetime.utcnow, nullable=True)
