@@ -54,7 +54,6 @@ class Group(Base):  # pylint: disable=too-few-public-methods
     slug = Column(String(32), nullable=False, index=True, unique=True)
     title = Column(String(128), nullable=False)
     description = Column(UnicodeText(), nullable=False)
-    cover_url = Column(String(1024), nullable=False)
 
     author = relationship("Author", back_populates="products")
     products = relationship("Product", back_populates="group")

@@ -28,6 +28,5 @@ class Group(BaseModel):
     slug: str
     title: str
     author: str
-    cover: str
     description: str
     products: List[Product]

@@ -8,9 +8,6 @@ export interface Group {
   /** Author of a product. */
   author: string;
 
-  /** Url to cover image. */
-  cover: string;
-
   /** Description of a product. */
   description: string;
 
@@ -53,7 +50,7 @@ export interface UrlInfo {
 }
 
 export const EmptyGroup: Group = {
-  slug: 'null', title: 'Empty book', author: 'No one', cover: '', description: '', products: []
+  slug: 'null', title: 'Empty book', author: 'No one',  description: '', products: []
 }
 
 export const EmptyProduct: Product = {

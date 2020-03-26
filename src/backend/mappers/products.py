@@ -33,7 +33,6 @@ def model2group(model: models.Group) -> Group:
         slug=model.slug,
         title=model.title,
         author=model.author.name,
-        cover=model.cover_url,
         description=model.description,
         products=products)
 
@@ -44,6 +43,5 @@ def model2group_nv(model: models.Group) -> Group:
         slug=model.slug,
         title=model.title,
         author=model.author.name,
-        cover=model.cover_url,
         description=model.description,
         products=[])
