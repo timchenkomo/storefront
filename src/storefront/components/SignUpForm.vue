@@ -45,8 +45,8 @@
     </button>
 
     <nuxt-link
-      to="/me/signin"
       class="block text-blue-500 text-center font-bold my-1 py-2 px-4 w-full rounded focus:outline-none"
+      :to="returnBackUrl ? '/me/signin?r=' + returnBackUrl : '/me/signin'"
       type="button"
     >
       Войти
@@ -80,6 +80,10 @@ class SignInForm extends Vue {
     if (!this.login.includes('@')) { return false }
     if (this.password.length < 3) { return false }
     return true
+  }
+
+  private get returnBackUrl(): string {
+    return this.$route.query.r
   }
 }
 

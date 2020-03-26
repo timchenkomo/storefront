@@ -29,7 +29,7 @@
     </button>
 
     <nuxt-link
-      to="/me/signup"
+      :to="returnBackUrl ? '/me/signup?r=' + returnBackUrl : '/me/signup'"
       class="block text-blue-500 text-sm text-center my-1 px-4 py-2 w-full rounded focus:outline-none"
     >
       Регистрация
@@ -56,6 +56,10 @@ class SignInForm extends Vue {
 
   private onSignInClicked() {
     this.$emit('signin', { login: this.login, password: this.password })
+  }
+
+  private get returnBackUrl(): string {
+    return this.$route.query.r
   }
 }
 
