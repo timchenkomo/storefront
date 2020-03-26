@@ -56,12 +56,21 @@
 
       <!-- Put an order -->
       <hr class="mt-2 mb-4">
-      <input
-        @click="pay"
+      <a
+        v-if="!isSignedIn"
+        href="/me/signup?r=/cart"
         class="px-4 py-2 text-white bg-blue-500 hover:bg-blue-600 rounded float-right"
-        type="submit"
-        value="Оплатить"
       >
+        Войти и оплатить
+      </a>
+
+      <button
+        v-if="isSignedIn"
+        @click="pay"
+        class="mx-2 px-4 py-2 text-white bg-blue-500 hover:bg-blue-600 rounded float-right"
+      >
+        Оплатить
+      </button>
     </div>
   </div>
 </template>
@@ -120,6 +129,10 @@ class Cart extends Vue {
 
   private get totalPrice(): number {
     return this.items.map(x => x.price).reduce((a, b) => a + b, 0)
+  }
+
+  private get isSignedIn(): boolean {
+    return this.$auth.loggedIn
   }
 
   private onDeleteItemClicked(item: CartItem) {
