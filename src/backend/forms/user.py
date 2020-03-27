@@ -1,7 +1,8 @@
 from typing import List, Optional
 
+from fastapi import Form
 from fastapi.security import OAuth2PasswordRequestForm
-from pydantic import BaseModel, Schema
+from pydantic import BaseModel
 
 
 class SignUp(BaseModel):
@@ -18,7 +19,7 @@ class SignIn(OAuth2PasswordRequestForm):
 
 class UserInfo(BaseModel):
     """UserInfo response form."""
-    name: str = Schema(
+    name: str = Form(
         "", title="User's name",
     )
     email: str = ""
