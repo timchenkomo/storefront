@@ -38,3 +38,28 @@ def test_check_user_email_uniqueness(db):
     assert response.status_code == 200
     dataJson = response.json()
     assert dataJson['msg'] == "Пользователь уже зарегистрирован"
+
+
+def test_user_able_to_login_afer_registration():
+    """User can login after registration."""
+    signup_form = SignUp(login="test@test.com", password="123456", name="test das")
+    signin_form = {"username": "test@test.com", "password": "123456"}
+
+    response = client.post("/api/me/signup", json=signup_form.dict())
+    response = client.post("/api/me/signin", signin_form)
+    token: Token = Token(**response.json())
+
+    assert token.token_type == "bearer"
+    assert token.access_token is not None
+
+
+def test_user_unable_to_login_with_invalid_credentials():
+    """User can login after registration."""
+    signup_form = SignUp(login="test@test.com", password="123456", name="test das")
+    signin_form = {"username": "test@test.com", "password": "invalid_password"}
+
+    response = client.post("/api/me/signup", json=signup_form.dict())
+    response = client.post("/api/me/signin", signin_form)
+    response_data: dict = response.json()
+
+    assert response_data["detail"] == "Incorrect name or password"
