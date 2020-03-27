@@ -27,6 +27,31 @@ def test_register_user_signup_date(db):
     assert (datetime.utcnow() - user.signup_date).total_seconds() < 10
 
 
+def test_signin_date_is_null_by_default(db):
+    """Last signin date is None before first login."""
+    signup_form = SignUp(login="test@test.com", password="123456", name="test das")
+    client.post("/api/me/signup", json=signup_form.dict())
+    user: User = db.query(User).filter(User.email == "test@test.com").first()
+    assert user.last_signin_date is None
+
+
+def test_update_signin_date(db):
+    """Update signin date."""
+    signup_form = SignUp(login="test@test.com", password="123456", name="test das")
+    signin_form = {"username": "test@test.com", "password": "123456"}
+
+    client.post("/api/me/signup", json=signup_form.dict())
+    client.post("/api/me/signin", signin_form)
+
+    user: User = db.query(User).filter(User.email == "test@test.com").first()
+    assert user is not None
+
+    # check signup date filled up correctly
+    # note: we are using diff between two dates because of lag
+    #       between request and response
+    assert (datetime.utcnow() - user.last_signin_date).total_seconds() < 10
+
+
 def test_check_user_email_uniqueness(db):
     """Check constraint - email must be unique"""
     # register a new user
@@ -56,7 +81,7 @@ def test_user_able_to_login_afer_registration():
 
 
 def test_user_unable_to_login_with_invalid_credentials():
-    """User can login after registration."""
+    """User unable to login with invalid credentials"""
     signup_form = SignUp(login="test@test.com", password="123456", name="test das")
     signin_form = {"username": "test@test.com", "password": "invalid_password"}
 
@@ -65,3 +90,4 @@ def test_user_unable_to_login_with_invalid_credentials():
     response_data: dict = response.json()
 
     assert response_data["detail"] == "Incorrect name or password"
+
