@@ -1,7 +1,8 @@
-from datetime import timedelta, datetime
+from datetime import datetime, timedelta
 from typing import Dict, List
 
 from fastapi import APIRouter, BackgroundTasks, Depends, HTTPException
+from sqlalchemy import exc
 from sqlalchemy.orm import Session
 
 from auth import (ACCESS_TOKEN_EXPIRE_MINUTES, PWD_CONTEXT, authenticate_user,
@@ -17,7 +18,6 @@ from logic.users import get_user_products
 from mappers.products import model2group_nv, model2product
 from mappers.user import model2user
 from postman import send_change_password_email, send_welcome_email
-from sqlalchemy import exc
 
 router = APIRouter()  # pylint: disable=invalid-name
 

@@ -1,9 +1,11 @@
+from datetime import datetime
+
 from starlette.testclient import TestClient
 
-from main import APP
-from forms.user import SignUp
 from db.models import User
-from datetime import datetime
+from forms.auth import Token
+from forms.user import SignIn, SignUp
+from main import APP
 
 client = TestClient(APP)
 
