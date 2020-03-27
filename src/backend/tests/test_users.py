@@ -22,7 +22,7 @@ def test_register_user_signup_date(db):
     # check signup date filled up correctly
     # note: we are using diff between two dates because of lag
     #       between request and response
-    assert (datetime.now() - user.signup_date).total_seconds() < 10
+    assert (datetime.utcnow() - user.signup_date).total_seconds() < 10
 
 
 def test_check_user_email_uniqueness(db):
