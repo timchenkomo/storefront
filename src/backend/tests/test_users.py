@@ -4,7 +4,7 @@ from starlette.testclient import TestClient
 
 from db.models import User
 from forms.auth import Token
-from forms.user import SignIn, SignUp
+from forms.user import SignUp
 from main import APP
 
 client = TestClient(APP)
