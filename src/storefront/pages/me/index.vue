@@ -41,7 +41,7 @@ import BookshelfFilter from '@/components/BookshelfFilter.vue'
 import Downloader from '@/components/Downloader.vue'
 import DownloadIcon from '~/assets/download.svg'
 
-import { Product, Group, UrlInfo } from '~/lib/book'
+import { Group } from '~/lib/book'
 import { msgStore } from '@/store/index'
 import { getProductUrl } from '@/lib/download'
 
@@ -54,7 +54,7 @@ import { getProductUrl } from '@/lib/download'
 class MeIndexPage extends Vue {
   private myProducts: Group[] = []
   private isDownloaderVisible: boolean = false
-  private downloaderOptions: UrlInfo[] = []
+  private downloaderOptions: any[] = []
   private query: string = ''
 
   async asyncData(ctx: Context) {
@@ -75,17 +75,12 @@ class MeIndexPage extends Vue {
   }
 
   private onProductClicked(group: Group) {
-    const getProductUrls = function(product: Product) {
-      return product.urls.map(url => ({
-        ...url, // get all the data from original object
-        'url': getProductUrl(product.slug, url.ext) // fix url to point to right place
-      }))
-    }
-
     this.isDownloaderVisible = true
     this.downloaderOptions = group.products
-      .filter(x => x.urls !== undefined) // remove products without urls, like printed books
-      .map(x => getProductUrls(x)) // fix urls
+      .map(product => product.formats.map(f => ({
+        url: getProductUrl(product.slug, f),
+        ext: f
+      })))
       .flat()
   }
 
