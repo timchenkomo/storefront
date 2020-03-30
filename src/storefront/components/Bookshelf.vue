@@ -5,7 +5,7 @@
       :key="book.slug"
       :title="book.title"
       :author="book.author"
-      :cover="'/downloads/covers/' + book.slug + '.jpg'"
+      :cover="'/downloads/' + book.slug + '/cover.jpg'"
       :url="'/book/' + book.slug"
       :class="props.productClass"
       @click="listeners.click ? listeners.click(book) : null"

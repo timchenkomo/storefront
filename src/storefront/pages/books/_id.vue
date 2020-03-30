@@ -2,7 +2,7 @@
   <div class="flex flex-col sm:flex-row">
     <!-- Product cover image -->
     <div class="w-full sm:w-1/3 mr-8 lg:mr-16 mb-8">
-      <img :src="'/downloads/covers/' + group.slug + '.jpg'" class="rounded">
+      <img :src="'/downloads/' + group.slug + '/cover.jpg'" class="rounded">
     </div>
 
     <!-- Content -->
