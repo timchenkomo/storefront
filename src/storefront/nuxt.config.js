@@ -70,10 +70,13 @@ export default {
    ** Build configuration
    */
   build: {
-    /*
-     ** You can extend webpack config here
-     */
-    // extend(config, ctx) {}
+    // workaround for: github.com/nuxt/nuxt.js/issues/3828
+    // note: it may cause memory leak in dev mode
+    filenames: {
+      app: ({ isDev }) => isDev ? '[name].[hash].js' : '[chunkhash].js',
+      chunk: ({ isDev }) => isDev ? '[name].[hash].js' : '[chunkhash].js'
+    },
+
     postcss: {
       plugins: {
         tailwindcss: 'tailwind.config.js'
