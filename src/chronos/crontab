@@ -1,5 +1,5 @@
 SHELL=/bin/sh
 PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
 
-* * * * * root  . /app/.env && /app/scan_products.py >> /var/log/scan_products.log 2>&1
+*/1 * * * * root  . /app/.env && /app/scan_products.py >> /var/log/scan_products.log 2>&1
 
