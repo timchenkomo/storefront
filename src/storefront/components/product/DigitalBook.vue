@@ -14,13 +14,13 @@
     >
       {{ actionText }}
       <a
-        v-for="url in product.urls"
-        :key="url.ext"
-        :href="bought ? productUrl(url.ext) : sampleUrl(url.ext)"
+        v-for="format in product.formats"
+        :key="format"
+        :href="bought ? productUrl(format) : sampleUrl(format)"
         class="hover:text-blue-200"
         download
       >
-        {{ url.ext.toUpperCase() }}
+        {{ format.toUpperCase() }}
       </a>
     </div>
   </div>
