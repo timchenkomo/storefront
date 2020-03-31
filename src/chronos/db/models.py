@@ -84,3 +84,38 @@ class Product(Base):  # pylint: disable=too-few-public-methods
 
     series = relationship("Series", back_populates="products")
     group = relationship("Group", back_populates="products")
+
+
+class Invoice(Base):  # pylint: disable=too-few-public-methods
+    """Invoice."""
+    __tablename__ = "invoices"
+    id = Column(Integer, primary_key=True, index=True)
+    user_id = Column(Integer, ForeignKey("users.id"), index=True)
+    created_date = Column(DateTime, nullable=False, default=datetime.utcnow)
+    paid_date = Column(DateTime, nullable=True)
+
+    user = relationship("User", back_populates="invoices")
+    items = relationship("InvoiceItem", back_populates="invoice")
+
+
+class InvoiceItem(Base):  # pylint: disable=too-few-public-methods
+    """Invoice item."""
+    __tablename__ = "invoice_items"
+    id = Column(Integer, primary_key=True, index=True)
+    invoice_id = Column(Integer, ForeignKey("invoices.id"), nullable=False, index=True)
+    product_id = Column(Integer, ForeignKey("products.id"), index=True)
+    price = Column(Integer)
+
+    invoice = relationship("Invoice", back_populates="items")
+    product = relationship("Product")
+
+
+class AccessToken(Base):  # pylint: disable=too-few-public-methods
+    """Restore password tokens."""
+    __tablename__ = "access_tokens"
+    id = Column(Integer, primary_key=True, index=True)
+    user_id = Column(Integer, ForeignKey("users.id"), index=True)
+    token = Column(String(32), index=True, unique=True)
+    expiry = Column(DateTime, nullable=False)
+
+    user = relationship("User")
