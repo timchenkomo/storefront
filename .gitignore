@@ -1,4 +1,5 @@
 node_modules/
+**/node_modules/
 .nuxt
 .DS_Store
 dist
@@ -138,7 +139,7 @@ dmypy.json
 .idea/
 
 #Docker shared folders
-db
+/db
 
 #VIM
 *.swo
