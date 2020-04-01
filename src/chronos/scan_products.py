@@ -87,6 +87,7 @@ for folder in folders:
         product.publisher = config.get(section, "publisher")
         product.year_published = config.get(section, "year_published")
         product.formats = config.get(section, "formats")
+        product.sample_formats = config.get(section, "sample_formats", fallback=None)
 
         # check files exists
         files_are_present = map(
@@ -96,11 +97,12 @@ for folder in folders:
             raise Exception(f"Not all files are present for {folder}")
 
         # check sample files exists
-        files_are_present = map(
-            lambda fmt: folder.joinpath(product.slug + ".sample." + fmt).exists(),
-            product.formats.split(";"))
-        if not all(files_are_present):
-            raise Exception(f"Not all sample files are present for {folder}")
+        if product.sample_formats:
+            samples_are_present = map(
+                lambda fmt: folder.joinpath(product.slug + ".sample." + fmt).exists(),
+                product.sample_formats.split(";"))
+            if not all(samples_are_present):
+                raise Exception(f"Not all sample files are present for {folder}")
 
         # add product
         db.add(product)
