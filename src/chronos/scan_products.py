@@ -36,6 +36,11 @@ def find_or_create_product(slug: str) -> Group:
     return product
 
 
+def proccess_description(text: str) -> str:
+    text = text.replace("<br>", "\n")
+    return text
+
+
 # list all directories in /downloads folder
 folders = filter(
     lambda x: x.is_dir(),
@@ -57,7 +62,7 @@ for folder in folders:
     group_author = config.get("group", "author")
     group = find_or_create_group(group_slug, group_author)
     group.title = config.get("group", "title")
-    group.description = config.get("group", "desc")
+    group.description = proccess_description(config.get("group", "desc"))
     db.add(group)
 
     # go trought all the sections in config file
