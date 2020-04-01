@@ -79,6 +79,7 @@ class Product(Base):  # pylint: disable=too-few-public-methods
     type = Column(EnumColumn(ProductType), nullable=False)
     price = Column(Integer)
     formats = Column(String(32))
+    sample_formats = Column(String(32))
     publisher = Column(String(256))
     year_published = Column(Integer)
 

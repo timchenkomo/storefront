@@ -36,6 +36,7 @@ export interface Product {
 
   /** List of formats to download file */
   formats: string[];
+  sample_formats: string[];
 
   series: string;
   year_published: number;
@@ -54,6 +55,7 @@ export const EmptyProduct: Product = {
   type: ProductType.Digital,
   title: '',
   formats: [],
+  sample_formats: [],
   series: '',
   year_published: 0,
   publisher: '',

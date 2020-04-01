@@ -11,7 +11,8 @@ class Product(BaseModel):
     publisher: Optional[str]
     year_published: Optional[int]
     series: Optional[str]
-    formats: List[str]
+    formats: Optional[List[str]]
+    sample_formats: Optional[List[str]]
     title: Optional[str]
     group_slug: Optional[str]
 

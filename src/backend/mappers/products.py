@@ -11,6 +11,7 @@ def model2product(model: models.Product) -> Product:
         year_published=model.year_published,
         series=model.series.title if model.series else None,
         formats=model.formats.split(";") if model.formats else None,
+        sample_formats=model.sample_formats.split(";") if model.sample_formats else None,
         slug=model.slug,
         title=model.group.title,
         group_slug=model.group.slug)
