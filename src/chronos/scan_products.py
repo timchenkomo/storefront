@@ -48,6 +48,7 @@ folders = filter(
 
 # iterate over all directories
 for folder in folders:
+    print(f"Processing {folder}")
     config_path = folder.joinpath("config.ini").absolute()
 
     # skip folder if no config.ini file provided
@@ -63,6 +64,16 @@ for folder in folders:
     group = find_or_create_group(group_slug, group_author)
     group.title = config.get("group", "title")
     group.description = proccess_description(config.get("group", "desc"))
+
+    # check slug and folder name are equal
+    if folder.name != group_slug:
+        raise Exception(f"Folder name and group slug mismatch for {folder.name} != {group_slug}")
+
+    # check cover exists
+    if not folder.joinpath("cover.jpg").exists():
+        raise Exception(f"No cover found for {folder}")
+
+    # add groups
     db.add(group)
 
     # go trought all the sections in config file
@@ -76,9 +87,23 @@ for folder in folders:
         product.publisher = config.get(section, "publisher")
         product.year_published = config.get(section, "year_published")
         product.formats = config.get(section, "formats")
-        db.add(product)
 
-        print(group, group.title, product_slug, product.type, product.price)
+        # check files exists
+        files_are_present = map(
+            lambda fmt: folder.joinpath(product.slug + "." + fmt).exists(),
+            product.formats.split(";"))
+        if not all(files_are_present):
+            raise Exception(f"Not all files are present for {folder}")
+
+        # check sample files exists
+        files_are_present = map(
+            lambda fmt: folder.joinpath(product.slug + ".sample." + fmt).exists(),
+            product.formats.split(";"))
+        if not all(files_are_present):
+            raise Exception(f"Not all sample files are present for {folder}")
+
+        # add product
+        db.add(product)
 
 
 db.commit()
