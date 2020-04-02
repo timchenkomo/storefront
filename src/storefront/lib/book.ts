@@ -34,8 +34,9 @@ export interface Product {
   /** Name of variety */
   title: string;
 
-  /** List of urls to download file */
-  urls: UrlInfo[];
+  /** List of formats to download file */
+  formats: string[];
+  sample_formats: string[];
 
   series: string;
   year_published: number;
@@ -43,11 +44,6 @@ export interface Product {
   group_slug: string;
 }
 
-export interface UrlInfo {
-  url: string;
-  size: string;
-  ext: string;
-}
 
 export const EmptyGroup: Group = {
   slug: 'null', title: 'Empty book', author: 'No one',  description: '', products: []
@@ -58,7 +54,8 @@ export const EmptyProduct: Product = {
   price: -1,
   type: ProductType.Digital,
   title: '',
-  urls: [],
+  formats: [],
+  sample_formats: [],
   series: '',
   year_published: 0,
   publisher: '',

@@ -3,7 +3,7 @@ from hashlib import md5
 from os import environ
 from typing import List
 
-from fastapi import APIRouter, Depends, Form, HTTPException
+from fastapi import APIRouter, Depends, Query, HTTPException
 from sqlalchemy.orm import Session
 
 from auth import get_current_active_user
@@ -37,14 +37,14 @@ async def payment_create(
     return {"invoice_id": invoice.id}
 
 
-@router.post(
+@router.get(
     "/result_pay",
     summary="Payment callback"
 )
 async def payment_result(
-        out_summ: float = Form(0),
-        inv_id: str = Form(None),
-        crc: str = Form(None),
+        out_summ: float = Query(0),
+        inv_id: str = Query(None),
+        crc: str = Query(None),
         db: Session = Depends(db_session)):
     """Payment callback."""
     # truncate zeros from the end

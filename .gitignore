@@ -1,9 +1,11 @@
 node_modules/
+**/node_modules/
 .nuxt
 .DS_Store
 dist
 .projectile
 .dir-locals.el
+.ignore
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
@@ -138,7 +140,7 @@ dmypy.json
 .idea/
 
 #Docker shared folders
-db
+/db
 
 #VIM
 *.swo

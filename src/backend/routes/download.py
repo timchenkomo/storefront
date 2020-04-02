@@ -10,7 +10,7 @@ from db import db_session
 from db.models import Product, User
 from logic.users import get_user_products
 
-ROOT = environ.get("DOWNLOADS_PATH", "../downloads")
+ROOT = environ.get("DOWNLOADS_PATH", "../../downloads")
 
 router = APIRouter()  # pylint: disable=invalid-name
 
@@ -23,13 +23,22 @@ router = APIRouter()  # pylint: disable=invalid-name
     "/{product_slug}/sample.{ext}",
     summary="Download a sample of a product."
 )
-async def download_sample(product_slug: str, ext: str) -> FileResponse:
+async def download_sample(
+        product_slug: str,
+        ext: str,
+        db: Session = Depends(db_session)) -> FileResponse:
     """Download a sample."""
-    return FileResponse(join(ROOT, product_slug, "sample." + ext))
+    # Check if product exists
+    product = db.query(Product).filter(Product.slug == product_slug).first()
+    if not product:
+        raise HTTPException(status_code=404, detail="No product found")
+
+    group_slug: str = product.group.slug
+    return FileResponse(join(ROOT, group_slug, product_slug + ".sample." + ext))
 
 
 @router.get(
-    "/{product_slug}\.{ext}",  # noqa pylint: disable=W1401
+    "/{product_slug}.{ext}",  # noqa pylint: disable=W1401
     summary="Download a product."
 )
 async def download_product(
@@ -47,4 +56,5 @@ async def download_product(
     if product not in get_user_products(db, user):
         raise HTTPException(status_code=403, detail="Doesn't belong to you")
 
-    return FileResponse(join(ROOT, product_slug, product_slug + "." + ext))
+    group_slug: str = product.group.slug
+    return FileResponse(join(ROOT, group_slug, product_slug + "." + ext))
