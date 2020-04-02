@@ -5,6 +5,7 @@ node_modules/
 dist
 .projectile
 .dir-locals.el
+.ignore
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
