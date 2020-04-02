@@ -49,7 +49,6 @@
         >
           <!-- Additional components accoring to product type -->
           <div
-            v-if="product.type !== 'printed'"
             :is="product.type + '-book'"
             :product="product"
             :bought="hasAlreadyBought(product)"
