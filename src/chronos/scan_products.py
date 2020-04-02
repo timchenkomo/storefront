@@ -10,6 +10,9 @@ from db.models import Group, Author, Product
 print("Scaning for new products")
 
 DOWNLOADS = environ.get("DOWNLOADS_PATH", "../../downloads")
+GROUPS = []
+PRODUCTS = []
+DELETE_UNLISTED = False
 
 db = next(db_session())  # acquire new db connection
 
@@ -75,6 +78,7 @@ for folder in folders:
 
     # add groups
     db.add(group)
+    GROUPS.append(group_slug)
 
     # go trought all the sections in config file
     sections = filter(lambda x: x != "group", config.sections())
@@ -106,14 +110,24 @@ for folder in folders:
 
         # add product
         db.add(product)
+        PRODUCTS.append(product_slug)
 
+
+# Delete unlisted products
+if DELETE_UNLISTED:
+    all_products = db.query(Product).all()
+    all_groups = db.query(Group).all()
+    del_products = list(filter(lambda p: p.slug not in PRODUCTS, all_products))
+
+    del_products = list(filter(lambda p: p.slug not in PRODUCTS, all_products))
+    del_groups = list(filter(lambda p: p.slug not in GROUPS, all_groups))
+
+    for product in del_products:
+        print(f"Delete {product.slug} {product.type}. {PRODUCTS}")
+        db.delete(product)
+
+        for group in del_groups:
+            print(f"Delete {group.slug} {group}")
+            db.delete(group)
 
 db.commit()
-
-    # group_exist = folder.name in group_titles
-    # print(folder.name, group_exist)
-
-
-#for group in groups:
-#    print(group.title)
-
