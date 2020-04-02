@@ -1,3 +1,3 @@
 <template>
-  <div />
+  <div v-if="true" />
 </template>
