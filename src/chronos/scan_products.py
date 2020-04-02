@@ -1,11 +1,11 @@
 #!/usr/local/bin/python
 
-from os import environ
 from configparser import ConfigParser
+from os import environ
 from pathlib import Path
 
 from db.db import db_session
-from db.models import Group, Author, Product
+from db.models import Author, Group, Product
 
 print("Scaning for new products")
 
