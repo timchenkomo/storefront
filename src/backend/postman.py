@@ -9,7 +9,7 @@ from jinja2 import Environment, FileSystemLoader
 
 SMTP_SERVER = environ.get("SMTP_HOST", "smtp")
 SMTP_PORT = int(environ.get("SMTP_PORT", 1025))
-SMTP_SENDER = "me@test.com"
+SMTP_SENDER = environ.get("SMTP_SENDER", "info@bbt-online.ru")
 SMTP_PASSWORD = "test"
 DO_NOT_SEND_EMAIL = environ.get("DO_NOT_SEND_EMAIL", None)
 
